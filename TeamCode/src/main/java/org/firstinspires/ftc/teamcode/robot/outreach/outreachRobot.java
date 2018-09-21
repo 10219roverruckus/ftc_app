@@ -8,13 +8,16 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import static java.lang.Thread.sleep;
 
 
-@TeleOp(name = "Demo Robot")
+@TeleOp(name = "Demo Robot 1")
 public class outreachRobot extends OpMode {
 
     outreachMotors myOutreachMotors;
     //outreachCatapultMotorsRunToPosition myOutreachCatapultMotorsRunToPosition;
     //outreachCatapultMotorsRunUsingEncoders myOutreachCatapultMotorsRunUsingEncoders;
     //outreachCatapultMotorsRunWithoutEncoders myOutreachCatapultMotorsRunWithoutEncoders;
+    //outreachCatapultMotorsRunUsingEncoders myOutreachCatapultMotorsRunUsingEncoders;
+    outreachCatapultMotorsRunToPosition2motors myOutreachCatapultMotorsRunToPosition2motors;
+
     outreachCatapultMotorsRunWithoutEncoders2motors myOutreachCatapultMotorsRunWithoutEncoders2motors;
 
     outreachTouchSensorCatapult myOutreachTouchSensorCatapult;
@@ -35,6 +38,8 @@ public class outreachRobot extends OpMode {
         //myOutreachCatapultMotorsRunToPosition = new outreachCatapultMotorsRunToPosition(hardwareMap.dcMotor.get("catapult_motor"));
         //myOutreachCatapultMotorsRunUsingEncoders = new outreachCatapultMotorsRunUsingEncoders(hardwareMap.dcMotor.get("catapult_motor"));
         //myOutreachCatapultMotorsRunWithoutEncoders = new outreachCatapultMotorsRunWithoutEncoders(hardwareMap.dcMotor.get("catapult_motor"));
+        myOutreachCatapultMotorsRunToPosition2motors = new outreachCatapultMotorsRunToPosition2motors(hardwareMap.dcMotor.get("catapult_motor1"), hardwareMap.dcMotor.get("catapult_motor2"));
+
         myOutreachCatapultMotorsRunWithoutEncoders2motors = new outreachCatapultMotorsRunWithoutEncoders2motors (hardwareMap.dcMotor.get("catapult_motor1"), hardwareMap.dcMotor.get("catapult_motor2"));
         myOutreachTouchSensorCatapult = new outreachTouchSensorCatapult (hardwareMap.get(DigitalChannel.class, "catapult_touch_sensor"));
         //catapult = hardwareMap.dcMotor.get("catapult_motor");
@@ -59,7 +64,7 @@ public class outreachRobot extends OpMode {
         }
 
         if (gamepad1.right_bumper) {
-    //        myOutreachCatapultMotorsRunToPosition.catapultLaunch(myOutreachTouchSensorCatapult);
+            myOutreachCatapultMotorsRunToPosition2motors.catapultLaunch(myOutreachTouchSensorCatapult);
         }
 
         if (gamepad1.y) {

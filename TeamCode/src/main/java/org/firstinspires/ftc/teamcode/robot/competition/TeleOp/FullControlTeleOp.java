@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
  * Created by blake_shafer on 8/23/17.
  */
 
-@Disabled
-@TeleOp(name = "Full Control (OLD RELIC RECOVERY)")
+//@Disabled
+@TeleOp(name = "Full Control ()")
 
 public class FullControlTeleOp extends OpMode {
 
@@ -147,10 +147,10 @@ public class FullControlTeleOp extends OpMode {
         //telemetry.addData("val", "L trgr: " + leftTriggerVal);
         //telemetry.addData("val", "R trgr: " + rightTriggerVal);
 
-        //telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
-        //telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
-        //telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
-        //telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
 
         telemetry.update();
     }
