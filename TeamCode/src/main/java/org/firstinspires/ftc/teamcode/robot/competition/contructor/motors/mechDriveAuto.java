@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.robot.constructor.motors;
+package org.firstinspires.ftc.teamcode.robot.competition.contructor.motors;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class driveAuto {
+public class mechDriveAuto {
     private DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
 
     int heading;
     int xVal, yVal, zVal;
 
 
-    public driveAuto (DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
+    public mechDriveAuto(DcMotor frontLM, DcMotor frontRM, DcMotor rearLM, DcMotor rearRM) {
 
         frontLeftMotor = frontLM;
         frontRightMotor = frontRM;
