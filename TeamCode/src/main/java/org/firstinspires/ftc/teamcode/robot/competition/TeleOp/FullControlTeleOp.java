@@ -29,6 +29,7 @@ public class FullControlTeleOp extends OpMode {
     DcMotor frontRightMotor;
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
+    DcMotor liftArmMotor;
 
     double leftStickVal;
     double rightStickVal;
@@ -40,6 +41,8 @@ public class FullControlTeleOp extends OpMode {
     double frontRightSpeed;
     double rearLeftSpeed;
     double rearRightSpeed;
+
+    double rightJoystick_lift;
 
     boolean reverseMode;
 
@@ -54,11 +57,13 @@ public class FullControlTeleOp extends OpMode {
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
+        liftArmMotor = hardwareMap.dcMotor.get("lift_arm_motor");
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         reverseMode = false;
 
@@ -80,10 +85,20 @@ public class FullControlTeleOp extends OpMode {
             reverseMode = true;
         }
 
+
+
+        rightJoystick_lift = gamepad2.right_stick_y;
+
+        if (rightJoystick_lift < -.2 || rightJoystick_lift > .2) {
+            liftArmMotor.setPower(rightJoystick_lift);
+        }
+
+
         leftStickVal = -gamepad1.left_stick_y;
         leftStickVal = Range.clip(leftStickVal, -1, 1);
         rightStickVal = -gamepad1.right_stick_y;
         rightStickVal = Range.clip(rightStickVal, -1, 1);
+
 
         leftTriggerVal = gamepad1.left_trigger;
         leftTriggerVal = Range.clip(leftTriggerVal, 0, 1);
