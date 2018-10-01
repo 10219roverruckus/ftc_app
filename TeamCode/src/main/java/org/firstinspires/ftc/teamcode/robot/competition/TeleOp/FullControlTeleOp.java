@@ -140,6 +140,8 @@ public class FullControlTeleOp extends OpMode {
         }
 
 
+        //MOTOR FOR LIFT
+
         // Telemetry
 
         //telemetry.addData("val", "L stck: " + leftStickVal);
