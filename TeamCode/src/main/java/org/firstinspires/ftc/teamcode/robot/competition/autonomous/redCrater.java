@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.robot.competition.contructor.motors.mechDriveAuto;
+import org.firstinspires.ftc.teamcode.robot.competition.constructor.motors.mechDriveAuto;
 
 public class redCrater extends LinearOpMode {
 
