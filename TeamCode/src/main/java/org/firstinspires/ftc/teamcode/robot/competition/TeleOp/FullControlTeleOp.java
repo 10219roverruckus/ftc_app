@@ -94,6 +94,9 @@ public class FullControlTeleOp extends OpMode {
         if (rightJoystick_lift < -.2 || rightJoystick_lift > .2) {
             liftArmMotor.setPower(rightJoystick_lift);
         }
+        else {
+            liftArmMotor.setPower(0);
+        }
 
 
         leftStickVal = -gamepad1.left_stick_y;
