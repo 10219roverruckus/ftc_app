@@ -172,6 +172,13 @@ public class mechDriveAuto {
                 rearRightMotor.setPower(-power);
                 break;
         }
+
+    }
+    public void stopMotors () {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
     }
 
 }

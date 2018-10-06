@@ -53,25 +53,29 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 1: //land robot
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                    gravity = imu.getGravity();
                     myLiftArm.extend();
                     sleep(100);
                     myMechDriveAuto.runToPosition(1, 4,.5);
                     myLiftArm.retract();
+                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
                     if (angles.firstAngle > .5){
-                        while angles.firstAngle > .5{
+                        while (angles.firstAngle > .5){
                             myMechDriveAuto.powerDrive(5, .15);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
                         }
                     }
                     else if (angles.firstAngle < -.5) {
                         while (angles.firstAngle < -.5){
                             myMechDriveAuto.powerDrive(-5, .15);
+                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
                         }
                     }
-                    else {
-
-                    }
-
+                    myMechDriveAuto.stopMotors();
                     movement++;
                     break;
                 case 2: //rejust the robot
