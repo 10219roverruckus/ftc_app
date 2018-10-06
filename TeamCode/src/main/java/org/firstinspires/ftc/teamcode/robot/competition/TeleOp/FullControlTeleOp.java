@@ -49,6 +49,11 @@ public class FullControlTeleOp extends OpMode {
 
     boolean initServos;
 
+    double powerThersholdp;
+    double powerThersholdn;
+
+
+
 
 
     @Override
@@ -70,6 +75,9 @@ public class FullControlTeleOp extends OpMode {
         reverseMode = false;
 
         initServos = false;
+
+        powerThersholdp = .1;
+        powerThersholdn = -.1;
     }
     @Override
     public void loop() {
@@ -152,6 +160,19 @@ public class FullControlTeleOp extends OpMode {
 
             rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
             rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
+
+            if ( frontLeftSpeed <= powerThersholdp && frontLeftSpeed >= powerThersholdn) {
+                frontLeftSpeed = 0;
+            }
+            if (frontRightSpeed <= powerThersholdp && frontRightSpeed >= powerThersholdn){
+                frontRightSpeed = 0;
+            }
+            if (rearLeftSpeed <= powerThersholdp && rearLeftSpeed >= powerThersholdn) {
+                rearLeftSpeed = 0;
+            }
+            if (rearRightSpeed <= powerThersholdp && rearLeftSpeed >= powerThersholdn){
+                rearRightSpeed = 0;
+            }
 
             frontLeftMotor.setPower(frontLeftSpeed);
             frontRightMotor.setPower(frontRightSpeed);
