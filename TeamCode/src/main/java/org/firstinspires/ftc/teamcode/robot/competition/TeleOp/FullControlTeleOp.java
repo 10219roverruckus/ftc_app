@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.boardArm;
@@ -17,7 +18,7 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
  */
 
 //@Disabled
-@TeleOp(name = "Full Control ()")
+@TeleOp(name = "Full Control - Main Channel Robot")
 
 public class FullControlTeleOp extends OpMode {
 
@@ -58,6 +59,7 @@ public class FullControlTeleOp extends OpMode {
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
         liftArmMotor = hardwareMap.dcMotor.get("lift_arm_motor");
+
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

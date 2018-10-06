@@ -4,11 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import static java.lang.Thread.sleep;
 
 
-@TeleOp(name = "Demo Robot 1")
+@TeleOp(name = "Demo Robot + LED")
 public class outreachRobot extends OpMode {
 
     outreachMotors myOutreachMotors;
@@ -30,7 +33,11 @@ public class outreachRobot extends OpMode {
     double triggerRight;
     DcMotor catapult;
 
+    double minLedPosistion = 0.2525;
+    double maxLedPosition = 0.7475;
+    double ledPosition = minLedPosistion;
 
+    Servo ledStrip;
 
     @Override
     public void init() {
@@ -44,10 +51,24 @@ public class outreachRobot extends OpMode {
         myOutreachTouchSensorCatapult = new outreachTouchSensorCatapult (hardwareMap.get(DigitalChannel.class, "catapult_touch_sensor"));
         //catapult = hardwareMap.dcMotor.get("catapult_motor");
         //catapult.setDirection(DcMotor.Direction.FORWARD);
+
+        ledStrip = hardwareMap.servo.get("led_strip");
+        ledStrip.setPosition(ledPosition);
+
+
+
     }
 
     @Override
     public void loop() {
+
+        ledPosition = ledPosition + (gamepad2.left_stick_y/1000);
+        ledPosition = Range.clip(ledPosition,minLedPosistion,maxLedPosition);
+        ledStrip.setPosition(ledPosition);
+
+
+
+
         leftY = gamepad1.left_stick_y;
         rightY = gamepad1.right_stick_y;
         myOutreachMotors.drive(leftY, rightY);
@@ -84,6 +105,8 @@ public class outreachRobot extends OpMode {
         //catapult.setPower(-triggerLeft);
         //catapult.setPower(triggerRight);
         telemetry.addData("Touch Sensor: ", myOutreachTouchSensorCatapult.checkCatapultTouchSensor());
+        telemetry.addData("LED Position", ledPosition);
+        telemetry.addData("LED Get Position", ledStrip.getPosition());
         telemetry.addData("Left Y: ", leftY);
         telemetry.addData("Right Y: ", rightY);
         telemetry.addData("Left trigger: ", triggerLeft);
