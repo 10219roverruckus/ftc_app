@@ -32,6 +32,9 @@ public class mechDriveAuto {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void runToPosition (int distance, int direction, double power) {
+        int cpr = 538;
+        int counts = distance * cpr;
+
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -50,25 +53,45 @@ public class mechDriveAuto {
         switch (direction) {
             case 1:
                 // forward
-                frontLeftMotor.setTargetPosition(distance);
-                frontRightMotor.setTargetPosition(distance);
-                rearLeftMotor.setTargetPosition(distance);
-                rearRightMotor.setTargetPosition(distance);
+                frontLeftMotor.setTargetPosition(counts);
+                frontRightMotor.setTargetPosition(counts);
+                rearLeftMotor.setTargetPosition(counts);
+                rearRightMotor.setTargetPosition(counts);
                 break;
             case 2:
                 //back
+                frontLeftMotor.setTargetPosition(-counts);
+                frontRightMotor.setTargetPosition(-counts);
+                rearLeftMotor.setTargetPosition(-counts);
+                rearRightMotor.setTargetPosition(-counts);
                 break;
             case 3:
                 //strafe left
+                frontLeftMotor.setTargetPosition(-counts);
+                frontRightMotor.setTargetPosition(counts);
+                rearLeftMotor.setTargetPosition(counts);
+                rearRightMotor.setTargetPosition(-counts);
                 break;
             case 4:
                 //strafe right
+                frontLeftMotor.setTargetPosition(counts);
+                frontRightMotor.setTargetPosition(-counts);
+                rearLeftMotor.setTargetPosition(-counts);
+                rearRightMotor.setTargetPosition(counts);
                 break;
             case 5:
                 //Rotate left
+                frontLeftMotor.setTargetPosition(-counts);
+                frontRightMotor.setTargetPosition(counts);
+                rearLeftMotor.setTargetPosition(-counts);
+                rearRightMotor.setTargetPosition(counts);
                 break;
             case 6:
                 //Rotate right
+                frontLeftMotor.setTargetPosition(counts);
+                frontRightMotor.setTargetPosition(-counts);
+                rearLeftMotor.setTargetPosition(counts);
+                rearRightMotor.setTargetPosition(-counts);
                 break;
         }
         while(frontLeftMotor.isBusy() && frontRightMotor.isBusy() && rearLeftMotor.isBusy() && rearRightMotor.isBusy()) {
@@ -98,6 +121,57 @@ public class mechDriveAuto {
 
 
 
+    }
+    public void powerDrive (int direction, double power) {
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        switch (direction) {
+            case 1:
+                // forward
+                frontLeftMotor.setPower(power);
+                frontRightMotor.setPower(power);
+                rearLeftMotor.setPower(power);
+                rearRightMotor.setPower(power);
+                break;
+            case 2:
+                //back
+                frontLeftMotor.setPower(-power);
+                frontRightMotor.setPower(-power);
+                rearLeftMotor.setPower(-power);
+                rearRightMotor.setPower(-power);
+                break;
+            case 3:
+                //strafe left
+                frontLeftMotor.setPower(-power);
+                frontRightMotor.setPower(power);
+                rearLeftMotor.setPower(power);
+                rearRightMotor.setPower(-power);
+                break;
+            case 4:
+                //strafe right
+                frontLeftMotor.setPower(power);
+                frontRightMotor.setPower(-power);
+                rearLeftMotor.setPower(-power);
+                rearRightMotor.setPower(power);
+                break;
+            case 5:
+                //Rotate left
+                frontLeftMotor.setPower(-power);
+                frontRightMotor.setPower(power);
+                rearLeftMotor.setPower(-power);
+                rearRightMotor.setPower(power);
+                break;
+            case 6:
+                //Rotate right
+                frontLeftMotor.setPower(power);
+                frontRightMotor.setPower(-power);
+                rearLeftMotor.setPower(power);
+                rearRightMotor.setPower(-power);
+                break;
+        }
     }
 
 }
