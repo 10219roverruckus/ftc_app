@@ -49,6 +49,9 @@ public class FullControlTeleOp extends OpMode {
 
     boolean initServos;
 
+    double powerThreshold = 0.1;
+
+
 
 
     @Override
@@ -65,6 +68,7 @@ public class FullControlTeleOp extends OpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         reverseMode = false;
@@ -93,6 +97,9 @@ public class FullControlTeleOp extends OpMode {
 
         if (rightJoystick_lift < -.2 || rightJoystick_lift > .2) {
             liftArmMotor.setPower(rightJoystick_lift);
+        }
+        else {
+            liftArmMotor.setPower(0);
         }
 
 
@@ -150,10 +157,33 @@ public class FullControlTeleOp extends OpMode {
             rearRightSpeed = rightStickVal + rightTriggerVal - leftTriggerVal;
             rearRightSpeed = Range.clip(rearRightSpeed, -1, 1);
 
-            frontLeftMotor.setPower(frontLeftSpeed);
-            frontRightMotor.setPower(frontRightSpeed);
-            rearLeftMotor.setPower(rearLeftSpeed);
-            rearRightMotor.setPower(rearRightSpeed);
+            if (frontLeftSpeed <= powerThreshold && frontLeftSpeed >= -powerThreshold) {
+                frontLeftSpeed = 0;
+                frontLeftMotor.setPower(frontLeftSpeed);
+            } else {
+                frontLeftMotor.setPower(frontLeftSpeed);
+            }
+
+            if (frontRightSpeed <= powerThreshold && frontRightSpeed >= -powerThreshold){
+                frontRightSpeed = 0;
+                frontRightMotor.setPower(frontRightSpeed);
+            } else {
+                frontRightMotor.setPower(frontRightSpeed);
+            }
+
+            if (rearLeftSpeed <= powerThreshold && rearLeftSpeed >= -powerThreshold) {
+                rearLeftSpeed = 0;
+                rearLeftMotor.setPower(rearLeftSpeed);
+            } else {
+                rearLeftMotor.setPower(rearLeftSpeed);
+            }
+
+            if (rearRightSpeed <= powerThreshold && rearRightSpeed >= -powerThreshold){
+                rearRightSpeed = 0;
+                rearRightMotor.setPower(rearRightSpeed);
+            } else {
+                rearRightMotor.setPower(rearRightSpeed);
+            }
         }
 
 
