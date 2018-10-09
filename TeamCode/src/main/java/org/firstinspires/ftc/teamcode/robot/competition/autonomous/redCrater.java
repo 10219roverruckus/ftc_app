@@ -12,14 +12,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.robot.competition.constructor.motors.mechDriveAuto;
-import org.firstinspires.ftc.teamcode.robot.competition.constructor.motors.liftArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.mechDriveAuto;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
 public class redCrater extends LinearOpMode {
     private int movement = 0;
-    mechDriveAuto myMechDriveAuto;
+    MecanumDrive myMechDrive;
     liftArm myLiftArm;
-    private int Goldposition;
+    private GoldPosition goldPosition = GoldPosition.MIDDLE;
 
     //info for gyro
     BNO055IMU imu;
@@ -32,7 +33,7 @@ public class redCrater extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        myMechDriveAuto = new mechDriveAuto(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
+        myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myLiftArm = new liftArm(hardwareMap.dcMotor.get("lift_motor"));
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
@@ -75,22 +76,22 @@ public class redCrater extends LinearOpMode {
             switch (movement) {
                 case 0: //opmode initial actions
                     if (detector.getXPosition() < 280) {
-                        Goldposition = 1;
+                        goldPosition = GoldPosition.LEFT;
                     }
                     else if (detector.getXPosition() > 500) {
-                        Goldposition = 3;
+                        goldPosition = GoldPosition.RIGHT;
                     }
                     else {
-                        Goldposition = 2;
+                        goldPosition = GoldPosition.MIDDLE;
                     }
                     movement++;
                     break;
-                case 1: //land robot
+                case 1: //land robot and adjust robot
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                     gravity = imu.getGravity();
                     myLiftArm.extend();
                     sleep(100);
-                    myMechDriveAuto.runToPosition(1, 4,.5);
+                    myMechDrive.driveStraight(SPD1, 0.5);
                     myLiftArm.retract();
                     myMechDriveAuto.runToPosition(1,1, .5 );
                     sleep(100 );
@@ -113,20 +114,26 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 2: // move to correct mineral
-                    switch (Goldposition) {
-                        case 1: {
+                    switch (goldPosition) {
+                        case LEFT: { //mineral left
                             myMechDriveAuto.runToPosition(3, 3, .5);
-                        }
-                        case 3: {
-                            myMechDriveAuto.runToPosition(3, 4, .5);
-                        }
-                        case 2: {
                             myMechDriveAuto.runToPosition(3, 1, .5);
+                            break;
+                        }
+                        case RIGHT: { //
+                            myMechDriveAuto.runToPosition(3, 4, .5);
+                            myMechDriveAuto.runToPosition(3, 1, .5);
+                            break;
+                        }
+                        case MIDDLE: {
+                            myMechDriveAuto.runToPosition(3, 1, .5);
+                            break;
                         }
                     }
                     movement++;
                     break;
-                case 3:
+                case 3: //Vuphoria
+
                     movement++;
                     break;
                 case 4: //
