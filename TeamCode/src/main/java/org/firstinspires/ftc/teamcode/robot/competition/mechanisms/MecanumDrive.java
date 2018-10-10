@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.competition.mechanisms;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 //Functions for mecanum drive steering for autonomous and teleop
 public class MecanumDrive {
@@ -33,10 +34,10 @@ public class MecanumDrive {
         rearLeftMotor = RL;         // RL is back or rear left motor
 
 
-        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-        rearRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -64,18 +65,24 @@ public class MecanumDrive {
         rearLeftMotor.setPower(speed);
     }
 
+    public void FORWARDPOWER () {
+        frontRightMotor.setPower(.5);
+        frontLeftMotor.setPower(.5);
+        rearLeftMotor.setPower(.5);
+        rearRightMotor.setPower(.5);
+
+    }
+
     //Driving Forward
     public void driveForward( double speed, double rotations) {
         int ticks = (int) rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
-
-        if (rotations < 0 && linearOp.opModeIsActive()) { //backwards
-            while (frontLeftMotor.getCurrentPosition() > ticks) {
+            while (frontLeftMotor.getCurrentPosition() < ticks) {
                 setMotorSpeeds(speed);
             }
         }
-    }
+
 
      // Driving Backward
     public void driveBackward ( double speed, double rotations){
@@ -83,13 +90,12 @@ public class MecanumDrive {
         int ticks = (int) rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
-
-        if (rotations > 0 && linearOp.opModeIsActive()) {
             while (frontLeftMotor.getCurrentPosition() < ticks) {
                 setMotorSpeeds(-speed);
             }
+            stopMotors();
         }
-    }
+
 
     // Strafing left
     public void strafeLeft (double speed, double rotations) {

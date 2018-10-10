@@ -74,11 +74,17 @@ public class redCrater extends LinearOpMode {
         detector.ratioScorer.perfectRatio = 1.0;
 
         detector.enable();
+        telemetry.addData("waiting for start", movement);
+        telemetry.update();
 
         waitForStart();
 
+        telemetry.addData("pressed startt", movement);
+        telemetry.update();
+
         movement = 1;
-        goldPosition = goldPosition.LEFT;
+       // goldPosition = goldPosition.LEFT;
+
 
         while (opModeIsActive()){
             switch (movement) {
@@ -95,72 +101,85 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 1: //land robot and adjust robot
-                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    gravity = imu.getGravity();
-                    //myLiftArm.extend();
-                    sleep(100);
+//                    telemetry.addData("case: ", movement);
+//                    telemetry.update();
+//                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//                    gravity = imu.getGravity();
+//                    //myLiftArm.extend();
+//                    sleep(100);
+
                     myMechDrive.driveForward(.5, 1);
+                    myMechDrive.stopMotors();
                     //myLiftArm.retract();
                     myMechDrive.driveForward(.5, 1 );
-                    sleep(100 );
-                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    if (angles.firstAngle > .5){
-                        while (angles.firstAngle > .5){
-                            myMechDrive.rotateLeft(5, .15);
-                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-                        }
-                    }
-                    else if (angles.firstAngle < -.5) {
-                        while (angles.firstAngle < -.5){
-                            myMechDrive.rotateRight(-5, .15);
-                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-                        }
-                    }
                     myMechDrive.stopMotors();
-                    movement++;
-                    break;
-                case 2: // move to correct mineral / knock it off
-                    switch (goldPosition) {
-                        case LEFT: { //mineral left
-                            myMechDrive.strafeLeft(.5, 1);
-                            myMechDrive.driveForward(.5, 1);
-                            break;
-                        }
-                        case RIGHT: { //mineral right
-                            myMechDrive.strafeRight(3, 1);
-                            myMechDrive.driveForward(.5, 1);
-                            break;
-                        }
-                        case MIDDLE: { // mineral straight
-                            myMechDrive.driveForward(.5, 1);
-                            break;
-                        }
-                    }
-                    movement++;
-                    break;
-                case 3: //Vuphoria  we don't know how to do this part yet
 
+//                    sleep(100 );
+//                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//                    if (angles.firstAngle > .5){
+//                        while (angles.firstAngle > .5){
+//                            myMechDrive.rotateLeft(5, .15);
+//                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//
+//                        }
+//                    }
+//                    else if (angles.firstAngle < -.5) {
+//                        while (angles.firstAngle < -.5){
+//                            myMechDrive.rotateRight(-5, .15);
+//                            angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//
+//                        }
+//                    }
+//                    myMechDrive.stopMotors();
                     movement++;
+                    sleep(500);
                     break;
-
-                case 4: // place team marker / servo arm
-                    myTeamMarker.teamMarkerArmLowered();
-                    sleep(100);
-                    myTeamMarker.teamMarkerArmRaised();
-                    movement++;
-                    break;
-
-                case 5: // park in crater need to look at different pathways that we could take
-
-//                    myMechDrive.TeamMarkerToCrater();
+//                case 2: // move to correct mineral / knock it off
+//                    telemetry.addData("case: ", movement);
+//                    telemetry.update();
+//                    sleep(500);
+//                    switch (goldPosition) {
+//                        case LEFT: { //mineral left
+//                            myMechDrive.strafeLeft(.5, 1);
+//                            myMechDrive.driveForward(.5, 1);
+//                            break;
+//                        }
+//                        case RIGHT: { //mineral right
+//                            myMechDrive.strafeRight(3, 1);
+//                            myMechDrive.driveForward(.5, 1);
+//                            break;
+//                        }
+//                        case MIDDLE: { // mineral straight
+//                            myMechDrive.driveForward(.5, 1);
+//                            break;
+//                        }
+//                    }
 //                    movement++;
 //                    break;
+//                case 3: //Vuphoria  we don't know how to do this part yet
+//
+//                    movement++;
+//                    break;
+//
+//                case 4: // place team marker / servo arm
+//                    myTeamMarker.teamMarkerArmLowered();
+//                    sleep(100);
+//                    myTeamMarker.teamMarkerArmRaised();
+//                    movement++;
+//                    break;
+//
+//                case 5: // park in crater need to look at different pathways that we could take
+//
+////                    myMechDrive.TeamMarkerToCrater();
+////                    movement++;
+////                    break;
 
             }
-            requestOpModeStop();
+
+            idle();
+//            requestOpModeStop();
 
         }
+
     }
 }
