@@ -5,6 +5,7 @@ import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
@@ -13,9 +14,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.mechDriveAuto;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
-
+@Autonomous(name = "Red Crater", group = "Red")
 public class redCrater extends LinearOpMode {
     private int movement = 0;
     MecanumDrive myMechDrive;
@@ -27,7 +28,11 @@ public class redCrater extends LinearOpMode {
     // State used for updating telemetry
     Orientation angles;
     Acceleration gravity;
-    //float heading;
+
+
+    TeamMarker myTeamMarker;
+
+
 
 
 
@@ -72,9 +77,12 @@ public class redCrater extends LinearOpMode {
 
         waitForStart();
 
+        movement = 1;
+        goldPosition = goldPosition.LEFT;
+
         while (opModeIsActive()){
             switch (movement) {
-                case 0: //opmode initial actions
+                case 0: //opmode initial actions and detect Gold Mineral
                     if (detector.getXPosition() < 280) {
                         goldPosition = GoldPosition.LEFT;
                     }
@@ -89,56 +97,66 @@ public class redCrater extends LinearOpMode {
                 case 1: //land robot and adjust robot
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                     gravity = imu.getGravity();
-                    myLiftArm.extend();
+                    //myLiftArm.extend();
                     sleep(100);
-                    myMechDrive.driveStraight(SPD1, 0.5);
-                    myLiftArm.retract();
-                    myMechDriveAuto.runToPosition(1,1, .5 );
+                    myMechDrive.driveForward(.5, 1);
+                    //myLiftArm.retract();
+                    myMechDrive.driveForward(.5, 1 );
                     sleep(100 );
                     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                     if (angles.firstAngle > .5){
                         while (angles.firstAngle > .5){
-                            myMechDriveAuto.powerDrive(5, .15);
+                            myMechDrive.rotateLeft(5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
                         }
                     }
                     else if (angles.firstAngle < -.5) {
                         while (angles.firstAngle < -.5){
-                            myMechDriveAuto.powerDrive(-5, .15);
+                            myMechDrive.rotateRight(-5, .15);
                             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
                         }
                     }
-                    myMechDriveAuto.stopMotors();
+                    myMechDrive.stopMotors();
                     movement++;
                     break;
-                case 2: // move to correct mineral
+                case 2: // move to correct mineral / knock it off
                     switch (goldPosition) {
                         case LEFT: { //mineral left
-                            myMechDriveAuto.runToPosition(3, 3, .5);
-                            myMechDriveAuto.runToPosition(3, 1, .5);
+                            myMechDrive.strafeLeft(.5, 1);
+                            myMechDrive.driveForward(.5, 1);
                             break;
                         }
                         case RIGHT: { //mineral right
-                            myMechDriveAuto.runToPosition(3, 4, .5);
-                            myMechDriveAuto.runToPosition(3, 1, .5);
+                            myMechDrive.strafeRight(3, 1);
+                            myMechDrive.driveForward(.5, 1);
                             break;
                         }
                         case MIDDLE: { // mineral straight
-                            myMechDriveAuto.runToPosition(3, 1, .5);
+                            myMechDrive.driveForward(.5, 1);
                             break;
                         }
                     }
                     movement++;
                     break;
-                case 3: //Vuphoria
+                case 3: //Vuphoria  we don't know how to do this part yet
 
                     movement++;
                     break;
-                case 4: //
+
+                case 4: // place team marker / servo arm
+                    myTeamMarker.teamMarkerArmLowered();
+                    sleep(100);
+                    myTeamMarker.teamMarkerArmRaised();
                     movement++;
                     break;
+
+                case 5: // park in crater need to look at different pathways that we could take
+
+//                    myMechDrive.TeamMarkerToCrater();
+//                    movement++;
+//                    break;
 
             }
             requestOpModeStop();

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.old;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -33,7 +34,7 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.mechDriveAuto;
  */
 
 @Autonomous(name = "Blue - 2", group = "BLUE")
-
+@Disabled
 public class Aut_Blue_2 extends LinearOpMode {
     int movement = 0; //switch variable to determine movementt
 

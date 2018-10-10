@@ -11,11 +11,10 @@ public class MecanumDrive {
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
     public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public static final int TICKS_PER_ROTATION = 375; // TICKS PER ROTATION NEEDED!!!!!!!!!!!!!! :)
+    public static final int TICKS_PER_ROTATION = 375; // TICKS PER ROTATION NEEDED!!!!!!!! :)
 
-
-    public int counts = counts * cpr; // added counts in here
     public int cpr = 538;
+    public int counts;
 
     public LinearOpMode linearOp = null;
 
@@ -42,6 +41,7 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         setMotorRunModes(currentMotorRunMode);
+        counts = counts * cpr; // added counts in here or should it be ticks
 
 
 
@@ -129,7 +129,7 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-        if (rotations < 0 && linearOp.opModeIsActive()) {   // HELP
+        if (rotations > 0 && linearOp.opModeIsActive()) {   // HELP
             while (frontLeftMotor.getCurrentPosition() > ticks) { // HELP
                 frontLeftMotor.setTargetPosition(-counts);
                 frontRightMotor.setTargetPosition(counts);
@@ -153,6 +153,26 @@ public class MecanumDrive {
             }
         }
     }
+
+    public void stopMotors() {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+
+    }
+
+//    public void TeamMarkerToCrater () {
+//
+//        rotateLeft(.5, 2);
+//
+//        while (distanceSensor > 5 ) {  // distance or color sensor needs to be determined
+//            driveForward(.5, 4);
+//        }
+//        driveForward(.5,1);
+//
+//    }
+
 
 
 
