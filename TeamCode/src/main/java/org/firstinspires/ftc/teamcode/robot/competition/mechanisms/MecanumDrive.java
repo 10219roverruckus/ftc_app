@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.competition.mechanisms;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 //Functions for mecanum drive steering for autonomous and teleop
@@ -10,14 +11,27 @@ public class MecanumDrive {
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
     public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public static final int TICKS_PER_ROTATION = 375; // TICKS PER ROTATION NEEDED
+    public static final int TICKS_PER_ROTATION = 375; // TICKS PER ROTATION NEEDED!!!!!!!!!!!!!! :)
 
-    //FL is frontleftMotor
+
+    public int counts = counts * cpr; // added counts in here
+    public int cpr = 538;
+
+    public LinearOpMode linearOp = null;
+
+
+// To stop loop when stop button pressed.
+    public void setLinearOp (LinearOpMode Op) {
+        linearOp = Op;
+    }
+
+
+
     public MecanumDrive(DcMotor FL, DcMotor FR, DcMotor RR, DcMotor RL ) {
-        frontLeftMotor = FL;
-        frontRightMotor = FR;
-        rearRightMotor = RR;
-        rearLeftMotor = RL;
+        frontLeftMotor = FL;      //FL is front left Motor
+        frontRightMotor = FR;     // FR is front Right Motor
+        rearRightMotor = RR;       //RR is back or rear right motor
+        rearLeftMotor = RL;         // RL is back or rear left motor
 
 
         frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -32,7 +46,7 @@ public class MecanumDrive {
 
 
     }
-
+// how do I describe a mode
     public void setMotorRunModes (DcMotor.RunMode mode) {
 
         frontLeftMotor.setMode(mode);
@@ -42,6 +56,7 @@ public class MecanumDrive {
 
     }
 
+    // default speed for all motors
     public void setMotorSpeeds (double speed) {
         frontLeftMotor.setPower(speed);
         frontRightMotor.setPower(speed);
@@ -49,32 +64,97 @@ public class MecanumDrive {
         rearLeftMotor.setPower(speed);
     }
 
-
-    public void driveStraight( double speed, double rotations) {
+    //Driving Forward
+    public void driveForward( double speed, double rotations) {
         int ticks = (int) rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
-        if (rotations < 0 ) { //backwards
+
+        if (rotations < 0 && linearOp.opModeIsActive()) { //backwards
             while (frontLeftMotor.getCurrentPosition() > ticks) {
-                setMotorSpeeds(-speed);
-            }
-        } else if (rotations > 0 ){
-            while (frontLeftMotor.getCurrentPosition() < ticks) {
                 setMotorSpeeds(speed);
             }
-
         }
     }
 
-    public void strafeLeft (double speed, double rotations) {
+     // Driving Backward
+    public void driveBackward ( double speed, double rotations){
+
+        int ticks = (int) rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
-        if ( rotations )
+
+        if (rotations > 0 && linearOp.opModeIsActive()) {
+            while (frontLeftMotor.getCurrentPosition() < ticks) {
+                setMotorSpeeds(-speed);
+            }
+        }
     }
 
-    //strafe RIght #TODO
+    // Strafing left
+    public void strafeLeft (double speed, double rotations) {
+        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(currentMotorRunMode);
 
-    //rotate #TODO
+        if (rotations < 0 && linearOp.opModeIsActive()) {
+            while (frontLeftMotor.getCurrentPosition() > ticks) {
+                frontLeftMotor.setTargetPosition(-counts);
+                frontRightMotor.setTargetPosition(counts);
+                rearLeftMotor.setTargetPosition(counts);
+                rearRightMotor.setTargetPosition(-counts);
+            }
+        }
+    }
+
+    // Strafing Right
+     public void strafeRight (double speed, double rotations) {
+         int ticks = (int) rotations * TICKS_PER_ROTATION;
+         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(currentMotorRunMode);
+
+        if (rotations > 0 && linearOp.opModeIsActive()) {
+            while(frontLeftMotor.getCurrentPosition() < ticks) {
+                frontLeftMotor.setTargetPosition(counts);
+                frontRightMotor.setTargetPosition(-counts);
+                rearLeftMotor.setTargetPosition(-counts);
+                rearRightMotor.setTargetPosition(counts);
+            }
+        }
+    }
+
+    // Rotating counterclockwise
+    public void rotateLeft (double speed, double rotations) {
+        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(currentMotorRunMode);
+
+        if (rotations < 0 && linearOp.opModeIsActive()) {   // HELP
+            while (frontLeftMotor.getCurrentPosition() > ticks) { // HELP
+                frontLeftMotor.setTargetPosition(-counts);
+                frontRightMotor.setTargetPosition(counts);
+                rearLeftMotor.setTargetPosition(-counts);
+                rearRightMotor.setTargetPosition(counts);
+            }
+        }
+    }
+    // rotating clockwise
+    public void rotateRight (double speed, double rotations) {
+        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(currentMotorRunMode);
+
+        if(rotations > 0 && linearOp.opModeIsActive()){ //HELP
+            while (frontLeftMotor.getCurrentPosition() < ticks) { //HELP
+                frontLeftMotor.setTargetPosition(counts);
+                frontRightMotor.setTargetPosition(-counts);
+                rearLeftMotor.setTargetPosition(counts);
+                rearRightMotor.setTargetPosition(-counts);
+            }
+        }
+    }
+
+
 
 
 

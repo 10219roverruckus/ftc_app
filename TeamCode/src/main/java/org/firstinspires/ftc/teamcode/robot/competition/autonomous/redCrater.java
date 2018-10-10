@@ -120,12 +120,12 @@ public class redCrater extends LinearOpMode {
                             myMechDriveAuto.runToPosition(3, 1, .5);
                             break;
                         }
-                        case RIGHT: { //
+                        case RIGHT: { //mineral right
                             myMechDriveAuto.runToPosition(3, 4, .5);
                             myMechDriveAuto.runToPosition(3, 1, .5);
                             break;
                         }
-                        case MIDDLE: {
+                        case MIDDLE: { // mineral straight
                             myMechDriveAuto.runToPosition(3, 1, .5);
                             break;
                         }
