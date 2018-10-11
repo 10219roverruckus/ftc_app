@@ -77,11 +77,13 @@ public class redCrater extends LinearOpMode {
         telemetry.addData("waiting for start", movement);
         telemetry.update();
 
+        myMechDrive.setLinearOp(this);
         waitForStart();
 
-        telemetry.addData("pressed startt", movement);
+        telemetry.addData("pressed start", movement);
         telemetry.update();
 
+        //not use camera yet - DELETE WHEN CAMERA IN PLACE!
         movement = 1;
        // goldPosition = goldPosition.LEFT;
 
@@ -101,8 +103,8 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 1: //land robot and adjust robot
-//                    telemetry.addData("case: ", movement);
-//                    telemetry.update();
+                    telemetry.addData("case START: ", movement);
+                    telemetry.update();
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
