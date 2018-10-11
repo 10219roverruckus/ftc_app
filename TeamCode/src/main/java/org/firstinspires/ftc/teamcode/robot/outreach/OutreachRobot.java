@@ -134,7 +134,7 @@ public class OutreachRobot extends OpMode {
             ledStrip.setPosition(ledPosition);
         }
 
-        //catapult.setPower(-triggerLeft);
+        //catapult.setPower(-triggerLeft);  jkjkjkj
         //catapult.setPower(triggerRight);
         telemetry.addData("Touch Sensor: ", myOutreachTouchSensorCatapult.checkCatapultTouchSensor());
         telemetry.addData("LED Pos VAR: ", ledPosition);
