@@ -103,7 +103,7 @@ public class OutreachRobot extends OpMode {
 
 
 
-        if (gamepad1.y) {
+        if (gamepad1.right_trigger == 1) {
             myCatapultArm.catapultReset(myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
             ledPosition = .43;
