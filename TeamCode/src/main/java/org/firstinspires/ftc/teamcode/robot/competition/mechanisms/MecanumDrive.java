@@ -20,6 +20,7 @@ public class MecanumDrive {
     public LinearOpMode linearOp = null;
 
 
+
 // To stop loop when stop button pressed.
     public void setLinearOp (LinearOpMode Op) {
         linearOp = Op;
@@ -45,6 +46,13 @@ public class MecanumDrive {
         counts = counts * cpr; // added counts in here or should it be ticks
 
 
+
+    }
+    public void stopMotors() {
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
 
     }
 // how do I describe a mode
@@ -84,6 +92,13 @@ public class MecanumDrive {
         frontRightMotor.setPower(speed);
         rearLeftMotor.setPower(-speed);
         rearRightMotor.setPower(speed);
+    }
+
+    public void setMotorSpeedRotateRight(double speed) {
+        frontLeftMotor.setTargetPosition(counts);
+        frontRightMotor.setTargetPosition(-counts);
+        rearLeftMotor.setTargetPosition(counts);
+        rearRightMotor.setTargetPosition(-counts);
     }
 
     public void FORWARDPOWER () {
@@ -129,11 +144,8 @@ public class MecanumDrive {
 
         if (rotations < 0 && linearOp.opModeIsActive()) {
             while (frontLeftMotor.getCurrentPosition() > ticks) {
-
-            }frontLeftMotor.setTargetPosition(-counts);
-            frontRightMotor.setTargetPosition(counts);
-            rearLeftMotor.setTargetPosition(counts);
-            rearRightMotor.setTargetPosition(-counts);
+                setMotorSpeedStrafeLeft(speed);
+            }
         }
     }
 
@@ -147,26 +159,20 @@ public class MecanumDrive {
 
         if (rotations > 0 && linearOp.opModeIsActive()) {
             while(frontLeftMotor.getCurrentPosition() < ticks) {
-                frontLeftMotor.setTargetPosition(counts);
-                frontRightMotor.setTargetPosition(-counts);
-                rearLeftMotor.setTargetPosition(-counts);
-                rearRightMotor.setTargetPosition(counts);
+                setMotorSpeedStrafeLeft(speed);
             }
         }
     }
 
     // Rotating counterclockwise
-    public void rotateLeft (double speed, double rotations) {
+    public void RotateLeft (double speed, double rotations) {
         int ticks = (int) rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
         if (rotations > 0 && linearOp.opModeIsActive()) {   // HELP
             while (frontLeftMotor.getCurrentPosition() > ticks) { // HELP
-                frontLeftMotor.setTargetPosition(-counts);
-                frontRightMotor.setTargetPosition(counts);
-                rearLeftMotor.setTargetPosition(-counts);
-                rearRightMotor.setTargetPosition(counts);
+            setMotorSpeedRotateLeft(speed);
             }
         }
     }
@@ -178,21 +184,12 @@ public class MecanumDrive {
 
         if(rotations > 0 && linearOp.opModeIsActive()){ //HELP
             while (frontLeftMotor.getCurrentPosition() < ticks) { //HELP
-                frontLeftMotor.setTargetPosition(counts);
-                frontRightMotor.setTargetPosition(-counts);
-                rearLeftMotor.setTargetPosition(counts);
-                rearRightMotor.setTargetPosition(-counts);
+            setMotorSpeedRotateRight(speed);
             }
         }
     }
 
-    public void stopMotors() {
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        rearLeftMotor.setPower(0);
-        rearRightMotor.setPower(0);
 
-    }
 
 //    public void TeamMarkerToCrater () {
 //

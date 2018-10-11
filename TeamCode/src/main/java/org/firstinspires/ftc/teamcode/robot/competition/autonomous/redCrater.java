@@ -50,6 +50,13 @@ public class redCrater extends LinearOpMode {
         parametersimu.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         GoldAlignDetector detector;
 
+
+        final double SPD_LOW = .20;
+        final double SPD_MED = .5;
+        final double SPD_HIGH = .75;
+        final double SPD_MAX = 1.0;
+
+
 // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
 // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
 // and named "imu".
@@ -110,7 +117,7 @@ public class redCrater extends LinearOpMode {
 //                    //myLiftArm.extend();
 //                    sleep(100);
 
-                    myMechDrive.driveForward(.5, 1);
+                    myMechDrive.driveForward(SPD_MED, 1);
                     myMechDrive.stopMotors();
                     //myLiftArm.retract();
                     myMechDrive.driveForward(.5, 1 );
