@@ -142,11 +142,11 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-        if (rotations < 0 && linearOp.opModeIsActive()) {
-            while (frontLeftMotor.getCurrentPosition() > ticks) {
+            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
                 setMotorSpeedStrafeLeft(speed);
+
             }
-        }
+            stopMotors();
     }
 
 
@@ -157,11 +157,10 @@ public class MecanumDrive {
          setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-        if (rotations > 0 && linearOp.opModeIsActive()) {
-            while(frontLeftMotor.getCurrentPosition() < ticks) {
+            while(frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
                 setMotorSpeedStrafeLeft(speed);
             }
-        }
+            stopMotors();
     }
 
     // Rotating counterclockwise
@@ -170,11 +169,10 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-        if (rotations > 0 && linearOp.opModeIsActive()) {   // HELP
-            while (frontLeftMotor.getCurrentPosition() > ticks) { // HELP
+            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
             setMotorSpeedRotateLeft(speed);
             }
-        }
+            stopMotors();
     }
     // rotating clockwise
     public void rotateRight (double speed, double rotations) {
@@ -182,11 +180,10 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-        if(rotations > 0 && linearOp.opModeIsActive()){ //HELP
-            while (frontLeftMotor.getCurrentPosition() < ticks) { //HELP
+            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) { //HELP
             setMotorSpeedRotateRight(speed);
             }
-        }
+        stopMotors();
     }
 
 

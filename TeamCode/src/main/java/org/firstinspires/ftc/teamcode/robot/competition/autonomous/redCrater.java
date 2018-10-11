@@ -55,6 +55,7 @@ public class redCrater extends LinearOpMode {
         final double SPD_MED = .5;
         final double SPD_HIGH = .75;
         final double SPD_MAX = 1.0;
+        final long sleepTime = 100;
 
 
 // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -91,7 +92,6 @@ public class redCrater extends LinearOpMode {
         telemetry.update();
 
         //not use camera yet - DELETE WHEN CAMERA IN PLACE!
-        movement = 1;
        // goldPosition = goldPosition.LEFT;
 
 
@@ -116,12 +116,12 @@ public class redCrater extends LinearOpMode {
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
 //                    sleep(100);
-
-                    myMechDrive.driveForward(SPD_MED, 1);
-                    myMechDrive.stopMotors();
+                    myMechDrive.strafeRight(SPD_LOW, 1); //get hook off of hook
+                    myMechDrive.driveForward(SPD_LOW, 1); // move away from the landertoward crater
                     //myLiftArm.retract();
+
                     myMechDrive.driveForward(.5, 1 );
-                    myMechDrive.stopMotors();
+                    myMechDrive.strafeRight(SPD_LOW, 1);
 
 //                    sleep(100 );
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -143,28 +143,36 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     sleep(500);
                     break;
-//                case 2: // move to correct mineral / knock it off
-//                    telemetry.addData("case: ", movement);
-//                    telemetry.update();
-//                    sleep(500);
-//                    switch (goldPosition) {
-//                        case LEFT: { //mineral left
-//                            myMechDrive.strafeLeft(.5, 1);
-//                            myMechDrive.driveForward(.5, 1);
-//                            break;
-//                        }
-//                        case RIGHT: { //mineral right
-//                            myMechDrive.strafeRight(3, 1);
-//                            myMechDrive.driveForward(.5, 1);
-//                            break;
-//                        }
-//                        case MIDDLE: { // mineral straight
-//                            myMechDrive.driveForward(.5, 1);
-//                            break;
-//                        }
-//                    }
-//                    movement++;
-//                    break;
+                case 2: // move to correct mineral / knock it off
+                    telemetry.addData("case START ", movement);
+                    telemetry.update();
+                    sleep(500);
+                    switch (goldPosition) {
+                        case LEFT: { //mineral left
+                            myMechDrive.strafeLeft(SPD_MED, 2);
+                            sleep(sleepTime);
+                            myMechDrive.driveForward(SPD_MED, 2);
+                            sleep(sleepTime);
+                            myMechDrive.driveBackward(SPD_MED, 2);
+                            break;
+                        }
+                        case RIGHT: { //mineral right
+                            myMechDrive.strafeRight(SPD_MED, 2);
+                            sleep(sleepTime);
+                            myMechDrive.driveForward(SPD_MED, 2);
+                            sleep(sleepTime);
+                            myMechDrive.driveBackward(SPD_MED, 2);
+                            break;
+                        }
+                        case MIDDLE: { // mineral straight
+                            myMechDrive.driveForward(SPD_MED, 2);
+                            sleep(sleepTime);
+                            myMechDrive.driveBackward(SPD_MED, 2);
+                            break;
+                        }
+                    }
+                    movement++;
+                    break;
 //                case 3: //Vuphoria  we don't know how to do this part yet
 //
 //                    movement++;
