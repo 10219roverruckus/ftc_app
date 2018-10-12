@@ -120,6 +120,7 @@ public class MecanumDrive {
             while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
                 setMotorSpeeds(speed);
             }
+            stopMotors();
         }
 
 
