@@ -13,7 +13,7 @@ public class liftArm {
 
     public liftArm (DcMotor liftAM) {
         liftArmMotor = liftAM;
-        liftArmMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         extendDuration = 360;

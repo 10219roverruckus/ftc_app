@@ -36,9 +36,9 @@ public class MecanumDrive {
         rearLeftMotor = RL;         // RL is back or rear left motor
 
 
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
         rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -74,44 +74,9 @@ public class MecanumDrive {
         rearLeftMotor.setPower(speed);
     }
 
-    public void setMotorSpeedStrafeLeft(double speed) {
-    frontLeftMotor.setPower(speed);
-    frontRightMotor.setPower(-speed);
-    rearLeftMotor.setPower(-speed);
-    rearRightMotor.setPower(speed);
-    }
-
-    public void setMotorSpeedStrafeRight(double speed) {
-        frontLeftMotor.setPower(-speed);
-        frontRightMotor.setPower(speed);
-        rearLeftMotor.setPower(speed);
-        rearRightMotor.setPower(-speed);
-    }
-
-    public void setMotorSpeedRotateLeft(double speed) {
-        frontLeftMotor.setPower(-speed);
-        frontRightMotor.setPower(speed);
-        rearLeftMotor.setPower(-speed);
-        rearRightMotor.setPower(speed);
-    }
-
-    public void setMotorSpeedRotateRight(double speed) {
-        frontLeftMotor.setTargetPosition(counts);
-        frontRightMotor.setTargetPosition(-counts);
-        rearLeftMotor.setTargetPosition(counts);
-        rearRightMotor.setTargetPosition(-counts);
-    }
-
-    public void FORWARDPOWER () {
-        frontRightMotor.setPower(.5);
-        frontLeftMotor.setPower(.5);
-        rearLeftMotor.setPower(.5);
-        rearRightMotor.setPower(.5);
-
-    }
-
     //Driving Forward
     public void driveForward( double speed, double rotations) {
+
         double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
@@ -127,11 +92,11 @@ public class MecanumDrive {
      // Driving Backward
     public void driveBackward ( double speed, double rotations){
 
-        double ticks = rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * (-1) * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive() ) {
+            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
                 setMotorSpeeds(-speed);
             }
             stopMotors();
@@ -139,13 +104,16 @@ public class MecanumDrive {
 
 
     // Strafing left
-    public void strafeLeft (double speed, double rotations) {
-        double ticks = rotations * TICKS_PER_ROTATION;
+    public void rotateLeft (double speed, double rotations) {
+        double ticks = Math.abs(rotations) * (-1) * TICKS_PER_ROTATION; //strafing left moves encoder towards positive infinity
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
-                setMotorSpeedStrafeLeft(speed);
+            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
+                frontLeftMotor.setPower(-speed);
+                frontRightMotor.setPower(speed);
+                rearLeftMotor.setPower(speed);
+                rearRightMotor.setPower(-speed);
             }
             stopMotors();
     }
@@ -153,36 +121,48 @@ public class MecanumDrive {
 
 
     // Strafing Right
-     public void strafeRight (double speed, double rotations) {
-         double ticks = rotations * TICKS_PER_ROTATION;
+     public void rotateRight (double speed, double rotations) {
+         double ticks = Math.abs(rotations) * TICKS_PER_ROTATION; //strafing right moves encoder towards -infinity
          setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
          setMotorRunModes(currentMotorRunMode);
 
-            while(frontLeftMotor.getCurrentPosition() > Math.abs(ticks) && linearOp.opModeIsActive()) {
-                setMotorSpeedStrafeRight(speed);
+            while(frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
+                linearOp.telemetry.addData("current position", frontLeftMotor.getCurrentPosition());
+                linearOp.telemetry.update();
+
+                frontLeftMotor.setPower(speed);
+                frontRightMotor.setPower(-speed);
+                rearLeftMotor.setPower(-speed);
+                rearRightMotor.setPower(speed);
             }
             stopMotors();
     }
 
     // Rotating counterclockwise
-    public void RotateLeft (double speed, double rotations) {
-        double ticks = rotations * TICKS_PER_ROTATION;
+    public void strafeRight (double speed, double rotations) {
+        double ticks = Math.abs(rotations) * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
-            setMotorSpeedRotateLeft(speed);
+            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
+                frontLeftMotor.setPower(speed);
+                frontRightMotor.setPower(-speed);
+                rearLeftMotor.setPower(speed);
+                rearRightMotor.setPower(-speed);
             }
             stopMotors();
     }
     // rotating clockwise
-    public void rotateRight (double speed, double rotations) {
-        double ticks = rotations * TICKS_PER_ROTATION;
+    public void strafeLeft (double speed, double rotations) {
+        double ticks = Math.abs(rotations) * (-1) *  TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) { //HELP!
-            setMotorSpeedRotateRight(speed);
+            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
+                frontLeftMotor.setPower(-speed);
+                frontRightMotor.setPower(speed);
+                rearLeftMotor.setPower(-speed);
+                rearRightMotor.setPower(speed);
             }
         stopMotors();
     }
