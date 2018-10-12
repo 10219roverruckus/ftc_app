@@ -61,7 +61,7 @@ public class FullControlTeleOp extends OpMode {
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
-        liftArmMotor = hardwareMap.dcMotor.get("lift_arm_motor");
+        liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
 
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

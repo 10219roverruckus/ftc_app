@@ -118,17 +118,17 @@ public class redCrater extends LinearOpMode {
 //                    sleep(100);
                     telemetry.addData("STRAFE RIGHT 1 --", movement);
                     telemetry.update();
-                    myMechDrive.strafeRight(SPD_MED, 1); //get hook off of hook
+                    myMechDrive.strafeRight(SPD_MED, .2); //get hook off of hook
                     telemetry.addData("STRAFE FORWARD 1 --", movement);
                     telemetry.update();
-                    myMechDrive.driveForward(SPD_MED, 1); // move away from the landertoward crater
+                    myMechDrive.driveForward(SPD_MED, .2); // move away from the landertoward crater
                     //myLiftArm.retract();
                     telemetry.addData("STRAFE FORWARD 2 -- ", movement);
                     telemetry.update();
-                    myMechDrive.driveForward(SPD_MED, 1 );
+                    myMechDrive.driveForward(SPD_MED, .2);
                     telemetry.addData("STRAFE RIGHT 2 --", movement);
                     telemetry.update();
-                    myMechDrive.strafeLeft(SPD_MED, 1);
+                    myMechDrive.strafeLeft(SPD_MED, .2);
 
 //                    sleep(100 );
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);

@@ -12,7 +12,7 @@ public class MecanumDrive {
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
     public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
-    public static final int TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
+    public static final double TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
     // http://www.andymark.com/NeveRest-20-12V-Planetary-Gearmotor-p/am-3637.htm
 
     //public int cpr = 538;
@@ -112,7 +112,7 @@ public class MecanumDrive {
 
     //Driving Forward
     public void driveForward( double speed, double rotations) {
-        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
@@ -126,7 +126,7 @@ public class MecanumDrive {
      // Driving Backward
     public void driveBackward ( double speed, double rotations){
 
-        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
@@ -139,7 +139,7 @@ public class MecanumDrive {
 
     // Strafing left
     public void strafeLeft (double speed, double rotations) {
-        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
@@ -154,19 +154,19 @@ public class MecanumDrive {
 
     // Strafing Right
      public void strafeRight (double speed, double rotations) {
-         int ticks = (int) rotations * TICKS_PER_ROTATION;
+         double ticks = rotations * TICKS_PER_ROTATION;
          setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setMotorRunModes(currentMotorRunMode);
+         setMotorRunModes(currentMotorRunMode);
 
             while(frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
-                setMotorSpeedStrafeLeft(speed);
+                setMotorSpeedStrafeRight(speed);
             }
             stopMotors();
     }
 
     // Rotating counterclockwise
     public void RotateLeft (double speed, double rotations) {
-        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
@@ -177,7 +177,7 @@ public class MecanumDrive {
     }
     // rotating clockwise
     public void rotateRight (double speed, double rotations) {
-        int ticks = (int) rotations * TICKS_PER_ROTATION;
+        double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
