@@ -75,17 +75,17 @@ public class MecanumDrive {
     }
 
     public void setMotorSpeedStrafeLeft(double speed) {
-    frontLeftMotor.setPower(-speed);
-    frontRightMotor.setPower(speed);
-    rearLeftMotor.setPower(speed);
-    rearRightMotor.setPower(-speed);
+    frontLeftMotor.setPower(speed);
+    frontRightMotor.setPower(-speed);
+    rearLeftMotor.setPower(-speed);
+    rearRightMotor.setPower(speed);
     }
 
     public void setMotorSpeedStrafeRight(double speed) {
-        frontLeftMotor.setPower(speed);
-        frontRightMotor.setPower(-speed);
-        rearLeftMotor.setPower(-speed);
-        rearRightMotor.setPower(speed);
+        frontLeftMotor.setPower(-speed);
+        frontRightMotor.setPower(speed);
+        rearLeftMotor.setPower(speed);
+        rearRightMotor.setPower(-speed);
     }
 
     public void setMotorSpeedRotateLeft(double speed) {
@@ -144,9 +144,8 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
+            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
                 setMotorSpeedStrafeLeft(speed);
-
             }
             stopMotors();
     }
@@ -159,7 +158,7 @@ public class MecanumDrive {
          setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
          setMotorRunModes(currentMotorRunMode);
 
-            while(frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
+            while(frontLeftMotor.getCurrentPosition() > Math.abs(ticks) && linearOp.opModeIsActive()) {
                 setMotorSpeedStrafeRight(speed);
             }
             stopMotors();
