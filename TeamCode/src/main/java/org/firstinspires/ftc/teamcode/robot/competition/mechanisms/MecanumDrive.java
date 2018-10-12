@@ -181,7 +181,7 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) { //HELP
+            while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) { //HELP!
             setMotorSpeedRotateRight(speed);
             }
         stopMotors();
