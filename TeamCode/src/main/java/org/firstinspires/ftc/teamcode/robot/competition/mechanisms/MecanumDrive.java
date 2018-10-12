@@ -11,10 +11,11 @@ public class MecanumDrive {
     public DcMotor frontRightMotor;
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
-    public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public static final int TICKS_PER_ROTATION = 375; // TICKS PER ROTATION NEEDED!!!!!!!! :)
+    public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+    public static final int TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
+    // http://www.andymark.com/NeveRest-20-12V-Planetary-Gearmotor-p/am-3637.htm
 
-    public int cpr = 538;
+    //public int cpr = 538;
     public int counts;
 
     public LinearOpMode linearOp = null;
@@ -43,7 +44,7 @@ public class MecanumDrive {
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         setMotorRunModes(currentMotorRunMode);
-        counts = counts * cpr; // added counts in here or should it be ticks
+        //counts = counts * cpr; // added counts in here or should it be ticks
 
 
 
