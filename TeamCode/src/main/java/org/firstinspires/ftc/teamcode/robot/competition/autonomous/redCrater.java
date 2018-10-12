@@ -110,27 +110,35 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 1: //land robot and adjust robot
-                    telemetry.addData("case START: ", movement);
+                    telemetry.addLine("case START: ");
                     telemetry.update();
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
 //                    sleep(100);
-                    telemetry.addData("STRAFE RIGHT 1 --", movement);
+                    telemetry.addLine("STRAFE RIGHT 1 --");
+                    telemetry.addData("current position", myMechDrive.frontLeftMotor.getCurrentPosition());
                     telemetry.update();
+                    sleep(1000);
                     myMechDrive.strafeRight(SPD_MED, 1); //get hook off of hook
                     sleep(sleepTime);
-                    telemetry.addData("STRAFE FORWARD 1 --", movement);
+                    telemetry.addLine("STRAFE FORWARD 1 --");
+                    telemetry.addData("current position", myMechDrive.frontLeftMotor.getCurrentPosition());
                     telemetry.update();
+                    sleep(1000);
                     myMechDrive.driveForward(SPD_MED, 1); // move away from the landertoward crater
                     sleep(sleepTime);
                     //myLiftArm.retract();
-                    telemetry.addData("STRAFE FORWARD 2 -- ", movement);
+                    telemetry.addLine("STRAFE FORWARD 2 -- ");
+                    telemetry.addData("current position", myMechDrive.frontLeftMotor.getCurrentPosition());
                     telemetry.update();
+                    sleep(1000);
                     myMechDrive.driveForward(SPD_MED, 1);
                     sleep(sleepTime);
-                    telemetry.addData("STRAFE RIGHT 2 --", movement);
+                    telemetry.addLine("STRAFE RIGHT 2 --");
+                    telemetry.addData("current position", myMechDrive.frontLeftMotor.getCurrentPosition());
                     telemetry.update();
+                    sleep(1000);
                     myMechDrive.strafeLeft(SPD_MED, 1);
                     sleep(sleepTime);
 
