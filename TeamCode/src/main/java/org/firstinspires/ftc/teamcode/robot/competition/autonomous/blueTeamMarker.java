@@ -15,14 +15,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
-@Autonomous(name = "Red Crater", group = "Red")
-public class redCrater extends LinearOpMode {
+
+@Autonomous(name = "Blue team Marker", group = "Blue")
+public class blueTeamMarker extends LinearOpMode {
     private int movement = 0;
+    MecanumDrive myMechDrive;
+    liftArm myLiftArm;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;
 
     //info for gyro
@@ -33,11 +34,7 @@ public class redCrater extends LinearOpMode {
 
 
     TeamMarker myTeamMarker;
-    MecanumDrive myMechDrive;
-    MineralLift myMineralLift;
-    LiftMotor myLiftMotor;
-    IntakeMotor myIntakeMotor;
-    IntakeExtenderArm myIntakeExtenderArm;
+    IntakeExtenderArm myIntakeArm;
 
 
 
@@ -46,7 +43,7 @@ public class redCrater extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
+        myLiftArm = new liftArm(hardwareMap.dcMotor.get("lift_motor"));
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
         parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -124,18 +121,12 @@ public class redCrater extends LinearOpMode {
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
 //                    sleep(100);
-                    telemetry.addData("Strafe Right",movement);
-                    telemetry.update();
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
 //                    //myLiftArm.retract();
-                    telemetry.addData("drive forward",movement);
-                    telemetry.update();
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 1); // move away from the lander toward crater
+                    myMechDrive.driveForward(SPD_DRIVE_MED, 1); // move away from the landertoward crater
                     sleep(sleepTime);
 //                    sleep(1000);
-                    telemetry.addData("Strafe Left",movement);
-                    telemetry.update();
                     myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);
                     sleep(sleepTime);
 
@@ -174,8 +165,10 @@ public class redCrater extends LinearOpMode {
                             sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1.2);
+                            myMechDrive.rotateLeft(SPD_DRIVE_LOW, .2);
+                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+                            myTeamMarker.teamMarkerArmLowered();
+                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
                             break;
                         }
                         case RIGHT: { //mineral right
@@ -187,8 +180,10 @@ public class redCrater extends LinearOpMode {
                             sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.2);
+                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .2);
+                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+                            myTeamMarker.teamMarkerArmLowered();
+                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
                             break;
                         }
                         case MIDDLE: { // mineral straight
@@ -198,8 +193,9 @@ public class redCrater extends LinearOpMode {
                             sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);
+                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+                            myTeamMarker.teamMarkerArmLowered();
+                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
                             break;
                         }
                     }
@@ -208,21 +204,22 @@ public class redCrater extends LinearOpMode {
                     break;
                 case 3: //Vuphoria  we don't know how to do this part yet
                     myMechDrive.rotateLeft(SPD_DRIVE_MED, .3);
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 2.5);
+
                     movement++;
                     break;
 
-                case 4: // place team marker / servo arm
-                    myTeamMarker.teamMarkerArmLowered();
-                    sleep(100);
-                    myTeamMarker.teamMarkerArmRaised();
-                    movement++;
-                    break;
-
-                case 5: // park in crater need to look at different pathways that we could take
-                    myMechDrive.driveBackward(SPD_DRIVE_MED, -3.2);
-                    movement++;
-                    break;
+//                case 4: // place team marker / servo arm
+//                    myTeamMarker.teamMarkerArmLowered();
+//                    sleep(100);
+//                    myTeamMarker.teamMarkerArmRaised();
+//                    movement++;
+//                    break;
+//
+//                case 5: // park in crater need to look at different pathways that we could take
+//
+////                    myMechDrive.TeamMarkerToCrater();
+////                    movement++;
+////                    break;
 
             }
 
