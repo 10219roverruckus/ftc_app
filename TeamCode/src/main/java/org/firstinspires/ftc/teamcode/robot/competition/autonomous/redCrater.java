@@ -55,7 +55,7 @@ public class redCrater extends LinearOpMode {
         final double SPD_MED = .5;
         final double SPD_HIGH = .75;
         final double SPD_MAX = 1.0;
-        final long sleepTime = 100;
+        final long sleepTime = 200;
 
 
 // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -116,22 +116,13 @@ public class redCrater extends LinearOpMode {
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
 //                    sleep(100);
-                    telemetry.addData("STRAFE RIGHT 1 --", movement);
-                    telemetry.update();
-                    myMechDrive.strafeRight(SPD_MED, 1); //get hook off of hook
+                    myMechDrive.strafeRight(SPD_MED,.5);
                     sleep(sleepTime);
-                    telemetry.addData("STRAFE FORWARD 1 --", movement);
-                    telemetry.update();
+//                    //myLiftArm.retract();
                     myMechDrive.driveForward(SPD_MED, 1); // move away from the landertoward crater
                     sleep(sleepTime);
-                    //myLiftArm.retract();
-                    telemetry.addData("STRAFE FORWARD 2 -- ", movement);
-                    telemetry.update();
-                    myMechDrive.driveForward(SPD_MED, 1);
-                    sleep(sleepTime);
-                    telemetry.addData("STRAFE RIGHT 2 --", movement);
-                    telemetry.update();
-                    myMechDrive.strafeLeft(SPD_MED, 1);
+//                    sleep(1000);
+                    myMechDrive.strafeLeft(SPD_MED, .5);
                     sleep(sleepTime);
 
 //                    sleep(100 );
@@ -151,37 +142,45 @@ public class redCrater extends LinearOpMode {
 //                        }
 //                    }
 //                    myMechDrive.stopMotors();
-                    movement = 3;
-                    sleep(500);
+                    telemetry.addData("done with case: ", movement);
+                    movement = 2;
+                    sleep(1000);
                     break;
                 case 2: // move to correct mineral / knock it off
                     telemetry.addData("case START ", movement);
                     telemetry.update();
-                    sleep(500);
+                    sleep(1000);
                     switch (goldPosition) {
                         case LEFT: { //mineral left
+                            telemetry.addLine("Left");
+                            telemetry.update();
                             myMechDrive.strafeLeft(SPD_MED, 2);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_MED, 2);
+                            myMechDrive.driveForward(SPD_MED, 1);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_MED, 2);
+                            myMechDrive.driveBackward(SPD_MED, 1);
                             break;
                         }
                         case RIGHT: { //mineral right
+                            telemetry.addLine("Right");
+                            telemetry.update();
                             myMechDrive.strafeRight(SPD_MED, 2);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_MED, 2);
+                            myMechDrive.driveForward(SPD_MED, 1);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_MED, 2);
+                            myMechDrive.driveBackward(SPD_MED, 1);
                             break;
                         }
                         case MIDDLE: { // mineral straight
-                            myMechDrive.driveForward(SPD_MED, 2);
+                            telemetry.addLine("Middle");
+                            telemetry.update();
+                            myMechDrive.driveForward(SPD_MED, 1);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_MED, 2);
+                            myMechDrive.driveBackward(SPD_MED, 1);
                             break;
                         }
                     }
+                    sleep(2000);
                     movement++;
                     break;
 //                case 3: //Vuphoria  we don't know how to do this part yet
