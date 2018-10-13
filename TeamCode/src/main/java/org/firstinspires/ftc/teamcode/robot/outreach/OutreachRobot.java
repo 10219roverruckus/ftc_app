@@ -40,6 +40,7 @@ public class OutreachRobot extends OpMode {
     double minLedPosition = 0.2525;
     double maxLedPosition = 0.7475;
     double ledPosition = minLedPosition;
+    double ledIncrementValue = 0.0001;
 
     Servo ledStrip;
 
@@ -61,18 +62,22 @@ public class OutreachRobot extends OpMode {
     @Override
     public void loop() {
 
-        if (gamepad1.left_trigger > 0 || gamepad1.right_trigger > 0) {
-            ledPosition = ledPosition - (gamepad1.left_trigger/1000);
-            ledPosition = ledPosition + (gamepad1.right_trigger/1000);
+        if (gamepad1.right_bumper) {
+            ledPosition = ledPosition + ledIncrementValue;
             ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
         }
 
         if (gamepad1.left_bumper) {
-            ledPosition = minLedPosition;
+            ledPosition = ledPosition - ledIncrementValue;
+            ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
         }
-        if (gamepad1.right_bumper) {
-            ledPosition = maxLedPosition;
-        }
+
+//        if (gamepad1.left_bumper) {
+//            ledPosition = minLedPosition;
+//        }
+//        if (gamepad1.right_bumper) {
+//            ledPosition = maxLedPosition;
+//        }
 
 //        if (bumperAllow == true && (gamepad1.left_bumper == true || gamepad1.right_bumper == true)) {
 //            if (gamepad1.left_bumper) {
@@ -115,17 +120,17 @@ public class OutreachRobot extends OpMode {
             myCatapultArm.motorPowerZero();
         }
 
-        if (gamepad1.a) {
+        if (gamepad1.left_trigger == 1) {
             myCatapultArm.catapultReset(myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
         }
 
-        if (gamepad1.x) {
+        if (gamepad1.a) {
             myCatapultArm.catapultMotorManualOperation(.3, 0, myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
         }
 
-        if (gamepad1.b) {
+        if (gamepad1.y) {
             myCatapultArm.catapultMotorManualOperation(0, .6, myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
         }
