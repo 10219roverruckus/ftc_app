@@ -133,7 +133,7 @@ public class redCrater extends LinearOpMode {
                     myLiftMotor.retractLiftMotorFully();
                     telemetry.addData("drive forward",movement);
                     telemetry.update();
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 1); // move away from the lander toward crater
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .6); // move away from the lander toward crater
                     sleep(sleepTime);
 //                    sleep(1000);
                     telemetry.addData("Strafe Left",movement);
@@ -172,12 +172,12 @@ public class redCrater extends LinearOpMode {
                             telemetry.update();
                             myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.2);
                             sleep(100);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, .2);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .7);
                             sleep(100);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, .4);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, .5);
                             sleep(100);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .7);
+                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .8);
                             sleep(100);
                             break;
                         }
@@ -210,9 +210,15 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 3: //Vuphoria  we don't know how to do this part yet
-                    myMechDrive.driveForward(SPD_DRIVE_MED, .7);
-                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 2.5);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .9);
+                    sleep(100);
+                    myMechDrive.rotateLeft(SPD_DRIVE_MED,.10);
+                    sleep(100);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .75);
+                    sleep(100);
+                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .06);
+                    sleep(100);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, 2.3);
                     movement++;
                     break;
 

@@ -33,8 +33,8 @@ public class FullControlTeleOp extends OpMode {
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
     DcMotor liftArmMotor;
-
-    Servo teamMarkerArm;
+//
+//    Servo teamMarkerArm;
     Servo intakeExtenderArm;
 
     double leftStickVal;
@@ -86,8 +86,8 @@ public class FullControlTeleOp extends OpMode {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
-        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
+//        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
+//        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
 
         // need to initilize sensors here
 
@@ -102,7 +102,7 @@ public class FullControlTeleOp extends OpMode {
     @Override
     public void start () {
         //SET LIFT MOTOR TO RETRACTED STATE
-        myLiftMotor.retractLiftMotorFully();
+//        myLiftMotor.retractLiftMotorFully();
         // SET INTAKE ARM TO RETRACTED STATE
 //        myIntakeExtenderArm.retractingIntakeArm(SPD_ARM_MED, 1);
     }
