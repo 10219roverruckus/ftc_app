@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.boardArm;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.colorSensorArm;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.glyphArms;
@@ -32,6 +34,9 @@ public class FullControlTeleOp extends OpMode {
     DcMotor rearRightMotor;
     DcMotor liftArmMotor;
 
+    Servo teamMarkerArm;
+    Servo intakeExtenderArm;
+
     double leftStickVal;
     double rightStickVal;
 
@@ -45,13 +50,24 @@ public class FullControlTeleOp extends OpMode {
 
     double rightJoystick_lift;
 
+    double intakeExtensionPower;
+    double intakePositionPower;
+
     boolean reverseMode;
 
     boolean initServos;
 
     double powerThreshold = 0.1;
 
+    LiftMotor myLiftMotor;
+    IntakeExtenderArm myIntakeExtenderArm;
 
+    final double SPD_DRIVE_LOW = .20;     //Lowest speed
+    final double SPD_DRIVE_MED = .5;      //Default is  SPD_MED
+    final double SPD_DRIVE_HIGH = .75;
+    final double SPD_DRIVE_MAX = 1.0;
+    final double SPD_ARM_MED = .5;
+    final long sleepTime = 200;
 
 
     @Override
@@ -68,41 +84,83 @@ public class FullControlTeleOp extends OpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
+        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
+
+        // need to initilize sensors here
 
         reverseMode = false;
 
         initServos = false;
     }
+
+
+    //Code runs only ONCE when driver hits PLAY
+
     @Override
+    public void start () {
+        //SET LIFT MOTOR TO RETRACTED STATE
+        myLiftMotor.retractLiftMotorFully();
+        // SET INTAKE ARM TO RETRACTED STATE
+//        myIntakeExtenderArm.retractingIntakeArm(SPD_ARM_MED, 1);
+    }
+
+    @Override
+
     public void loop() {
 
-
-        if (!initServos) {
-            initServos = true;
-        }
-
-        if (gamepad1.dpad_up) {
-            reverseMode = false;
+        if (gamepad1.dpad_up) {    //see if the controller is in reverse mode or not (if joysticks are pressed down or not)
+            reverseMode = false; // forward mode
         }
 
         else if (gamepad1.dpad_down) {
-            reverseMode = true;
+            reverseMode = true;    //reverse mode
         }
 
+        drive();
 
-
-        rightJoystick_lift = gamepad2.right_stick_y;
+        rightJoystick_lift = gamepad2.right_stick_y;    //assigns liftto right stick y
 
         if (rightJoystick_lift < -.2 || rightJoystick_lift > .2) {
             liftArmMotor.setPower(rightJoystick_lift);
         }
         else {
-            liftArmMotor.setPower(0);
+            liftArmMotor.setPower(0);   //if right joystick is within the two values then the power is 0
         }
 
+        // intake system
+        intakeExtensionPower = gamepad2.right_stick_y;      // WIP
+        intakePositionPower = gamepad2.left_stick_y;
 
+
+
+
+
+
+
+
+
+
+        //MOTOR FOR LIFT
+
+        // Telemetry
+
+        //telemetry.addData("val", "L stck: " + leftStickVal);
+        //telemetry.addData("val", "R stck: " + rightStickVal);
+        //telemetry.addData("val", "L trgr: " + leftTriggerVal);
+        //telemetry.addData("val", "R trgr: " + rightTriggerVal);
+
+        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+
+        telemetry.update();
+    }
+
+    public void drive () {
         leftStickVal = -gamepad1.left_stick_y;
         leftStickVal = Range.clip(leftStickVal, -1, 1);
         rightStickVal = -gamepad1.right_stick_y;
@@ -185,22 +243,5 @@ public class FullControlTeleOp extends OpMode {
                 rearRightMotor.setPower(rearRightSpeed);
             }
         }
-
-
-        //MOTOR FOR LIFT
-
-        // Telemetry
-
-        //telemetry.addData("val", "L stck: " + leftStickVal);
-        //telemetry.addData("val", "R stck: " + rightStickVal);
-        //telemetry.addData("val", "L trgr: " + leftTriggerVal);
-        //telemetry.addData("val", "R trgr: " + rightTriggerVal);
-
-        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
-        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
-        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
-        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
-
-        telemetry.update();
     }
 }

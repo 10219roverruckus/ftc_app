@@ -52,4 +52,15 @@ public class LiftMotor {
     public void retractingLiftMotor(double speed, double rotations) {
         liftMotor.setMode(currentRunMode);
     }
+
+
+    //function that fully extends arm using distance sensor
+    public void extendLiftMotorFully () {
+
+    }
+
+    //function that fully retracts arm using distance sensor.
+    public void retractLiftMotorFully() {
+
+    }
 }

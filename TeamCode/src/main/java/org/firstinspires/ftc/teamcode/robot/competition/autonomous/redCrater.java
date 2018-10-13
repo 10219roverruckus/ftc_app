@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
@@ -38,6 +39,7 @@ public class redCrater extends LinearOpMode {
     LiftMotor myLiftMotor;
     IntakeMotor myIntakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
+    IntakeRotator myIntakeRotator;
 
 
 
@@ -120,15 +122,15 @@ public class redCrater extends LinearOpMode {
                 case 1: //land robot and adjust robot and get robot away from the lander, so it can collect minerals
                     telemetry.addData("case START: ", movement);
                     telemetry.update();
-//                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//                    gravity = imu.getGravity();
-//                    //myLiftArm.extend();
-//                    sleep(100);
+//                  angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//                  gravity = imu.getGravity();
+                    myLiftMotor.extendLiftMotorFully();
+//                  sleep(100);
                     telemetry.addData("Strafe Right",movement);
                     telemetry.update();
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
-//                    //myLiftArm.retract();
+                    myLiftMotor.retractLiftMotorFully();
                     telemetry.addData("drive forward",movement);
                     telemetry.update();
                     myMechDrive.driveForward(SPD_DRIVE_MED, 1); // move away from the lander toward crater
@@ -155,37 +157,38 @@ public class redCrater extends LinearOpMode {
 //
 //                        }
 //                    }
-//                    myMechDrive.stopMotors();
+                    myMechDrive.stopMotors();
                     telemetry.addData("done with case: ", movement);
                     movement = 2;  // increments to case 2
-                    sleep(1000);
+                    sleep(100);
                     break;
                 case 2:           // move to correct mineral / knock it off
                     telemetry.addData("case START ", movement);
                     telemetry.update();
-                    sleep(1000);
+                    sleep(100);
                     switch (goldPosition) {
                         case LEFT: { //mineral left
                             telemetry.addLine("Left");
                             telemetry.update();
-                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 2);
-                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
-                            sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.2);
+                            sleep(100);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .2);
+                            sleep(100);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, .4);
+                            sleep(100);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1.2);
+                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .7);
+                            sleep(100);
                             break;
                         }
                         case RIGHT: { //mineral right
                             telemetry.addLine("Right");
                             telemetry.update();
-                            myMechDrive.strafeRight(SPD_DRIVE_MED, 2);
+                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.2);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .2);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, .4);
 
                             myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
                             myMechDrive.driveForward(SPD_DRIVE_MED, 2.2);
@@ -203,19 +206,20 @@ public class redCrater extends LinearOpMode {
                             break;
                         }
                     }
-                    sleep(2000);
+                    sleep(100);
                     movement++;
                     break;
                 case 3: //Vuphoria  we don't know how to do this part yet
-                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .3);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .7);
+                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);
                     myMechDrive.driveForward(SPD_DRIVE_MED, 2.5);
                     movement++;
                     break;
 
                 case 4: // place team marker / servo arm
-                    myTeamMarker.teamMarkerArmLowered();
-                    sleep(100);
-                    myTeamMarker.teamMarkerArmRaised();
+//                    myTeamMarker.teamMarkerArmLowered();
+//                    sleep(100);
+//                    myTeamMarker.teamMarkerArmRaised();
                     movement++;
                     break;
 
