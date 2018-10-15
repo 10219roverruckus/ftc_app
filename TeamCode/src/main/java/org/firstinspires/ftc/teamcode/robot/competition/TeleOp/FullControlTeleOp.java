@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.boardArm;
@@ -59,6 +62,13 @@ public class FullControlTeleOp extends OpMode {
 
     double powerThreshold = 0.1;
 
+    double topHeight = 8.3;
+    double lowHeight = 3.6;
+    boolean liftSensorOverride = false;
+
+
+    private DistanceSensor liftDistanceSensor;
+
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
 
@@ -78,6 +88,7 @@ public class FullControlTeleOp extends OpMode {
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
         liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
+        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
 
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -85,6 +96,7 @@ public class FullControlTeleOp extends OpMode {
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
 //        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
 //        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
@@ -121,43 +133,70 @@ public class FullControlTeleOp extends OpMode {
 
         drive();
 
-        rightJoystick_lift = gamepad2.right_stick_y;    //assigns liftto right stick y
 
-        if (rightJoystick_lift < -.2 || rightJoystick_lift > .2) {
+        //MOTOR FOR LIFT
+
+        rightJoystick_lift = gamepad2.right_stick_y;    //assigns lift to right stick y
+
+        if (rightJoystick_lift < -.2 && gamepad2.dpad_down) {
             liftArmMotor.setPower(rightJoystick_lift);
         }
         else {
             liftArmMotor.setPower(0);   //if right joystick is within the two values then the power is 0
         }
 
+        if (rightJoystick_lift > -.2 && gamepad2.dpad_down) {
+            liftArmMotor.setPower(rightJoystick_lift);
+        }
+        else {
+            liftArmMotor.setPower(0);
+        }
+
+
+        if (rightJoystick_lift < -.2 && lowHeight < liftDistanceSensor.getDistance(DistanceUnit.INCH) ) {
+            liftArmMotor.setPower(rightJoystick_lift);
+        }
+        else {
+            liftArmMotor.setPower(0);   //if right joystick is within the two values then the power is 0
+        }
+
+        if (rightJoystick_lift > -.2 && topHeight > liftDistanceSensor.getDistance(DistanceUnit.INCH) ) {
+            liftArmMotor.setPower(rightJoystick_lift);
+        }
+        else {
+            liftArmMotor.setPower(0);
+        }
+
+
+
         // intake system
         intakeExtensionPower = gamepad2.right_stick_y;      // WIP
         intakePositionPower = gamepad2.left_stick_y;
 
+        telemetryOutput();
 
 
 
 
+    }
 
+    public void telemetryOutput (){
 
+//        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+//        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+//        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+//        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+//        telemetry.update();
 
-
-
-        //MOTOR FOR LIFT
-
-        // Telemetry
-
-        //telemetry.addData("val", "L stck: " + leftStickVal);
-        //telemetry.addData("val", "R stck: " + rightStickVal);
-        //telemetry.addData("val", "L trgr: " + leftTriggerVal);
-        //telemetry.addData("val", "R trgr: " + rightTriggerVal);
-
-        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
-        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
-        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
-        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+        // generic DistanceSensor methods.
+        telemetry.addData("deviceName",liftDistanceSensor.getDeviceName() );
+        telemetry.addData("range", String.format("%.01f mm", liftDistanceSensor.getDistance(DistanceUnit.MM)));
+        telemetry.addData("range", String.format("%.01f cm", liftDistanceSensor.getDistance(DistanceUnit.CM)));
+        telemetry.addData("range", String.format("%.01f m", liftDistanceSensor.getDistance(DistanceUnit.METER)));
+        telemetry.addData("range", String.format("%.01f in", liftDistanceSensor.getDistance(DistanceUnit.INCH)));
 
         telemetry.update();
+
     }
 
     public void drive () {
