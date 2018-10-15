@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
@@ -62,8 +63,8 @@ public class FullControlTeleOp extends OpMode {
 
     double powerThreshold = 0.1;
 
-    double topHeight = 8.3;
-    double lowHeight = 3.6;
+    double topHeight = 8.4;
+    double lowHeight = 3.0;
     boolean liftSensorOverride = false;
 
 
@@ -136,37 +137,32 @@ public class FullControlTeleOp extends OpMode {
 
         //MOTOR FOR LIFT
 
+
         rightJoystick_lift = gamepad2.right_stick_y;    //assigns lift to right stick y
 
-        if (rightJoystick_lift < -.2 && gamepad2.dpad_down) {
-            liftArmMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            liftArmMotor.setPower(0);   //if right joystick is within the two values then the power is 0
-        }
 
-        if (rightJoystick_lift > -.2 && gamepad2.dpad_down) {
-            liftArmMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            liftArmMotor.setPower(0);
-        }
+        if (gamepad2.dpad_down) { //override distance sensor for lif
 
+            if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+                liftArmMotor.setPower(rightJoystick_lift);
+            }
+            else {
+                liftArmMotor.setPower(0);
+            }
+        }
+        else { // lift with distance sensor
 
-        if (rightJoystick_lift < -.2 && lowHeight < liftDistanceSensor.getDistance(DistanceUnit.INCH) ) {
-            liftArmMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            liftArmMotor.setPower(0);   //if right joystick is within the two values then the power is 0
-        }
+            if (lowHeight <= liftDistanceSensor.getDistance(DistanceUnit.INCH) && topHeight >= liftDistanceSensor.getDistance(DistanceUnit.INCH)) {
 
-        if (rightJoystick_lift > -.2 && topHeight > liftDistanceSensor.getDistance(DistanceUnit.INCH) ) {
-            liftArmMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            liftArmMotor.setPower(0);
-        }
+                if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+                    liftArmMotor.setPower(rightJoystick_lift);
+                }
+                else {
+                    liftArmMotor.setPower(0);
+                }
 
+            }
+        }
 
 
         // intake system
