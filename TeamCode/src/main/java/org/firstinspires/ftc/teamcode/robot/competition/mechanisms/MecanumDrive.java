@@ -74,6 +74,20 @@ public class MecanumDrive {
         rearLeftMotor.setPower(speed);
     }
 
+    public void setMotorPowerStrafeRight (double power) {
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(-power);
+        rearLeftMotor.setPower(power);
+        rearRightMotor.setPower(-power);
+    }
+
+    public void setMotorPowerStrafeLeft (double power) {
+        frontLeftMotor.setPower(-power);
+        frontRightMotor.setPower(power);
+        rearLeftMotor.setPower(-power);
+        rearRightMotor.setPower(power);
+    }
+
     //Driving Forward
     public void driveForward( double speed, double rotations) {
 
