@@ -143,6 +143,7 @@ public class redCrater extends LinearOpMode {
                     myMechDrive.strafeLeft(SPD_DRIVE_MED, .8);
                     sleep(sleepTime);
 
+                    // moving off lander
 //                    sleep(100 );
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //                    if (angles.firstAngle > .5){
