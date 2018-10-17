@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMa
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 @Autonomous(name = "Red Crater", group = "Red")
 public class redCrater extends LinearOpMode {
-    private int movement = 0;
+    private int movement = 6;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;
 
     //info for gyro
@@ -49,6 +49,7 @@ public class redCrater extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
+        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
         parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -187,25 +188,26 @@ public class redCrater extends LinearOpMode {
                         case RIGHT: { //mineral right
                             telemetry.addLine("Right");
                             telemetry.update();
-                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.2);
+                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.4);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, .2);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, .4);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
+                            sleep(sleepTime);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.2);
+                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.2);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 2);
                             break;
                         }
                         case MIDDLE: { // mineral straight
                             telemetry.addLine("Middle");
                             telemetry.update();
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);
+                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.2);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
                             break;
                         }
                     }
@@ -247,6 +249,13 @@ public class redCrater extends LinearOpMode {
                 case 5: // park in crater need to look at different pathways that we could take
                     myMechDrive.driveBackward(SPD_DRIVE_MED, -3.2);
                     movement++;
+                    break;
+
+                case 6: //testing servo arm
+                    myTeamMarker.teamMarkerArmLowered();
+                    sleep(100);
+                    myTeamMarker.teamMarkerArmRaised();
+            //        movement++;
                     break;
 
             }

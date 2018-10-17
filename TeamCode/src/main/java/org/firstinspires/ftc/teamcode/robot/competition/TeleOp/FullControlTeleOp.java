@@ -37,6 +37,8 @@ public class FullControlTeleOp extends OpMode {
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
     DcMotor liftArmMotor;
+    DcMotor intakePositionMotor;
+    DcMotor intakeMotor;
 //
 //    Servo teamMarkerArm;
     Servo intakeExtenderArm;
@@ -90,6 +92,8 @@ public class FullControlTeleOp extends OpMode {
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
         liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
         liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
+        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
+        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
 
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -98,6 +102,7 @@ public class FullControlTeleOp extends OpMode {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakePositionMotor.setDirection(DcMotorSimple.Direction.REVERSE                                                                                      );
 
 //        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
 //        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
@@ -142,6 +147,7 @@ public class FullControlTeleOp extends OpMode {
 
 
         if (gamepad2.dpad_down) { //override distance sensor for lif
+            telemetry.addData("rightJoystick_lift-if", rightJoystick_lift);
 
             if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
                 liftArmMotor.setPower(rightJoystick_lift);
@@ -153,7 +159,7 @@ public class FullControlTeleOp extends OpMode {
         else { // lift with distance sensor
 
             if (lowHeight <= liftDistanceSensor.getDistance(DistanceUnit.INCH) && topHeight >= liftDistanceSensor.getDistance(DistanceUnit.INCH)) {
-
+                rightJoystick_lift = gamepad2.right_stick_y;
                 if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
                     liftArmMotor.setPower(rightJoystick_lift);
                 }
@@ -165,11 +171,32 @@ public class FullControlTeleOp extends OpMode {
         }
 
 
-        // intake system
-        intakeExtensionPower = gamepad2.right_stick_y;      // WIP
+//        intake system
+//        intakeExtensionPower = gamepad2.right_stick_y;      // WIP
         intakePositionPower = gamepad2.left_stick_y;
 
-        telemetryOutput();
+        if ( gamepad2.left_stick_y < -.1 || gamepad2.left_stick_y > .1) {
+            intakePositionMotor.setPower(intakePositionPower);
+        }
+        else {
+            intakePositionMotor.setPower(0);
+        }
+
+
+        if (gamepad2.right_trigger > .9 ) {
+            intakeMotor.setPower(1);
+        }
+
+        else if (gamepad2.left_trigger > .9) {
+            intakeMotor.setPower(-1);
+        }
+        else {
+            intakeMotor.setPower(0);
+        }
+
+
+
+     //   telemetryOutput();
 
 
 

@@ -56,7 +56,7 @@ public class redTeamMarker extends LinearOpMode {
 
         // created constant variables that are used for speed (different setting)
         final double SPD_DRIVE_LOW = .20;     //Lowest speed
-        final double SPD_DRIVE_MED = .5;      //Default is  SPD_MED
+        final double SPD_DRIVE_MED = .4;      //Default is  SPD_MED
         final double SPD_DRIVE_HIGH = .75;
         final double SPD_DRIVE_MAX = 1.0;
         final double SPD_ARM_MED = .5;
@@ -159,43 +159,66 @@ public class redTeamMarker extends LinearOpMode {
                         case LEFT: { //mineral left
                             telemetry.addLine("Left");
                             telemetry.update();
-                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 2);
+                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.4);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+//                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55); //Not needed
 
-                            myMechDrive.rotateLeft(SPD_DRIVE_LOW, .2);
-                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
+                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .3);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,1);
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,.3);
+
+//                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
+                            // myIntakeArm.retractingIntakeArm (SPD_ARM_MED, 1);
                             myTeamMarker.teamMarkerArmLowered();
-                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED,-1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,1);
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,.8); //rotate .8
+                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
+                            sleep(1000);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
                         case RIGHT: { //mineral right
                             telemetry.addLine("Right");
                             telemetry.update();
-                            myMechDrive.strafeRight(SPD_DRIVE_MED, 2);
+                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.2);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+//                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55); // can remove
 
-                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .2);
-                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+                            myMechDrive.rotateLeft(SPD_DRIVE_LOW, .3);
+//                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+//                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,1);
+
                             myTeamMarker.teamMarkerArmLowered();
-                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.rotateRight(SPD_DRIVE_MED, 1);
+                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
+                            sleep(1000);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
                         case MIDDLE: { // mineral straight
                             telemetry.addLine("Middle");
                             telemetry.update();
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.5);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
 
-                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
+//                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
+//                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,.5);
                             myTeamMarker.teamMarkerArmLowered();
-                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.rotateRight(SPD_DRIVE_MED, .9);
+                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
+                            sleep(1000);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
                     }
@@ -203,7 +226,6 @@ public class redTeamMarker extends LinearOpMode {
                     movement++;
                     break;
                 case 3: //Vuphoria  we don't know how to do this part yet
-                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .3);
 
                     movement++;
                     break;

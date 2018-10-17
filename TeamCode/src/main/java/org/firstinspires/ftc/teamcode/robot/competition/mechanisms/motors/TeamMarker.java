@@ -5,13 +5,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class TeamMarker {
 
     // instance variables
-    private Servo teamMarkerArm; // actually the arm
-    private double tMArmRaised = 1; // arm raised position
-    private double tMArmLowered = 0; // arm lowered position
+    public Servo teamMarkerArm; // actually the arm
+    public double tMArmRaised = 1; // arm raised position
+    public double tMArmLowered = 0; // arm lowered position
 
 
     // constructors
     public TeamMarker(Servo tMarkArm) {
+
         teamMarkerArm = tMarkArm;
     }
 
