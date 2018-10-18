@@ -36,7 +36,7 @@ public class LiftMotor {
         setLiftMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setLiftMotorRunModes(currentRunMode);
     }
-
+//seting motors
 
 
     // methods
