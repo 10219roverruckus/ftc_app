@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
-@Autonomous(name = "Red Team Marker", group = "Red")
+@Autonomous(name = "Team Marker Both", group = "Red - Blue")
 public class redTeamMarker extends LinearOpMode {
     private int movement = 0;
     MecanumDrive myMechDrive;
@@ -44,6 +44,7 @@ public class redTeamMarker extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myLiftArm = new liftArm(hardwareMap.dcMotor.get("lift_motor"));
+        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
         parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -91,6 +92,9 @@ public class redTeamMarker extends LinearOpMode {
         telemetry.update();
 
         myMechDrive.setLinearOp(this);
+
+        myTeamMarker.teamMarkerArmRaised();
+
         waitForStart();
 
         telemetry.addData("pressed start", movement);
@@ -112,6 +116,7 @@ public class redTeamMarker extends LinearOpMode {
                     else {
                         goldPosition = GoldPosition.MIDDLE;
                     }
+                    goldPosition = GoldPosition.LEFT;
                     movement++;   // Increments to next space
                     break;
                 case 1: //land robot and adjust robot and get robot away from the lander, so it can collect minerals
@@ -124,10 +129,9 @@ public class redTeamMarker extends LinearOpMode {
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
 //                    //myLiftArm.retract();
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 1); // move away from the landertoward crater
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .6); // move away from the landertoward crater
                     sleep(sleepTime);
-//                    sleep(1000);
-                    myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);
+                    myMechDrive.strafeLeft(SPD_DRIVE_MED, .6); // go a little extra because offset hook
                     sleep(sleepTime);
 
 //                    sleep(100 );
@@ -148,8 +152,7 @@ public class redTeamMarker extends LinearOpMode {
 //                    }
 //                    myMechDrive.stopMotors();
                     telemetry.addData("done with case: ", movement);
-                    movement = 2;  // increments to case 2
-                    sleep(1000);
+                    movement ++;  // increments to case 2
                     break;
                 case 2:           // move to correct mineral / knock it off
                     telemetry.addData("case START ", movement);
@@ -159,24 +162,26 @@ public class redTeamMarker extends LinearOpMode {
                         case LEFT: { //mineral left
                             telemetry.addLine("Left");
                             telemetry.update();
-                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.4);
+                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.5);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.0);
                             sleep(sleepTime);
-//                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55); //Not needed
-
-                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .3);
-                            myMechDrive.driveForward(SPD_DRIVE_MED,1);
-                            myMechDrive.rotateRight(SPD_DRIVE_MED,.3);
-
-//                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
-                            // myIntakeArm.retractingIntakeArm (SPD_ARM_MED, 1);
-                            myTeamMarker.teamMarkerArmLowered();
-                            myMechDrive.driveForward(SPD_DRIVE_MED,1);
-                            myMechDrive.rotateRight(SPD_DRIVE_MED,.8); //rotate .8
+                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .9);
+                            sleep(sleepTime);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,2);
+                            sleep(sleepTime);
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,.2);
+                              myTeamMarker.teamMarkerArmOutside();
+                              sleep(1000);
+                            myTeamMarker.teamMarkerArmRaised();
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1.5);
+                            sleep(sleepTime);
                             myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
-                            sleep(1000);
-                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
+                            sleep(2000);
+                            myMechDrive.stopMotors();
+                            sleep(sleepTime);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 3);
+                            sleep(sleepTime);
                             break;
                         }
                         case RIGHT: { //mineral right
@@ -194,8 +199,10 @@ public class redTeamMarker extends LinearOpMode {
 
                             myMechDrive.driveForward(SPD_DRIVE_MED, 1);
                             myMechDrive.rotateRight(SPD_DRIVE_MED,1);
-
-                            myTeamMarker.teamMarkerArmLowered();
+//
+                            myTeamMarker.teamMarkerArmOutside();
+                            sleep(1000);
+                            myTeamMarker.teamMarkerArmRaised();
 
                             myMechDrive.rotateRight(SPD_DRIVE_MED, 1);
                             myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
@@ -213,7 +220,10 @@ public class redTeamMarker extends LinearOpMode {
 //                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
 
                             myMechDrive.rotateRight(SPD_DRIVE_MED,.5);
-                            myTeamMarker.teamMarkerArmLowered();
+
+                            myTeamMarker.teamMarkerArmOutside();
+                            sleep(1000);
+                            myTeamMarker.teamMarkerArmRaised();
 
                             myMechDrive.rotateRight(SPD_DRIVE_MED, .9);
                             myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);

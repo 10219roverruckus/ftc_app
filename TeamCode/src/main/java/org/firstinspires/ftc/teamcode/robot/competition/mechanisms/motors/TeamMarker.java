@@ -6,8 +6,9 @@ public class TeamMarker {
 
     // instance variables
     public Servo teamMarkerArm; // actually the arm
-    public double tMArmRaised = 1; // arm raised position
-    public double tMArmLowered = 0; // arm lowered position
+    public double tMArmRaised = .46; // arm raised position
+    public double tMArmOutside = .9 ; // arm lowered position
+    public double tMArmInside = 0;
 
 
     // constructors
@@ -22,9 +23,15 @@ public class TeamMarker {
         teamMarkerArm.setPosition(tMArmRaised);     // or when you are driing over to the square to place team marker
     }
 
-    public void teamMarkerArmLowered () {          // lowers arm to put team marker in square
-        teamMarkerArm.setPosition(tMArmLowered);
+    public void teamMarkerArmOutside () {          // lowers arm to put team marker in square
+        teamMarkerArm.setPosition(tMArmOutside);
     }
+
+    public void teamMarkerInside () {
+        teamMarkerArm.setPosition(tMArmInside);
+    }
+
+
 
 
 

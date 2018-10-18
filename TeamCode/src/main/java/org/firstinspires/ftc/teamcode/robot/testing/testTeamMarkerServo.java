@@ -20,23 +20,25 @@ public class testTeamMarkerServo extends OpMode {
 
     @Override
     public void init() {
+        teamMarkerPosition = SERVO_MID;
         teamMarkerArm = hardwareMap.servo.get ("team_marker_arm");
-        teamMarkerArm.setPosition(SERVO_MID);
+        teamMarkerArm.setPosition(teamMarkerPosition);
     }
 
     @Override
     public void loop() {
-        if (gamepad2.dpad_up) {
+        if (gamepad2.y) {
             teamMarkerPosition = teamMarkerPosition + .001;
         }
-        if (gamepad2.dpad_down) {
+        if (gamepad2.a) {
             teamMarkerPosition = teamMarkerPosition - .001;
         }
-        if (gamepad2.dpad_left || gamepad2.dpad_right) {
+        if (gamepad2.x || gamepad2.b) {
             teamMarkerPosition = SERVO_MID;
         }
 
         teamMarkerPosition = Range.clip(teamMarkerPosition,SERVO_LOW,SERVO_HIGH);
         teamMarkerArm.setPosition(teamMarkerPosition);
+        telemetry.addData("servo position: ", teamMarkerArm.getPosition());
     }
 }

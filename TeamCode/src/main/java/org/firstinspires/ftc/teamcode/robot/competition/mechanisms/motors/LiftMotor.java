@@ -3,12 +3,16 @@ package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class LiftMotor {
     //instance variables
 
     public DcMotor liftMotor; //  the arm
-
+    double topHeight = 8.4;
+    double lowHeight = 3.0;
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
 
@@ -60,15 +64,20 @@ public class LiftMotor {
 
 
     //function that fully extends arm using distance sensor
-    public void extendLiftMotorFully () {
-        //set motor to full power WHILE the distance is less than topHeight
-        //be sure to stop motor at end!
-
+    public void extendLiftMotorFully (DistanceSensor distanceSensor) {
+       while (distanceSensor.getDistance(DistanceUnit.INCH)  < topHeight) {
+           liftMotor.setPower(-1);
+       }
+        liftMotor.setPower(0);
     }
 
     //function that fully retracts arm using distance sensor.
-    public void retractLiftMotorFully() {
+    public void retractLiftMotorFully(DistanceSensor distanceSensor) {
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
+        while (distanceSensor.getDistance(DistanceUnit.INCH) > lowHeight) {
+            liftMotor.setPower(1);
+        }
+        liftMotor.setPower(0);
     }
 }
