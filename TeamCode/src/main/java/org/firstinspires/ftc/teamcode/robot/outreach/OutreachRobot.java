@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.CatapultArm;
 
 import static java.lang.Thread.sleep;
-
+//adb connect 1.2.3.4:5555
 
 @TeleOp(name = "Outreach Robot")
 public class OutreachRobot extends OpMode {

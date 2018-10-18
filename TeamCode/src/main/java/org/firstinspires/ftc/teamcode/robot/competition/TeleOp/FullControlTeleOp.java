@@ -101,8 +101,8 @@ public class FullControlTeleOp extends OpMode {
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        intakePositionMotor.setDirection(DcMotorSimple.Direction.REVERSE                                                                                      );
+        liftArmMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakePositionMotor.setDirection(DcMotor.Direction.REVERSE);
 
 //        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
 //        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");

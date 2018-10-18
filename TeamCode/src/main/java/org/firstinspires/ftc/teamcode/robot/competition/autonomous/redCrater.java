@@ -127,18 +127,19 @@ public class redCrater extends LinearOpMode {
                     telemetry.update();
 //                  angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //                  gravity = imu.getGravity();
+                    //LOWER ROBOT DOWN TO PLAYING FIELD
 //                    myLiftMotor.extendLiftMotorFully();
 //                  sleep(100);
                     telemetry.addData("Strafe Right",movement);
                     telemetry.update();
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
+                    //RETRACT LIFT ARM
 //                    myLiftMotor.retractLiftMotorFully();
                     telemetry.addData("drive forward",movement);
                     telemetry.update();
                     myMechDrive.driveForward(SPD_DRIVE_MED, .6); // move away from the lander toward crater
                     sleep(sleepTime);
-//                    sleep(1000);
                     telemetry.addData("Strafe Left",movement);
                     telemetry.update();
                     myMechDrive.strafeLeft(SPD_DRIVE_MED, .8);
@@ -175,14 +176,13 @@ public class redCrater extends LinearOpMode {
                             telemetry.addLine("Left");
                             telemetry.update();
                             myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.4);
-                            sleep(100);
+                            sleep(sleepTime);
                             myMechDrive.driveForward(SPD_DRIVE_MED, .8);
-                            sleep(100);
+                            sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
-                            sleep(100);
-
+                            sleep(sleepTime);
                             myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.20);
-                            sleep(100);
+                            sleep(sleepTime);
                             break;
                         }
                         case RIGHT: { //mineral right
@@ -205,37 +205,46 @@ public class redCrater extends LinearOpMode {
                             myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
-
+                            sleep(sleepTime);
                             myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.2);
+                            sleep(sleepTime);
                             myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            sleep(sleepTime);
                             break;
                         }
                     }
                     sleep(100);
                     movement++;
                     break;
-                case 3: //Vuphoria  we don't know how to do this part yet
+                case 3: //driving towards wall
                     myMechDrive.driveForward(SPD_DRIVE_MED, 2);
-                    sleep(100);
+                    sleep(sleepTime);
 //                    myMechDrive.rotateLeft(SPD_DRIVE_MED,.37);
-                    sleep(100);
+                    //sleep(100);
                     myMechDrive.rotateLeft(SPD_DRIVE_MED, .57); //rorate at wall
-                    sleep(100);
+                    sleep(sleepTime);
                     myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);
-                    sleep (2000);
+                    sleep (2000); //orient self with wall
                     myMechDrive.stopMotors();
 //                    myMechDrive.strafeRight(SPD_DRIVE_MED,.3);
                     myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);
-
+                    sleep(sleepTime);
                     myMechDrive.strafeLeft(SPD_DRIVE_MED,.7);
+                    sleep(sleepTime);
                     myMechDrive.rotateRight(SPD_DRIVE_MED, .6);
                     //drop off team maker
+                    //
+                    //Why are there 2 Rotate Rights?
+                    //
                     myMechDrive.rotateRight(SPD_DRIVE_MED, 1.05);
                     sleep(1000);
                     myMechDrive.rotateRight(SPD_DRIVE_MED,1.05);
+                    sleep(sleepTime);
                     myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
-                    sleep(2000);
+                    sleep(2000); //go into the wall!
                     myMechDrive.driveForward(SPD_DRIVE_MED,5);
+                    sleep(sleepTime);
+
                     movement++;
                     break;
 
@@ -248,14 +257,16 @@ public class redCrater extends LinearOpMode {
 
                 case 5: // park in crater need to look at different pathways that we could take
                     myMechDrive.driveBackward(SPD_DRIVE_MED, -3.2);
+                    sleep(sleepTime);
                     movement++;
                     break;
 
                 case 6: //testing servo arm
                     myTeamMarker.teamMarkerArmLowered();
-                    sleep(100);
+                    sleep(sleepTime);
                     myTeamMarker.teamMarkerArmRaised();
-            //        movement++;
+                    sleep(sleepTime);
+                    //        movement++;
                     break;
 
             }

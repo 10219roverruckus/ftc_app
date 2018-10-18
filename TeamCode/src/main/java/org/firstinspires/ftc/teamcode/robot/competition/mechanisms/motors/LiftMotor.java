@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class LiftMotor {
     //instance variables
@@ -10,8 +11,7 @@ public class LiftMotor {
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public double extendPosition = 1;    // help confused
-    public int retractPosition = 0;   // help confused
+
 
     public LinearOpMode liftMotorLinearOp = null;
 
@@ -19,13 +19,17 @@ public class LiftMotor {
 
 
 
+    //NEED:
+    //topHeight
+    //lowHeight
+
     // constructors
     public LiftMotor (DcMotor liftM) {
         liftMotor = liftM;
 
-        liftMotor.setDirection(DcMotor.Direction.FORWARD);
+        liftMotor.setDirection(DcMotor.Direction.REVERSE);
+        liftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setLiftMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         setLiftMotorRunModes(currentRunMode);
     }
 
@@ -51,16 +55,20 @@ public class LiftMotor {
 
     public void retractingLiftMotor(double speed, double rotations) {
         liftMotor.setMode(currentRunMode);
+
     }
 
 
     //function that fully extends arm using distance sensor
     public void extendLiftMotorFully () {
+        //set motor to full power WHILE the distance is less than topHeight
+        //be sure to stop motor at end!
 
     }
 
     //function that fully retracts arm using distance sensor.
     public void retractLiftMotorFully() {
-
+        //set motor to full power WHILE the distance sensor is less than lowHeight
+        //be sure to stop motor at end!
     }
 }

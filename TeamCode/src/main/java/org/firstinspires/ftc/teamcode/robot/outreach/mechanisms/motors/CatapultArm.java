@@ -10,7 +10,7 @@ public class CatapultArm {
     public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     public final DcMotor.ZeroPowerBehavior currentMotorBrakeMode = DcMotor.ZeroPowerBehavior.BRAKE;
     public static final int TICKS_PER_ROTATION = 1680; // TICKS PER ROTATION NEEDED
-    public static final int LAUNCH_DISTANCE = 195; //distance arms will travel.
+    public static final int LAUNCH_DISTANCE = 190; //distance arms will travel.
     public static final double LAUNCH_POWER = 1;
     public static final double RESET_POWER = -.2;
 
