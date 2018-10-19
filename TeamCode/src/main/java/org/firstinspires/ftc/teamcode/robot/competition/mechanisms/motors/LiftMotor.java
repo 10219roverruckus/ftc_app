@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.Timer;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -13,6 +17,9 @@ public class LiftMotor {
     public DcMotor liftMotor; //  the arm
     double topHeight = 8.4;
     double lowHeight = 3.0;
+    double maxArmExtendTime = 5000; //max time for arm to run, in ms. (for lowering robot)
+    double maxArmRetractTime = 5000; //max time for arm to run, in ms. (for lowering robot)
+
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
 
@@ -21,6 +28,7 @@ public class LiftMotor {
 
     public final double TICKS_PER_ROTATION = 538;
 
+    public ElapsedTime armRunTime;
 
 
     //NEED:
@@ -35,6 +43,9 @@ public class LiftMotor {
         liftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setLiftMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setLiftMotorRunModes(currentRunMode);
+
+        armRunTime = new ElapsedTime();
+        armRunTime.reset();
     }
 //seting motors
 
@@ -65,9 +76,10 @@ public class LiftMotor {
 
     //function that fully extends arm using distance sensor
     public void extendLiftMotorFully (DistanceSensor distanceSensor) {
-       while (distanceSensor.getDistance(DistanceUnit.INCH)  < topHeight) {
+        armRunTime.reset();
+        while (distanceSensor.getDistance(DistanceUnit.INCH) < topHeight && armRunTime.time() <= maxArmExtendTime) {
            liftMotor.setPower(-1);
-       }
+        }
         liftMotor.setPower(0);
     }
 
@@ -75,7 +87,8 @@ public class LiftMotor {
     public void retractLiftMotorFully(DistanceSensor distanceSensor) {
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
-        while (distanceSensor.getDistance(DistanceUnit.INCH) > lowHeight) {
+        armRunTime.reset();
+        while (distanceSensor.getDistance(DistanceUnit.INCH) > lowHeight && armRunTime.time() <= maxArmRetractTime) {
             liftMotor.setPower(1);
         }
         liftMotor.setPower(0);

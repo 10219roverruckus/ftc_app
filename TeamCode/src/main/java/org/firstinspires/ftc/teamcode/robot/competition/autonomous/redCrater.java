@@ -22,6 +22,10 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMo
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
+
+import java.sql.Time;
+import java.util.Timer;
+
 @Autonomous(name = "Crater Both", group = "Red - Blue")
 public class redCrater extends LinearOpMode {
     private int movement = 0;
@@ -43,12 +47,9 @@ public class redCrater extends LinearOpMode {
     IntakeRotator myIntakeRotator;
     DistanceSensor liftDistanceSensor;
 
-
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
+
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
@@ -106,6 +107,8 @@ public class redCrater extends LinearOpMode {
 
         telemetry.addData("pressed start", movement);
         telemetry.update();
+
+        this.getRuntime();
 
         //not use camera yet - DELETE WHEN CAMERA IN PLACE!
        // goldPosition = goldPosition.LEFT;
