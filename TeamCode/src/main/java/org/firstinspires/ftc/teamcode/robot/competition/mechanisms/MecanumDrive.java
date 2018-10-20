@@ -11,7 +11,7 @@ public class MecanumDrive {
     public DcMotor frontRightMotor;
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
-    public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+    public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
     public static final double TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
     // http://www.andymark.com/NeveRest-20-12V-Planetary-Gearmotor-p/am-3637.htm
 
@@ -55,6 +55,24 @@ public class MecanumDrive {
         rearLeftMotor.setPower(0);
         rearRightMotor.setPower(0);
 
+    }
+
+    public void alignLeftFront (double speed) {
+        frontLeftMotor.setPower(-speed);
+        frontRightMotor.setPower(speed);
+    }
+
+    public void alignLeftBack (double speed) {
+        rearLeftMotor.setPower(-speed);
+        rearRightMotor.setPower(speed);
+    }
+    public void alignRightFront (double speed) {
+        frontLeftMotor.setPower(speed);
+        frontRightMotor.setPower(-speed);
+    }
+    public void alignRightBack (double speed) {
+        rearLeftMotor.setPower(speed);
+        rearRightMotor.setPower(-speed);
     }
 // how do I describe a mode
     public void setMotorRunModes (DcMotor.RunMode mode) {

@@ -66,7 +66,7 @@ public class FullControlTeleOp extends OpMode {
     double powerThreshold = 0.1;
 
     double topHeight = 8.4;
-    double lowHeight = 3.0;
+    double lowHeight = 3.2;
     boolean liftSensorOverride = false;
 
 

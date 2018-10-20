@@ -7,6 +7,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
@@ -23,7 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftAr
 public class redTeamMarker extends LinearOpMode {
     private int movement = 0;
     MecanumDrive myMechDrive;
-    liftArm myLiftArm;
+    LiftMotor myLiftArm;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;
 
     //info for gyro
@@ -35,6 +37,8 @@ public class redTeamMarker extends LinearOpMode {
 
     TeamMarker myTeamMarker;
     IntakeExtenderArm myIntakeArm;
+    DistanceSensor liftDistanceSensor;
+
 
 
 
@@ -43,8 +47,10 @@ public class redTeamMarker extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myLiftArm = new liftArm(hardwareMap.dcMotor.get("lift_motor"));
+        myLiftArm = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
+        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
+
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
         parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -126,13 +132,22 @@ public class redTeamMarker extends LinearOpMode {
 //                    gravity = imu.getGravity();
 //                    //myLiftArm.extend();
 //                    sleep(100);
+
+                    myLiftArm.extendLiftMotorFully(liftDistanceSensor);
+                    sleep(sleepTime);
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
-//                    //myLiftArm.retract();
-                    myMechDrive.driveForward(SPD_DRIVE_MED, .6); // move away from the landertoward crater
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .5); // move away from the lander toward crater
                     sleep(sleepTime);
-                    myMechDrive.strafeLeft(SPD_DRIVE_MED, .6); // go a little extra because offset hook
+                    myMechDrive.rotateLeft(SPD_DRIVE_MED,1);
                     sleep(sleepTime);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,1);
+                    sleep(sleepTime);
+                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.2);
+                    sleep(sleepTime);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,1.2);
+                    sleep(sleepTime);
+
 
 //                    sleep(100 );
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -157,30 +172,38 @@ public class redTeamMarker extends LinearOpMode {
                 case 2:           // move to correct mineral / knock it off
                     telemetry.addData("case START ", movement);
                     telemetry.update();
-                    sleep(1000);
+                    //sleep(1000);
                     switch (goldPosition) {
                         case LEFT: { //mineral left
                             telemetry.addLine("Left");
                             telemetry.update();
-                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.5);
+//                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.5);
+//                            sleep(sleepTime);
+//                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.0);
+//                            sleep(sleepTime);
+                            myMechDrive.rotateRight(SPD_DRIVE_LOW, 1);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.0);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,1.8);
                             sleep(sleepTime);
-                            myMechDrive.rotateRight(SPD_DRIVE_LOW, .9);
-                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED,2);
-                            sleep(sleepTime);
-                            myMechDrive.rotateRight(SPD_DRIVE_MED,.2);
+                            //myMechDrive.rotateRight(SPD_DRIVE_MED,.2);
                               myTeamMarker.teamMarkerArmOutside();
-                              sleep(1000);
+                              sleep(500);
                             myTeamMarker.teamMarkerArmRaised();
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1.5);
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1.7);
                             sleep(sleepTime);
-                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
-                            sleep(2000);
+                            myMechDrive.setMotorPowerStrafeLeft(.25);
+
+                            sleep(1000);
+                            myMechDrive.alignLeftFront(.5);
+                            sleep(500);
+                            myMechDrive.alignLeftBack(.5);
+                            sleep(500);
                             myMechDrive.stopMotors();
-                            sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, 3);
+                            sleep(1200);
+                            myMechDrive.stopMotors();
+
+
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 3.7);
                             sleep(sleepTime);
                             break;
                         }
@@ -204,9 +227,20 @@ public class redTeamMarker extends LinearOpMode {
                             sleep(1000);
                             myTeamMarker.teamMarkerArmRaised();
 
-                            myMechDrive.rotateRight(SPD_DRIVE_MED, 1);
-                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
+
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+                            myMechDrive.setMotorPowerStrafeLeft(.3);
                             sleep(1000);
+
+                            sleep(1000);
+                            myMechDrive.alignLeftFront(.5);
+                            sleep(500);
+                            myMechDrive.alignLeftBack(.5);
+                            sleep(500);
+                            myMechDrive.stopMotors();
+                            sleep(1200);
+                            myMechDrive.stopMotors();
+
                             myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
@@ -226,8 +260,6 @@ public class redTeamMarker extends LinearOpMode {
                             myTeamMarker.teamMarkerArmRaised();
 
                             myMechDrive.rotateRight(SPD_DRIVE_MED, .9);
-                            myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
-                            sleep(1000);
                             myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }

@@ -16,9 +16,9 @@ public class LiftMotor {
 
     public DcMotor liftMotor; //  the arm
     double topHeight = 8.4;
-    double lowHeight = 3.0;
-    double maxArmExtendTime = 5000; //max time for arm to run, in ms. (for lowering robot)
-    double maxArmRetractTime = 5000; //max time for arm to run, in ms. (for lowering robot)
+    double lowHeight = 3.2;
+    double maxArmExtendTime = 6; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmRetractTime = 6; //max time for arm to run, in SECONDS. (for lowering robot)
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
@@ -77,7 +77,7 @@ public class LiftMotor {
     //function that fully extends arm using distance sensor
     public void extendLiftMotorFully (DistanceSensor distanceSensor) {
         armRunTime.reset();
-        while (distanceSensor.getDistance(DistanceUnit.INCH) < topHeight && armRunTime.time() <= maxArmExtendTime) {
+        while (armRunTime.time() <= maxArmExtendTime) {
            liftMotor.setPower(-1);
         }
         liftMotor.setPower(0);
@@ -88,7 +88,7 @@ public class LiftMotor {
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
         armRunTime.reset();
-        while (distanceSensor.getDistance(DistanceUnit.INCH) > lowHeight && armRunTime.time() <= maxArmRetractTime) {
+        while (armRunTime.time() <= maxArmRetractTime) {
             liftMotor.setPower(1);
         }
         liftMotor.setPower(0);

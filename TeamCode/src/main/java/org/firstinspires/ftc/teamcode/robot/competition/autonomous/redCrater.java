@@ -141,11 +141,15 @@ public class redCrater extends LinearOpMode {
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
                     //RETRACT LIFT ARM
-                    myLiftMotor.retractLiftMotorFully(liftDistanceSensor);
+//                    myLiftMotor.retractLiftMotorFully(liftDistanceSensor);
+//                    sleep(sleepTime);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .5); // move away from the lander toward crater
                     sleep(sleepTime);
-                    myMechDrive.driveForward(SPD_DRIVE_MED, .6); // move away from the lander toward crater
+                    myMechDrive.rotateLeft(SPD_DRIVE_MED,1);
                     sleep(sleepTime);
-                    myMechDrive.strafeLeft(SPD_DRIVE_MED, .6);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,1);
+                    sleep(sleepTime);
+                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.2);
                     sleep(sleepTime);
 
                     // moving off lander
@@ -171,18 +175,18 @@ public class redCrater extends LinearOpMode {
                 case 2:           // move to correct mineral / knock it off
                     telemetry.addData("case START ", movement);
                     telemetry.update();
-                    sleep(1000);
+                    //sleep(1000);
                     switch (goldPosition) {
                         case LEFT: { //mineral left
                             telemetry.addLine("Left");
                             telemetry.update();
-                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.6);
-                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
+//                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.6);
+//                            sleep(sleepTime);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);  // knocks mineral off!
                             sleep(sleepTime);
                             myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
                             sleep(sleepTime);
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.20);
+                            myMechDrive.rotateLeft(SPD_DRIVE_MED, .7);
                             sleep(sleepTime);
                             break;
                         }
@@ -218,35 +222,44 @@ public class redCrater extends LinearOpMode {
                     movement++;
                     break;
                 case 3: //driving towards wall
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 2);
+                    myMechDrive.driveForward(SPD_DRIVE_MED, 1.5);
                     sleep(sleepTime);
 //                    myMechDrive.rotateLeft(SPD_DRIVE_MED,.37);
                     //sleep(100);
                     myMechDrive.rotateLeft(SPD_DRIVE_MED, .57); //rorate at wall
                     sleep(sleepTime);
-                    myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);
-                    sleep (2000); //orient self with wall
+                    myMechDrive.setMotorPowerStrafeRight(.3);
+                    sleep (1500); //orient self with wall
+
+                    sleep(1000);
+                    myMechDrive.alignLeftFront(.5);
+                    sleep(500);
+                    myMechDrive.alignLeftBack(.5);
+                    sleep(500);
                     myMechDrive.stopMotors();
+                    sleep(1200);
+                    myMechDrive.stopMotors();
+
                     myMechDrive.driveForward(SPD_DRIVE_MED, 3.2 ); // 3.5
                     sleep(sleepTime);
-                    myMechDrive.strafeLeft(SPD_DRIVE_MED,.7);
+                    myMechDrive.strafeLeft(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
-                    myMechDrive.rotateRight(SPD_DRIVE_MED, 1.05);
+                    myMechDrive.rotateRight(SPD_DRIVE_MED, 1.5);
                     sleep (sleepTime);
 
-
+//1.05 + 1.05 = 2.1
                     myTeamMarker.teamMarkerArmOutside();
-                    sleep(1000);
+                    sleep(500);
 
                     myTeamMarker.teamMarkerArmRaised();
 
-                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.05);
+                    myMechDrive.rotateRight(SPD_DRIVE_MED,.7);
                     sleep(sleepTime);
-                    myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED);
-                    sleep(2000); //go into the wall!
+                    myMechDrive.setMotorPowerStrafeLeft(.3);
+                    sleep(1000); //go into the wall!
                     myMechDrive.stopMotors();
                     sleep(sleepTime);
-                    myMechDrive.driveForward(SPD_DRIVE_MED,5);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,6);
                     sleep(sleepTime);
 
                     movement++;
