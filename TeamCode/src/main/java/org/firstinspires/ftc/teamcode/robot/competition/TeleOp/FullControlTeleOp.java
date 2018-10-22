@@ -145,30 +145,35 @@ public class FullControlTeleOp extends OpMode {
 
         rightJoystick_lift = gamepad2.right_stick_y;    //assigns lift to right stick y
 
-
-        if (gamepad2.dpad_down) { //override distance sensor for lif
-            telemetry.addData("rightJoystick_lift-if", rightJoystick_lift);
-
-            if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-                liftArmMotor.setPower(rightJoystick_lift);
-            }
-            else {
-                liftArmMotor.setPower(0);
-            }
+        if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+            liftArmMotor.setPower(rightJoystick_lift);
         }
-        else { // lift with distance sensor
-
-            if (lowHeight <= liftDistanceSensor.getDistance(DistanceUnit.INCH) && topHeight >= liftDistanceSensor.getDistance(DistanceUnit.INCH)) {
-                rightJoystick_lift = gamepad2.right_stick_y;
-                if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-                    liftArmMotor.setPower(rightJoystick_lift);
-                }
-                else {
-                    liftArmMotor.setPower(0);
-                }
-
-            }
+        else {
+            liftArmMotor.setPower(0);
         }
+//        if (gamepad2.dpad_down) { //override distance sensor for lif
+//            telemetry.addData("rightJoystick_lift-if", rightJoystick_lift);
+//
+//            if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+//                liftArmMotor.setPower(rightJoystick_lift);
+//            }
+//            else {
+//                liftArmMotor.setPower(0);
+//            }
+//        }
+//        else { // lift with distance sensor
+//
+//            if (lowHeight <= liftDistanceSensor.getDistance(DistanceUnit.INCH) && topHeight >= liftDistanceSensor.getDistance(DistanceUnit.INCH)) {
+//                rightJoystick_lift = gamepad2.right_stick_y;
+//                if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+//                    liftArmMotor.setPower(rightJoystick_lift);
+//                }
+//                else {
+//                    liftArmMotor.setPower(0);
+//                }
+//
+//            }
+//        }
 
 
 //        intake system

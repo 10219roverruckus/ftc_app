@@ -37,7 +37,7 @@ public class redTeamMarker extends LinearOpMode {
 
     TeamMarker myTeamMarker;
     IntakeExtenderArm myIntakeArm;
-    DistanceSensor liftDistanceSensor;
+//    DistanceSensor liftDistanceSensor;
 
 
 
@@ -49,7 +49,7 @@ public class redTeamMarker extends LinearOpMode {
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         myLiftArm = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
-        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
+//        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
 
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
@@ -67,7 +67,7 @@ public class redTeamMarker extends LinearOpMode {
         final double SPD_DRIVE_HIGH = .75;
         final double SPD_DRIVE_MAX = 1.0;
         final double SPD_ARM_MED = .5;
-        final long sleepTime = 200;
+        final long sleepTime = 0;
 
 
 // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -133,7 +133,7 @@ public class redTeamMarker extends LinearOpMode {
 //                    //myLiftArm.extend();
 //                    sleep(100);
 
-                    myLiftArm.extendLiftMotorFully(liftDistanceSensor);
+                    myLiftArm.extendLiftMotorFully(); //distance sensor
                     sleep(sleepTime);
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
@@ -193,14 +193,14 @@ public class redTeamMarker extends LinearOpMode {
                             sleep(sleepTime);
                             myMechDrive.setMotorPowerStrafeLeft(.25);
 
-                            sleep(1000);
+                            sleep(100);
                             myMechDrive.alignLeftFront(.5);
                             sleep(500);
                             myMechDrive.alignLeftBack(.5);
                             sleep(500);
                             myMechDrive.stopMotors();
-                            sleep(1200);
-                            myMechDrive.stopMotors();
+                            sleep(120);
+//                            myMechDrive.stopMotors();
 
 
                             myMechDrive.driveBackward(SPD_DRIVE_MED, 3.7);

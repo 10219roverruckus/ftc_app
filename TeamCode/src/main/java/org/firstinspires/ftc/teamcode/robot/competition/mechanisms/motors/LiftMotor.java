@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+//import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.Timer;
@@ -17,8 +17,8 @@ public class LiftMotor {
     public DcMotor liftMotor; //  the arm
     double topHeight = 8.4;
     double lowHeight = 3.2;
-    double maxArmExtendTime = 6; //max time for arm to run, in SECONDS. (for lowering robot)
-    double maxArmRetractTime = 6; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmExtendTime = 20; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmRetractTime = 20; //max time for arm to run, in SECONDS. (for lowering robot)
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
@@ -75,7 +75,7 @@ public class LiftMotor {
 
 
     //function that fully extends arm using distance sensor
-    public void extendLiftMotorFully (DistanceSensor distanceSensor) {
+    public void extendLiftMotorFully () { //distance sensor
         armRunTime.reset();
         while (armRunTime.time() <= maxArmExtendTime) {
            liftMotor.setPower(-1);
@@ -84,7 +84,7 @@ public class LiftMotor {
     }
 
     //function that fully retracts arm using distance sensor.
-    public void retractLiftMotorFully(DistanceSensor distanceSensor) {
+    public void retractLiftMotorFully() {               //DistanceSensor distanceSensor
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
         armRunTime.reset();
