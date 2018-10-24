@@ -23,6 +23,9 @@ public class outreachMotors {
     }
 
     public void drive (double leftY, double rightY) {
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor.setDirection(DcMotor.Direction.FORWARD);
+
         leftY = Range.clip(leftY,-1,+1);
         rightY = Range.clip(rightY, -1 ,1);
         if (leftY < -.1 || leftY > .1) {

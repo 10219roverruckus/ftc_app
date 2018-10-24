@@ -31,12 +31,12 @@ public class johnGyroTest extends LinearOpMode  {
         myMechDrive.driveForward(SPD_DRIVE_MED, .65); // move away from the lander toward crater
         myMechDrive.rotateLeft(SPD_DRIVE_MED, 1);
         myMechDrive.driveForward(SPD_DRIVE_MED, 2.6);
-        myMechDrive.rotateLeft(SPD_DRIVE_MED, .7);
+        myMechDrive.rotateRight(SPD_DRIVE_MED, .7);
 
         //testing gyro to adjust to face the depot after it reaches the wall
         sleep(100);
         //LET ORIENT OURSELVES!  (???)
-        myGyro.gyroOrient(70, myMechDrive);
+        //myGyro.gyroOrient(70, myMechDrive);
 
     }
 }
