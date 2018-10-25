@@ -34,7 +34,7 @@ public class AutoTesting extends LinearOpMode  {
         final double SPD_DRIVE_MED = .5;
         myOutReachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
-        myGyro.setLinearOp(this);
+        myGyro.setLinearOp(this); //
 
 
         waitForStart();
