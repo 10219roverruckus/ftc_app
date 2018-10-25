@@ -96,19 +96,25 @@ public class Gyro {
                 linearOp.telemetry.addLine("GREATER THAN WHILE");
                 linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
                 linearOp.telemetry.update();
-                myOutreachMotors.drive(1,-1);
+                myOutreachMotors.drive(.2,-.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
+            myOutreachMotors.drive(0,0);
+            linearOp.sleep(1000);
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
             while (angles.firstAngle <= angle - TOLERANCE) {
                 linearOp.telemetry.addLine("LESS THAN WHILE");
                 linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
                 linearOp.telemetry.update();
-                myOutreachMotors.drive(-1,1);
+                myOutreachMotors.drive(-.2,.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
+            myOutreachMotors.drive(0,0);
+            linearOp.sleep(1000);
         }
+        // NEED TO STOP MOTORS!
+        myOutreachMotors.drive(0,0);
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);

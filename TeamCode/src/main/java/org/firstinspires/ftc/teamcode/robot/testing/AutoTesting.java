@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.testing;
 
+import android.sax.TextElementListener;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -39,39 +41,34 @@ public class AutoTesting extends LinearOpMode  {
 
         waitForStart();
 
-
+        boolean active = true;
         while (opModeIsActive()) {
+            while (active) {
+                myOutReachMotors.drive(.4, .4); // forward
+                telemetry.addLine("DRIVE FORWARD FROM CRATER");
+                telemetry.update();
+                sleep(1350);
+                myOutReachMotors.drive(-.2, .2); // rotate left
+                sleep(300);
+                telemetry.addLine("ROTATE TOWARDS WALL");
+                telemetry.update();
+                myGyro.gyroOrientOutreach(90, myOutReachMotors); //-90
+                sleep(300);
+                myOutReachMotors.drive(.8,.8); // drive forward
+                sleep(2800);
+                telemetry.addLine("DRIVE TOWARD WALL");
+                telemetry.update();
+                myOutReachMotors.drive(-.2,.2);
+                sleep(850);
 
-            myOutReachMotors.drive (.5,.5); // forward
-            sleep (600);
-            myOutReachMotors.drive(-.5,.5); // rotate left
-            sleep (300);
-            myGyro.gyroOrientOutreach(90, myOutReachMotors); //-90
-            sleep(300);
-            myOutReachMotors.drive(.5,.5); // drive forward
-            sleep(300);
-            myOutReachMotors.drive(-.5,.5);
-
+                telemetry.addLine("ROTATE TOWARDS DEPO");
+                telemetry.update();
+                myGyro.gyroOrientOutreach(70, myOutReachMotors); //-90
+                myOutReachMotors.drive(0,0);
+                active = false;
+            }
+            //requestOpModeStop();
             idle();
         }
-       // myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
-        //myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-
-     //   myGyro.gyroOrientOutreach(-40,myOutReachMotors);
-
-
-//        myMechDrive.driveForward(SPD_DRIVE_MED, 2.6);
-////        myMechDrive.rotateRight(SPD_DRIVE_MED, .7);
-////        myGyro.gyroOrient(-60, myMechDrive);
-//        myMechDrive.driveForward(SPD_DRIVE_MED,1);
-//        myMechDrive.rotateLeft(SPD_DRIVE_MED,.6);
-//        myGyro.gyroOrientMecanum(-80, myMechDrive);
-
-
-
-        //testing gyro to adjust to face the depot after it reaches the wall
-        //LET ORIENT OURSELVES!  (???)
-//        myGyro.gyroOrient(70, myMechDrive);
-
     }
 }
