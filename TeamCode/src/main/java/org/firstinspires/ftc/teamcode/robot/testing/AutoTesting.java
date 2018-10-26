@@ -48,9 +48,9 @@ public class AutoTesting extends LinearOpMode  {
             while (active) {
                 telemetry.addLine("DRIVE FORWARD FROM CRATER");
                 telemetry.update();
-                //myOutReachMotors.drive(.4, .4); // forward
                 myMotorsPID.drivePID(.8, 2);
-                sleep(1350);
+                //myOutReachMotors.drive(.4, .4); // forward
+                //sleep(1350);
                 telemetry.addLine("ROTATE TOWARDS WALL");
                 telemetry.update();
                 myOutReachMotors.drive(-.2, .2); // rotate left
@@ -61,9 +61,9 @@ public class AutoTesting extends LinearOpMode  {
                 sleep(300);
                 telemetry.addLine("DRIVE TOWARD WALL");
                 telemetry.update();
-                myMotorsPID.drivePID (.8, 3);
+                myMotorsPID.drivePID (.8, 3.2);
                 //myOutReachMotors.drive(.8,.8); // drive forward
-                sleep(1700);
+                //sleep(1700);
                 telemetry.addLine("ROTATE WITH WALL");
                 telemetry.update();
                 myOutReachMotors.drive(-.2,.2);
