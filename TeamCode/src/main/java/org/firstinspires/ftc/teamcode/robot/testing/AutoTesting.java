@@ -14,18 +14,15 @@ import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
 
 
-@Autonomous(name = "Auto Testing - Main Channel Robot")
+@Autonomous(name = "Auto Testing - Outreach Robot")
 
 public class AutoTesting extends LinearOpMode  {
 
-    MecanumDrive myMechDrive;
+    //MecanumDrive myMechDrive;
     outreachMotors myOutReachMotors;
-    MotorsPID myMotorsPID;
+    //MotorsPID myMotorsPID;
 
 
-
-
-    //gyro
     Gyro myGyro;
 
     @Override
@@ -35,21 +32,26 @@ public class AutoTesting extends LinearOpMode  {
 
         final long sleepTime = 200;
         final double SPD_DRIVE_MED = .5;
+  //      myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+//        myMotorsPID.setLinearOp(this);
+
         myOutReachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        myOutReachMotors.setLinearOp(this);
+
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this); //
-        myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
 
 
         waitForStart();
 
         boolean active = true;
-        while (opModeIsActive() && !isStopRequested()) {
+        while (opModeIsActive()) {
             while (active) {
                 telemetry.addLine("DRIVE FORWARD FROM CRATER");
                 telemetry.update();
-                myMotorsPID.drivePID(.8, 2);
-                //myOutReachMotors.drive(.4, .4); // forward
+                sleep(500);
+                myOutReachMotors.drivePID(.8, 2);
+                //myOutReachMotors.drive(.4, .4); //forward
                 //sleep(1350);
                 telemetry.addLine("ROTATE TOWARDS WALL");
                 telemetry.update();
@@ -61,7 +63,7 @@ public class AutoTesting extends LinearOpMode  {
                 sleep(300);
                 telemetry.addLine("DRIVE TOWARD WALL");
                 telemetry.update();
-                myMotorsPID.drivePID (.8, 3.2);
+                myOutReachMotors.drivePID (.4, 2.2);
                 //myOutReachMotors.drive(.8,.8); // drive forward
                 //sleep(1700);
                 telemetry.addLine("ROTATE WITH WALL");
