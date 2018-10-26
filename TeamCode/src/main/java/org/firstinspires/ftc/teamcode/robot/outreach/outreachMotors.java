@@ -41,4 +41,9 @@ public class outreachMotors {
             rightMotor.setPower(0);
         }
     }
+
+    public void stopMotors () {
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
+    }
 }

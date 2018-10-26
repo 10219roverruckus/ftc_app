@@ -20,6 +20,7 @@ public class AutoTesting extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
     outreachMotors myOutReachMotors;
+    MotorsPID myMotorsPID;
 
 
 
@@ -37,38 +38,46 @@ public class AutoTesting extends LinearOpMode  {
         myOutReachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this); //
+        myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
 
 
         waitForStart();
 
         boolean active = true;
-        while (opModeIsActive()) {
+        while (opModeIsActive() && !isStopRequested()) {
             while (active) {
-                myOutReachMotors.drive(.4, .4); // forward
                 telemetry.addLine("DRIVE FORWARD FROM CRATER");
                 telemetry.update();
+                //myOutReachMotors.drive(.4, .4); // forward
+                myMotorsPID.drivePID(.8, 2);
                 sleep(1350);
+                telemetry.addLine("ROTATE TOWARDS WALL");
+                telemetry.update();
                 myOutReachMotors.drive(-.2, .2); // rotate left
                 sleep(300);
-                telemetry.addLine("ROTATE TOWARDS WALL");
+                telemetry.addLine("ORIENT WALL WITH GYRO");
                 telemetry.update();
                 myGyro.gyroOrientOutreach(90, myOutReachMotors); //-90
                 sleep(300);
-                myOutReachMotors.drive(.8,.8); // drive forward
-                sleep(2800);
                 telemetry.addLine("DRIVE TOWARD WALL");
+                telemetry.update();
+                myMotorsPID.drivePID (.8, 3);
+                //myOutReachMotors.drive(.8,.8); // drive forward
+                sleep(1700);
+                telemetry.addLine("ROTATE WITH WALL");
                 telemetry.update();
                 myOutReachMotors.drive(-.2,.2);
                 sleep(850);
-
-                telemetry.addLine("ROTATE TOWARDS DEPO");
+                telemetry.addLine("ORIENT WITH WALL USING GYRO");
                 telemetry.update();
-                myGyro.gyroOrientOutreach(70, myOutReachMotors); //-90
-                myOutReachMotors.drive(0,0);
+                myGyro.gyroOrientOutreach(70, myOutReachMotors); //-70
+                myOutReachMotors.stopMotors();
+                //make the program stop!
                 active = false;
             }
             //requestOpModeStop();
             idle();
+            requestOpModeStop();
         }
     }
 }

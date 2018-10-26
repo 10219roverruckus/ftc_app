@@ -30,9 +30,4 @@ public class TeamMarker {
     public void teamMarkerInside () {
         teamMarkerArm.setPosition(tMArmInside);
     }
-
-
-
-
-
 }

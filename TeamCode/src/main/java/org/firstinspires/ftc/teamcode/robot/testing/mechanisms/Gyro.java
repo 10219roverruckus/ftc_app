@@ -70,7 +70,6 @@ public class Gyro {
                 linearOp.telemetry.update();
                 myMechDrive.setMotorPowerRotateLeft(.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                linearOp.sleep(1000); //intentionally long sleep for feedback
             }
         }
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -99,7 +98,7 @@ public class Gyro {
                 myOutreachMotors.drive(.2,-.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
-            myOutreachMotors.drive(0,0);
+            myOutreachMotors.stopMotors();
             linearOp.sleep(1000);
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
@@ -110,11 +109,11 @@ public class Gyro {
                 myOutreachMotors.drive(-.2,.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
-            myOutreachMotors.drive(0,0);
+            myOutreachMotors.stopMotors();
             linearOp.sleep(1000);
         }
         // NEED TO STOP MOTORS!
-        myOutreachMotors.drive(0,0);
+        myOutreachMotors.stopMotors();
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
