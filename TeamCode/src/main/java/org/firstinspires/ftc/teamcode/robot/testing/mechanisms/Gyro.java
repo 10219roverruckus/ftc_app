@@ -10,7 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robot.outreach.OutreachMotors;
+//import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
+import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.DriveMotors;
+
 
 
 public class Gyro {
@@ -21,7 +23,7 @@ public class Gyro {
     public LinearOpMode linearOp = null;
 
 
-    public final double TOLERANCE = 0.5;   //variation from target angle allowed.
+    public final double TOLERANCE = 1;   //variation from target angle allowed.
 
     //created in constructior
     //    public BNO055IMU imu;
@@ -76,46 +78,47 @@ public class Gyro {
         linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
         linearOp.telemetry.update();
-        linearOp.sleep(1000); //intentionally long sleep for feedback
+        //linearOp.sleep(1000); //intentionally long sleep for feedback
     }
 
 
-    public void gyroOrientOutreach (double angle, OutreachMotors myOutreachMotors ) {
+    public void gyroOrientOutreach (double angle, DriveMotors myDriveMotors) {
 //        int x = 1;
         linearOp.telemetry.addLine("gyroORIENTOUTREACH");
         linearOp.telemetry.update();
-        linearOp.sleep(1000);
+        //linearOp.sleep(1000);
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         linearOp.telemetry.addLine("READY TO ORIENT WITH GYRO!");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
         linearOp.telemetry.update();
-        linearOp.sleep(1000); //intentionally long sleep for feedback
+        linearOp.idle();
+        //linearOp.sleep(1000); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
             while (angles.firstAngle >=  angle + TOLERANCE) {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myOutreachMotors.drive(.3,-.3);
+                myDriveMotors.drive(.25,-.25);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                 linearOp.idle();
             }
-            myOutreachMotors.stopMotors();
-            linearOp.sleep(1000);
+            myDriveMotors.stopMotors();
+            //linearOp.sleep(1000);
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
             while (angles.firstAngle <= angle - TOLERANCE) {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myOutreachMotors.drive(-.3,.3);
+                myDriveMotors.drive(-.25,.25);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                 linearOp.idle();
             }
-            myOutreachMotors.stopMotors();
-            linearOp.sleep(1000);
+            myDriveMotors.stopMotors();
+           // linearOp.sleep(1000);
         }
         // NEED TO STOP MOTORS!
-        myOutreachMotors.stopMotors();
+        myDriveMotors.stopMotors();
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);

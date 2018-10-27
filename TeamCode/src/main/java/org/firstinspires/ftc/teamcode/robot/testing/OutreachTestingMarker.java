@@ -14,13 +14,11 @@ import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 //import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.DriveMotors;
 
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MineralMiner;
 
 
+@Autonomous(name = "Auto Testing - Outreach Marker")
 
-    @Autonomous(name = "AUTO Testing - Outreach Crater")
-
-public class AutoTesting extends LinearOpMode  {
+public class OutreachTestingMarker extends LinearOpMode  {
 
     //MecanumDrive myMechDrive;
     //outreachMotors myOutReachMotors;
@@ -28,7 +26,6 @@ public class AutoTesting extends LinearOpMode  {
 
     DriveMotors myDriveMotors;
     Gyro myGyro;
-    MineralMiner myMineralMiner;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -37,7 +34,7 @@ public class AutoTesting extends LinearOpMode  {
 
         final long sleepTime = 100;
         final double SPD_DRIVE_MED = .5;
-  //      myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        //      myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
 //        myMotorsPID.setLinearOp(this);
         myDriveMotors = new DriveMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myDriveMotors.setLinearOp(this);
@@ -46,9 +43,6 @@ public class AutoTesting extends LinearOpMode  {
 
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this); //
-
-        myMineralMiner = new MineralMiner();
-        myMineralMiner.setLinearOp(this);
 
 
         waitForStart();
@@ -59,19 +53,7 @@ public class AutoTesting extends LinearOpMode  {
 //                telemetry.addLine("DRIVE FORWARD FROM CRATER");
 //                telemetry.update();
                 idle();
-                myMineralMiner.findingMineral();
-                idle();
-                myMineralMiner.driveMineral(myGyro, myDriveMotors);
-                //myMineralMiner.driveMineral(myGyro, myDriveMotors);
-                //  back up to tape w/ color sensor
-                //  turn left 90 degrees.
-
-
-
-
-
-
-                //myDriveMotors.drivePID(.6, 3);
+                myDriveMotors.drivePID(.6, 7);
                 //sleep(sleepTime);
                 //myOutReachMotors.drive(.4, .4); //forward -
                 //sleep(1350);
@@ -81,17 +63,24 @@ public class AutoTesting extends LinearOpMode  {
                 //sleep(sleepTime);
 //                telemetry.addLine("ORIENT WALL WITH GYRO");
 //                telemetry.update();
-               // myGyro.gyroOrientOutreach(87, myDriveMotors); //-90
-                //sleep(sleepTime);
 //                telemetry.addLine("DRIVE TOWARD WALL");
 //                telemetry.update();
-               // myDriveMotors.drivePID (.6, 5.3);
-                //sleep(sleepTime);
+
+
+
+                myGyro.gyroOrientOutreach(53, myDriveMotors); //-90
+                sleep(sleepTime);
+
+                myDriveMotors.drivePID(.6,.2);
+
+                //drop and raise servo Team Marker arm
+
+
                 //myOutReachMotors.drive(.8,.8); // drive forward
                 //sleep(1700);
 //                telemetry.addLine("ROTATE WITH WALL");
 //                telemetry.update();
-               // myOutReachMotors.drive(-.2,.2);
+                // myOutReachMotors.drive(-.2,.2);
                 idle();
 //                telemetry.addLine("ORIENT WITH WALL USING GYRO");
 //                telemetry.update();
@@ -111,13 +100,13 @@ public class AutoTesting extends LinearOpMode  {
 
 //                telemetry.addLine("GO BACK TO CRATER");
 //                telemetry.update();
-               //// myDriveMotors.drivePID(-.6, 3.5); //half way backwards
-               //// sleep(sleepTime);
-                ////myGyro.gyroOrientOutreach(135, myDriveMotors); // adjust angle
-                ////sleep(sleepTime);
-                ////myDriveMotors.drivePID(-.6, 3.3); // last half way backwards
-                ////sleep(sleepTime);
-                ////myGyro.gyroOrientOutreach(135, myDriveMotors); // adjust angle
+                myDriveMotors.drivePID(-.6, 3.7); //half way backwards
+                sleep(sleepTime);
+                myGyro.gyroOrientOutreach(44, myDriveMotors); // adjust angle
+                sleep(sleepTime);
+                myDriveMotors.drivePID(-.6, 3.6); // last half way backwards
+                sleep(sleepTime);
+                myGyro.gyroOrientOutreach(44, myDriveMotors); // adjust angle
 
                 active = false;
             }
