@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.outreach.OutreachRobot;
 import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
-import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
+import org.firstinspires.ftc.teamcode.robot.outreach.OutreachMotors;
 
 
 @Autonomous(name = "Auto Testing - Outreach Robot")
@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
 public class AutoTesting extends LinearOpMode  {
 
     //MecanumDrive myMechDrive;
-    outreachMotors myOutReachMotors;
+    OutreachMotors myOutReachMotors;
     //MotorsPID myMotorsPID;
 
 
@@ -35,7 +35,7 @@ public class AutoTesting extends LinearOpMode  {
   //      myMotorsPID = new MotorsPID(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
 //        myMotorsPID.setLinearOp(this);
 
-        myOutReachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        myOutReachMotors = new OutreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myOutReachMotors.setLinearOp(this);
 
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));
@@ -45,34 +45,34 @@ public class AutoTesting extends LinearOpMode  {
         waitForStart();
 
         boolean active = true;
-        while (opModeIsActive()) {
-            while (active) {
+        while (opModeIsActive() && !isStopRequested()) {
+            while (active && !isStopRequested()) {
                 telemetry.addLine("DRIVE FORWARD FROM CRATER");
                 telemetry.update();
                 sleep(500);
-                myOutReachMotors.drivePID(.8, 2);
-                //myOutReachMotors.drive(.4, .4); //forward
+                myOutReachMotors.drivePID(.6, 2.3);
+                //myOutReachMotors.drive(.4, .4); //forward -
                 //sleep(1350);
                 telemetry.addLine("ROTATE TOWARDS WALL");
                 telemetry.update();
-                myOutReachMotors.drive(-.2, .2); // rotate left
+                //myOutReachMotors.drive(-.2, .2); // rotate left
                 sleep(300);
                 telemetry.addLine("ORIENT WALL WITH GYRO");
                 telemetry.update();
-                myGyro.gyroOrientOutreach(90, myOutReachMotors); //-90
+                myGyro.gyroOrientOutreach(87, myOutReachMotors); //-90
                 sleep(300);
                 telemetry.addLine("DRIVE TOWARD WALL");
                 telemetry.update();
-                myOutReachMotors.drivePID (.4, 2.2);
+                myOutReachMotors.drivePID (.6, 5.7);
                 //myOutReachMotors.drive(.8,.8); // drive forward
                 //sleep(1700);
                 telemetry.addLine("ROTATE WITH WALL");
                 telemetry.update();
-                myOutReachMotors.drive(-.2,.2);
+               // myOutReachMotors.drive(-.2,.2);
                 sleep(850);
                 telemetry.addLine("ORIENT WITH WALL USING GYRO");
                 telemetry.update();
-                myGyro.gyroOrientOutreach(70, myOutReachMotors); //-70
+                myGyro.gyroOrientOutreach(130, myOutReachMotors); //-70
                 myOutReachMotors.stopMotors();
                 //make the program stop!
                 active = false;

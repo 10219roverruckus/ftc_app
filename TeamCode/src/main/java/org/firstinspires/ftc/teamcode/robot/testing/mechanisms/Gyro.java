@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
+import org.firstinspires.ftc.teamcode.robot.outreach.OutreachMotors;
 
 
 public class Gyro {
@@ -80,7 +80,7 @@ public class Gyro {
     }
 
 
-    public void gyroOrientOutreach (double angle, outreachMotors myOutreachMotors ) {
+    public void gyroOrientOutreach (double angle, OutreachMotors myOutreachMotors ) {
 //        int x = 1;
         linearOp.telemetry.addLine("gyroORIENTOUTREACH");
         linearOp.telemetry.update();
@@ -92,22 +92,24 @@ public class Gyro {
         linearOp.sleep(1000); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
             while (angles.firstAngle >=  angle + TOLERANCE) {
-                linearOp.telemetry.addLine("GREATER THAN WHILE");
-                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
-                linearOp.telemetry.update();
-                myOutreachMotors.drive(.2,-.2);
+//                linearOp.telemetry.addLine("GREATER THAN WHILE");
+//                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//                linearOp.telemetry.update();
+                myOutreachMotors.drive(.3,-.3);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                linearOp.idle();
             }
             myOutreachMotors.stopMotors();
             linearOp.sleep(1000);
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
             while (angles.firstAngle <= angle - TOLERANCE) {
-                linearOp.telemetry.addLine("LESS THAN WHILE");
-                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
-                linearOp.telemetry.update();
-                myOutreachMotors.drive(-.2,.2);
+//                linearOp.telemetry.addLine("LESS THAN WHILE");
+//                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//                linearOp.telemetry.update();
+                myOutreachMotors.drive(-.3,.3);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                linearOp.idle();
             }
             myOutreachMotors.stopMotors();
             linearOp.sleep(1000);

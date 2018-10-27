@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-public class outreachMotors {
+public class OutreachMotors {
     public DcMotor leftMotor;
     public DcMotor rightMotor;
 
@@ -25,7 +25,7 @@ public class outreachMotors {
 
 
 
-    public outreachMotors (DcMotor lm, DcMotor rm) {
+    public OutreachMotors (DcMotor lm, DcMotor rm) {
         leftMotor = lm;
         rightMotor = rm;
 
@@ -112,37 +112,40 @@ public class outreachMotors {
 //        stopMotors();
 //        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        while (targetDistance > leftMotor.getCurrentPosition() && linearOp.opModeIsActive()) {
-            linearOp.telemetry.addData("START WHILE", leftMotor.getCurrentPosition());
+        while (targetDistance > rightMotor.getCurrentPosition() && linearOp.opModeIsActive()  && !linearOp.isStopRequested()) {
+            linearOp.telemetry.addData("START WHILE", rightMotor.getCurrentPosition());
             linearOp.telemetry.update();
-            if (leftMotor.getCurrentPosition() <= targetDistance * .2) {
-                linearOp.telemetry.addData("FIRST IF", leftMotor.getCurrentPosition());
-                linearOp.telemetry.update();
+            if (rightMotor.getCurrentPosition() <= (targetDistance * .2) ) {
+//                linearOp.telemetry.addData("FIRST IF", rightMotor.getCurrentPosition());
+//                linearOp.telemetry.update();
                 leftMotor.setPower(MINPOWER);
                 rightMotor.setPower(MINPOWER);
                 //linearOp.sleep(1000);
             }
-            else if (leftMotor.getCurrentPosition() > targetDistance * .2 && leftMotor.getCurrentPosition() < targetDistance * .8) {  // (target distance - current distance) / total distance
-                linearOp.telemetry.addData("FIRST ELSE IF", leftMotor.getCurrentPosition());
-                linearOp.telemetry.update();
+            else if (rightMotor.getCurrentPosition() > (targetDistance * .2) && rightMotor.getCurrentPosition() < (targetDistance * .6) ) {  // (target distance - current distance) / total distance
+//                linearOp.telemetry.addData("FIRST ELSE IF", rightMotor.getCurrentPosition());
+//                linearOp.telemetry.update();
                 leftMotor.setPower(power);
                 rightMotor.setPower(power);
             }
-            else if (leftMotor.getCurrentPosition() > targetDistance * .8) {  //may need to be just an ELSE if we have a third condition about to check for MINPOWER threshold.
-                linearOp.telemetry.addData("SECOND ELSE IF", leftMotor.getCurrentPosition());
-                linearOp.telemetry.update();
+            else if (rightMotor.getCurrentPosition() >= (targetDistance * .6) && rightMotor.getCurrentPosition() <= (targetDistance * 1) )  {  //may need to be just an ELSE if we have a third condition about to check for MINPOWER threshold.
+//                linearOp.telemetry.addData("SECOND ELSE IF", rightMotor.getCurrentPosition());
+//                linearOp.telemetry.update();
                 leftMotor.setPower(MINPOWER);
                 rightMotor.setPower(MINPOWER);
+                linearOp.sleep(1000);
             }
             else {
-                linearOp.telemetry.addLine("Else STOP");
-                linearOp.telemetry.update();
+//                linearOp.telemetry.addLine("Else STOP");
+//                linearOp.telemetry.update();
                 stopMotors();
             }
-            linearOp.telemetry.addData("END WHILE", leftMotor.getCurrentPosition());
-            linearOp.telemetry.update();
-            linearOp.sleep(2000);
+            //linearOp.telemetry.addData("END WHILE - position: ", rightMotor.getCurrentPosition());
+          //  linearOp.telemetry.update();
+//            linearOp.sleep(2000);
+            linearOp.idle();
         }
+        stopMotors();
         //stopMotors();
         linearOp.idle();
     }
