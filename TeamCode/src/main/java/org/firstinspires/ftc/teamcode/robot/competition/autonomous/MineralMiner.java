@@ -99,7 +99,7 @@ public class MineralMiner {
 
     public void wallToDepot (Gyro myGyro, DriveMotors myDriveMotors) {
         //EMMA's got this...
-        // REMEMBER: WE HAVE NOT TURNED YET SO WE'RE ANGLED PARALLEL WITH THE WALL.
+        // REMEMBER: WE HAVE NOT TURNED YET. WE ARE NOT ANGLED PARALLEL WITH THE WALL.
 
     }
 
