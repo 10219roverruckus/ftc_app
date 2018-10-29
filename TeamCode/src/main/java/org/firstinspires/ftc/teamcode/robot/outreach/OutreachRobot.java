@@ -16,7 +16,7 @@ import static java.lang.Thread.sleep;
 @TeleOp(name = "Outreach Robot")
 public class OutreachRobot extends OpMode {
 
-    outreachMotors myOutreachMotors;
+    OutreachMotors myOutreachMotors;
     //outreachCatapultMotorsRunToPosition myOutreachCatapultMotorsRunToPosition;
     //outreachCatapultMotorsRunUsingEncoders myOutreachCatapultMotorsRunUsingEncoders;
     //outreachCatapultMotorsRunWithoutEncoders myOutreachCatapultMotorsRunWithoutEncoders;
@@ -48,7 +48,7 @@ public class OutreachRobot extends OpMode {
 
     @Override
     public void init() {
-        myOutreachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myCatapultArm = new CatapultArm(hardwareMap.dcMotor.get("left_catapult_motor"), hardwareMap.dcMotor.get("right_catapult_motor"));
         myOutreachTouchSensorCatapult = new outreachTouchSensorCatapult (hardwareMap.get(DigitalChannel.class, "catapult_touch_sensor"));
 

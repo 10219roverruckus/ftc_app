@@ -87,11 +87,12 @@ public class AutoTesting extends LinearOpMode  {
                  */
                 myMineralMiner.craterMineralToWall (myGyro, myDriveMotors, myRevColorDistance);
                 sleep(sleepTime);
+
                 idle();
                 /*
                 Will angle robot to be parallel with robot, score in depot, and then go to crater.
                  */
-                myMineralMiner.wallToDepot(myGyro, myDriveMotors);
+                myMineralMiner.wallToDepot(myGyro, myDriveMotors, myRevColorDistance);
 
                 active = false;
             }

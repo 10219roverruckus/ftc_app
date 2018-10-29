@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-public class outreachMotors {
+public class OutreachMotors {
     public DcMotor leftMotor;
     public DcMotor rightMotor;
 
@@ -24,7 +24,7 @@ public class outreachMotors {
 
 
 
-    public outreachMotors (DcMotor lm, DcMotor rm) {
+    public OutreachMotors (DcMotor lm, DcMotor rm) {
         leftMotor = lm;
         rightMotor = rm;
 
