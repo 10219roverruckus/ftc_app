@@ -80,6 +80,7 @@ public class MineralMiner {
     public void craterMineralToWall(Gyro myGyro, DriveMotors myDriveMotors, RevColorDistance myRevColorDisance) {
         //Drives back to tape
         // SHOULD BE ABLE TO USE FOR DETECTING EITHER COLOR.
+        myDriveMotors.stopMotors();
         Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
@@ -92,7 +93,8 @@ public class MineralMiner {
             myDriveMotors.drive(-.4, -.4);
             linearOp.idle();
         }
-        myDriveMotors.stopMotors();  //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
+        myDriveMotors.stopMotors();
+        //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
         myDriveMotors.drivePID(.3, .4);
         myGyro.gyroOrientOutreach(87, myDriveMotors);  //orients self with red tape so parallel to tape.
         //
@@ -127,7 +129,7 @@ public class MineralMiner {
                     (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                     (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                     hsvValues);
-            myDriveMotors.drive(-.4, -.4);
+            myDriveMotors.drive(.4, .4);
             linearOp.idle();
         }
         myDriveMotors.stopMotors();
