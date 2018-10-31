@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftAr
 import java.sql.Time;
 import java.util.Timer;
 
-@Autonomous(name = "Crater Both", group = "Red - Blue")
+@Autonomous(name = " Old Crater Both", group = "Red - Blue")
 public class redCrater extends LinearOpMode {
     private int movement = 0;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;

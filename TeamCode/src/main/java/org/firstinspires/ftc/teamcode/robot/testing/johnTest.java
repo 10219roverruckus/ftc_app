@@ -12,20 +12,20 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
-import org.firstinspires.ftc.teamcode.robot.outreach.outreachMotors;
+import org.firstinspires.ftc.teamcode.robot.outreach.OutreachMotors;
 
 @Autonomous (name = "Auto Testing - IGNORE")
 public class johnTest extends LinearOpMode  {
 
     //MecanumDrive myMechDrive;
-    outreachMotors myOutReachMotors;
+    OutreachMotors myOutReachMotors;
     //MotorsPID myMotorsPID;
 
 
     Gyro myGyro;
     @Override
     public void runOpMode() throws InterruptedException {
-        myOutReachMotors = new outreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        myOutReachMotors = new OutreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
         myOutReachMotors.setLinearOp(this);
 
         myGyro = new Gyro(hardwareMap.get(BNO055IMU.class, "imu"));

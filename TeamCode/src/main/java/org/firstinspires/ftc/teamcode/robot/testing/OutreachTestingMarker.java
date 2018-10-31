@@ -110,7 +110,6 @@ public class OutreachTestingMarker extends LinearOpMode  {
 
                 active = false;
             }
-            //requestOpModeStop();
             idle();
             requestOpModeStop();
         }
