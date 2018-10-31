@@ -5,6 +5,7 @@ import android.util.Log;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.DogeCVDetector;
 import com.disnodeteam.dogecv.filters.DogeCVColorFilter;
+import com.disnodeteam.dogecv.filters.HSVRangeFilter;
 import com.disnodeteam.dogecv.filters.LeviColorFilter;
 import com.disnodeteam.dogecv.scoring.MaxAreaScorer;
 import com.disnodeteam.dogecv.scoring.PerfectAreaScorer;
@@ -26,13 +27,13 @@ import java.util.List;
  * Created by Victo on 9/10/2018.
  */
 
-public class GoldDetector extends DogeCVDetector {
+public class SilverDetector extends DogeCVDetector {
 
     // Defining Mats to be used.
     private Mat displayMat = new Mat(); // Display debug info to the screen (this is what is returned)
     private Mat workingMat = new Mat(); // Used for preprocessing and working with (blurring as an example)
-    private Mat maskYellow = new Mat(); // Yellow Mask returned by color filter
-    private Mat hierarchy  = new Mat(); // hierarchy used by coutours
+    private Mat maskWhite  = new Mat(); // White Mask returned by color filter
+    private Mat hierarchy  = new Mat(); // hierarchy used by coutnours
 
     // Results of the detector
     private boolean found    = false; // Is the gold mineral found
@@ -42,7 +43,7 @@ public class GoldDetector extends DogeCVDetector {
     public DogeCV.AreaScoringMethod areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Setting to decide to use MaxAreaScorer or PerfectAreaScorer
 
     //Create the default filters and scorers
-    public DogeCVColorFilter yellowFilter      = new LeviColorFilter(LeviColorFilter.ColorPreset.YELLOW); //Default Yellow filter
+    public DogeCVColorFilter whiteFilter  = new HSVRangeFilter(new Scalar(0,0,200), new Scalar(50,40,255));
 
     public RatioScorer       ratioScorer       = new RatioScorer(1.0, 3);          // Used to find perfect squares
     public MaxAreaScorer     maxAreaScorer     = new MaxAreaScorer( 0.01);                    // Used to find largest objects
@@ -51,9 +52,9 @@ public class GoldDetector extends DogeCVDetector {
     /**
      * Simple constructor
      */
-    public GoldDetector() {
+    public SilverDetector() {
         super();
-        detectorName = "Gold Detector"; // Set the detector name
+        detectorName = "Silver Detector"; // Set the detector name
     }
 
 
@@ -66,14 +67,14 @@ public class GoldDetector extends DogeCVDetector {
         input.release();
 
 
-        //Preprocess the working Mat (blur it then apply a yellow filter)
+        //Preprocess the working Mat (blur it then apply a white filter)
         Imgproc.GaussianBlur(workingMat,workingMat,new Size(5,5),0);
-        yellowFilter.process(workingMat.clone(),maskYellow);
+        whiteFilter.process(workingMat.clone(),maskWhite);
 
         //Find contours of the yellow mask and draw them to the display mat for viewing
 
         List<MatOfPoint> contoursYellow = new ArrayList<>();
-        Imgproc.findContours(maskYellow, contoursYellow, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(maskWhite, contoursYellow, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.drawContours(displayMat,contoursYellow,-1,new Scalar(230,70,70),2);
 
         // Current result
@@ -132,7 +133,7 @@ public class GoldDetector extends DogeCVDetector {
     }
 
     /**
-     * Returns the gold element's last position in screen pixels
+     * Returns the silver element's last position in screen pixels
      * @return position in screen pixels
      */
     public Point getScreenPosition(){
@@ -140,16 +141,16 @@ public class GoldDetector extends DogeCVDetector {
     }
 
     /**
-     * Returns the gold element's found rectangle
-     * @return gold element rect
+     * Returns the silver element's found rectangle
+     * @return silver element rect
      */
     public Rect getFoundRect() {
         return foundRect;
     }
 
     /**
-     * Returns if a gold mineral is being tracked/detected
-     * @return if a gold mineral is being tracked/detected
+     * Returns if a silver mineral is being tracked/detected
+     * @return if a silver mineral is being tracked/detected
      */
     public boolean isFound() {
         return found;

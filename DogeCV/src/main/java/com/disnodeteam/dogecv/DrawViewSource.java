@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import org.corningrobotics.enderbots.endercv.R;
 import org.opencv.BuildConfig;
 
 import java.util.ArrayList;
@@ -33,31 +32,26 @@ public class DrawViewSource extends View {
     private Bitmap bitmap;
 
     public DrawViewSource(Context context) {
-        // TODO Auto-generated constructor stub
         super(context);
         init(context, null, 0);
     }
 
     public DrawViewSource(Context context, AttributeSet attrs) {
-        // TODO Auto-generated constructor stub
         super(context, attrs);
         init(context, attrs, 0);
     }
 
     public DrawViewSource(Context context, AttributeSet attrs, int defStyleAttr) {
-        // TODO Auto-generated constructor stub
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        // TODO Auto-generated method stub
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 
         resources = context.getResources();
-        bitmap = BitmapFactory
-                .decodeResource(resources, R.drawable.ic_launcher);
+
 
 
         setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -67,7 +61,6 @@ public class DrawViewSource extends View {
     public DrawViewSource(Context context, AttributeSet attrs,
                           int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        // TODO Auto-generated constructor stub
     }
 
     /*
@@ -81,7 +74,6 @@ public class DrawViewSource extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO Auto-generated method stub
         super.onDraw(canvas);
 
         canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
@@ -94,7 +86,9 @@ public class DrawViewSource extends View {
         int deviceOrientation = getContext().getResources().getConfiguration().orientation;
 
 
-        canvas.drawBitmap(bitmap, 0, 0,mPaint);
+        if(bitmap != null){
+            canvas.drawBitmap(bitmap, 0, 0,null);
+        }
 
     }
 }

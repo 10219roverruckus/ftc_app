@@ -57,7 +57,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@TeleOp(name="GoldAlign Example WEBCAMERA", group="DogeCV")
+@TeleOp(name="GoldAlign Example WEBCAMERA 4.2", group="DogeCV")
 
 public class GoldAlignExampleCAMERA extends OpMode
 {
