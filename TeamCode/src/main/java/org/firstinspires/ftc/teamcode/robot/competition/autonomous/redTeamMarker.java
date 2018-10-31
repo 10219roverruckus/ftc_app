@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMo
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
-@Autonomous(name = "Team Marker Both", group = "Red - Blue")
+@Autonomous(name = "Old Team Marker Both", group = "Red - Blue")
 public class redTeamMarker extends LinearOpMode {
     private int movement = 0;
     MecanumDrive myMechDrive;

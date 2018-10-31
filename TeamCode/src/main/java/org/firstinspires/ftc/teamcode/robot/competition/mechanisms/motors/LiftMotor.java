@@ -17,8 +17,8 @@ public class LiftMotor {
     public DcMotor liftMotor; //  the arm
     double topHeight = 8.4;
     double lowHeight = 3.2;
-    double maxArmExtendTime = 20; //max time for arm to run, in SECONDS. (for lowering robot)
-    double maxArmRetractTime = 20; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmExtendTime = 8; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmRetractTime = 8; //max time for arm to run, in SECONDS. (for lowering robot)
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
