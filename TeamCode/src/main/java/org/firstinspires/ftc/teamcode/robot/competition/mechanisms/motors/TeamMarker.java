@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class TeamMarker {
@@ -9,12 +10,16 @@ public class TeamMarker {
     public double tMArmRaised = .46; // arm raised position
     public double tMArmOutside = .9 ; // arm lowered position
     public double tMArmInside = 0;
-
+    public LinearOpMode linearOp = null;
 
     // constructors
     public TeamMarker(Servo tMarkArm) {
 
         teamMarkerArm = tMarkArm;
+    }
+
+    public void setLinearOp (LinearOpMode Op) {
+        linearOp = Op;
     }
 
 

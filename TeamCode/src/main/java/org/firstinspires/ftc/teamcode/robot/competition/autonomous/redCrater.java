@@ -22,7 +22,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
 import java.sql.Time;
 import java.util.Timer;

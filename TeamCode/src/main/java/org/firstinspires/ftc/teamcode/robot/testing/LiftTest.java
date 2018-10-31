@@ -4,14 +4,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "TEST LIFT ONLY")
+@TeleOp(name = "TEST LIFT - P2 R STICK")
 public class LiftTest extends OpMode {
     DcMotor liftArmMotor;
     double rightJoystick_lift;
     @Override
     public void init() {
         liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
+//        liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override

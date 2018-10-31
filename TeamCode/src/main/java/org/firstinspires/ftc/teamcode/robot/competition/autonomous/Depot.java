@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 
 @Autonomous(name = "Depot - competition")
@@ -20,6 +22,9 @@ MecanumDrive myMechDrive;
 GyroCompetition myGyro;
 MecanumMineralMiner myMineralMiner;
 RevColorDistance myRevColorDistance;
+
+    LiftMotor myLiftMotor;
+    TeamMarker myTeamMarker;
 
 @Override
 public void runOpMode() throws InterruptedException {
@@ -38,6 +43,12 @@ public void runOpMode() throws InterruptedException {
 
     myMineralMiner = new MecanumMineralMiner();
     myMineralMiner.setLinearOp(this);
+
+    myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
+    myLiftMotor.setLinearOp(this);
+
+    myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
+    myTeamMarker.setLinearOp(this);
 
     myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
@@ -60,7 +71,7 @@ public void runOpMode() throws InterruptedException {
             2) angles self with gold mineral based on myMineralMiner.findingMineral
             3) Drives forward to knock of gold mineral.
              */
-            myMineralMiner.driveMineral(myGyro, myMechDrive);
+            myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);
             sleep(sleepTime);
             idle();
             /*
@@ -68,7 +79,7 @@ public void runOpMode() throws InterruptedException {
             2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
             3) GOES STRAIGHT TOWARDS WALL
              */
-            myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance);
+            myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
             sleep(sleepTime);
 
             idle();

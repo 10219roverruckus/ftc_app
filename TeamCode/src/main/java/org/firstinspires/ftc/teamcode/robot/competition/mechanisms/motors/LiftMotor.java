@@ -17,14 +17,15 @@ public class LiftMotor {
     public DcMotor liftMotor; //  the arm
     double topHeight = 8.4;
     double lowHeight = 3.2;
-    double maxArmExtendTime = 8; //max time for arm to run, in SECONDS. (for lowering robot)
-    double maxArmRetractTime = 8; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
 
 
     public LinearOpMode liftMotorLinearOp = null;
+    public LinearOpMode linearOp = null;
 
     public final double TICKS_PER_ROTATION = 538;
 
@@ -39,7 +40,7 @@ public class LiftMotor {
     public LiftMotor (DcMotor liftM) {
         liftMotor = liftM;
 
-        liftMotor.setDirection(DcMotor.Direction.REVERSE);
+        liftMotor.setDirection(DcMotor.Direction.FORWARD);
         liftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setLiftMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setLiftMotorRunModes(currentRunMode);
@@ -48,6 +49,10 @@ public class LiftMotor {
         armRunTime.reset();
     }
 //seting motors
+
+    public void setLinearOp (LinearOpMode Op) {
+        linearOp = Op;
+    }
 
 
     // methods
