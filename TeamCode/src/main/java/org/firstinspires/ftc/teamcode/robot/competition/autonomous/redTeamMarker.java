@@ -6,6 +6,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMa
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
 @Autonomous(name = "Old Team Marker Both", group = "Red - Blue")
+@Disabled
 public class redTeamMarker extends LinearOpMode {
     private int movement = 0;
     MecanumDrive myMechDrive;

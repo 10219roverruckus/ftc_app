@@ -49,8 +49,8 @@ public class OutreachRobot extends OpMode {
     @Override
     public void init() {
         myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
-        myCatapultArm = new CatapultArm(hardwareMap.dcMotor.get("left_catapult_motor"), hardwareMap.dcMotor.get("right_catapult_motor"));
-        myOutreachTouchSensorCatapult = new outreachTouchSensorCatapult (hardwareMap.get(DigitalChannel.class, "catapult_touch_sensor"));
+//        myCatapultArm = new CatapultArm(hardwareMap.dcMotor.get("left_catapult_motor"), hardwareMap.dcMotor.get("right_catapult_motor"));
+//        myOutreachTouchSensorCatapult = new outreachTouchSensorCatapult (hardwareMap.get(DigitalChannel.class, "catapult_touch_sensor"));
 
         ledStrip = hardwareMap.servo.get("led_strip");
         ledStrip.setPosition(ledPosition);
@@ -107,7 +107,7 @@ public class OutreachRobot extends OpMode {
 
 
 
-
+/*
         if (gamepad1.right_trigger == 1) {
             myCatapultArm.catapultReset(myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
@@ -134,20 +134,20 @@ public class OutreachRobot extends OpMode {
             myCatapultArm.catapultMotorManualOperation(0, .6, myOutreachTouchSensorCatapult);
             myCatapultArm.motorPowerZero();
         }
-
+*/
         if (ledPosition != ledStrip.getPosition()) {
             ledStrip.setPosition(ledPosition);
         }
 
         //catapult.setPower(-triggerLeft);  jkjkjkj
         //catapult.setPower(triggerRight);
-        telemetry.addData("Touch Sensor: ", myOutreachTouchSensorCatapult.checkCatapultTouchSensor());
+//        telemetry.addData("Touch Sensor: ", myOutreachTouchSensorCatapult.checkCatapultTouchSensor());
         telemetry.addData("LED Pos VAR: ", ledPosition);
         telemetry.addData("LED getPosition: ", ledStrip.getPosition());
         telemetry.addData("Left Y: ", leftY);
         telemetry.addData("Right Y: ", rightY);
-        telemetry.addData("Left trigger: ", gamepad1.left_trigger);
-        telemetry.addData("Right Trigger: ", gamepad1.right_trigger);
-        telemetry.update();
+//        telemetry.addData("Left trigger: ", gamepad1.left_trigger);
+//        telemetry.addData("Right Trigger: ", gamepad1.right_trigger);
+//        telemetry.update();
     }
 }

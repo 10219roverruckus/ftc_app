@@ -15,7 +15,7 @@ public class OutreachMotors {
     public final double MAXPOWER = 1;
 
     public double targetDistance;
-    public static final double TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
+    public static final double TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!!! :)
 
 
     public void setLinearOp (LinearOpMode Op) {

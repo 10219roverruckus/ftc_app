@@ -6,6 +6,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -27,6 +28,7 @@ import java.sql.Time;
 import java.util.Timer;
 
 @Autonomous(name = " Old Crater Both", group = "Red - Blue")
+@Disabled
 public class redCrater extends LinearOpMode {
     private int movement = 0;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;
