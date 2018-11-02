@@ -67,10 +67,10 @@ public class FullControlTeleOp extends OpMode {
 
     double topHeight = 8.4;
     double lowHeight = 3.2;
-    boolean liftSensorOverride = false;
+    //boolean liftSensorOverride = false;
 
 
-    private DistanceSensor liftDistanceSensor;
+//    private DistanceSensor liftDistanceSensor;
 
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
@@ -91,7 +91,7 @@ public class FullControlTeleOp extends OpMode {
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
         liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
-        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
+     //   liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
         intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
         intakeMotor = hardwareMap.dcMotor.get("intake_motor");
 
@@ -217,13 +217,13 @@ public class FullControlTeleOp extends OpMode {
 //        telemetry.update();
 
         // generic DistanceSensor methods.
-        telemetry.addData("deviceName",liftDistanceSensor.getDeviceName() );
-        telemetry.addData("range", String.format("%.01f mm", liftDistanceSensor.getDistance(DistanceUnit.MM)));
-        telemetry.addData("range", String.format("%.01f cm", liftDistanceSensor.getDistance(DistanceUnit.CM)));
-        telemetry.addData("range", String.format("%.01f m", liftDistanceSensor.getDistance(DistanceUnit.METER)));
-        telemetry.addData("range", String.format("%.01f in", liftDistanceSensor.getDistance(DistanceUnit.INCH)));
+//        telemetry.addData("deviceName",liftDistanceSensor.getDeviceName() );
+//        telemetry.addData("range", String.format("%.01f mm", liftDistanceSensor.getDistance(DistanceUnit.MM)));
+//        telemetry.addData("range", String.format("%.01f cm", liftDistanceSensor.getDistance(DistanceUnit.CM)));
+//        telemetry.addData("range", String.format("%.01f m", liftDistanceSensor.getDistance(DistanceUnit.METER)));
+//        telemetry.addData("range", String.format("%.01f in", liftDistanceSensor.getDistance(DistanceUnit.INCH)));
 
-        telemetry.update();
+//        telemetry.update();
 
     }
 

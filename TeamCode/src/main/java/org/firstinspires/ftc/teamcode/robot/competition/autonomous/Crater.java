@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
@@ -23,6 +24,7 @@ GyroCompetition myGyro;
 MecanumMineralMiner myMineralMiner;
 RevColorDistance myRevColorDistance;
 
+Webcam myWebcam;
 LiftMotor myLiftMotor;
 TeamMarker myTeamMarker;
 
@@ -51,7 +53,7 @@ public void runOpMode() throws InterruptedException {
     myTeamMarker.setLinearOp(this);
 
     myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-
+    myWebcam = new Webcam();
 
 
     waitForStart();
