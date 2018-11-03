@@ -47,24 +47,36 @@ public class MecanumMineralMiner {
     }
 // both crater and depot
     public void findingMineral() {
-//        if (detector.getXPosition() < 280) {
+//        if (cameraGoldLocation < 280) {
 //            goldPosition = GoldPosition.LEFT;
 //        }
-//        else if (detector.getXPosition() > 500) {
+//        else if (cameraGoldLocation > 500) {
 //            goldPosition = GoldPosition.RIGHT;
 //        }
 //        else {
 //            goldPosition = GoldPosition.MIDDLE;
 //        }
-
-        goldPosition = GoldPosition.RIGHT;
+        goldPosition = goldPosition.MIDDLE;
     }
+
+    public void findingMineralCamera (double cameraGoldLocation) {
+        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
+            goldPosition = GoldPosition.MIDDLE;
+        }
+        else if (cameraGoldLocation > 300) {
+            goldPosition = GoldPosition.RIGHT;
+        }
+        else {
+            goldPosition = GoldPosition.LEFT;
+        }
+    }
+
 //both crater and depot
     public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor) {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
-        myLiftMotor.extendLiftMotorFully(); //distance sensor
+        myLiftMotor.extendLiftMotorFullyEncoders(); //distance sensor
 
         myMechDrive.strafeRight(.3,.3);
         myMechDrive.driveForward(.3, .3); //DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
@@ -74,7 +86,7 @@ public class MecanumMineralMiner {
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
                 myGyro.gyroOrientMecanum(34, myMechDrive);
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.35);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.8);
                 break;
 
             case MIDDLE:
@@ -82,15 +94,15 @@ public class MecanumMineralMiner {
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
                 myGyro.gyroOrientMecanum(7, myMechDrive);
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.3);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);
                 break;
 
             case RIGHT:
 //                linearOp.telemetry.addData("MINERAL POSITION: ", goldPosition);
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
-                myGyro.gyroOrientMecanum(-13, myMechDrive);
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.35);
+                myGyro.gyroOrientMecanum(-14, myMechDrive);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.8);
                 break;
         }
     }
@@ -115,25 +127,25 @@ public class MecanumMineralMiner {
         myMechDrive.stopMotors();
         //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
  //       myMechDrive.driveForward(SPD_DRIVE_MED, .3);
-        myGyro.gyroOrientMecanum(85, myMechDrive);  //orients self with red tape so parallel to tape.
-        //
+        myGyro.gyroOrientMecanum(74, myMechDrive);  //orients self with red tape so parallel to tape.
+
         //MAY NEED TO BE LESS THAN 90 DEGRESS SO ROBOT DOES NOT HIT THE LANDER LEG!
-        //
+
 
 
         //IN THEORY, THE DRIVE DISTANCE SHOULD BE THE SAME OR CLOSE FOR L / M / R
         //DRIVES TO WALL
-//        switch (goldPosition) {  //DRIVE TO WALL
-//            case LEFT:
-//                myMechDrive.driveForward(SPD_DRIVE_MED, 6);
-//                break;
-//            case MIDDLE:
-//                myMechDrive.driveForward(SPD_DRIVE_MED, 6);
-//                break;
-//            case RIGHT:
-//                myMechDrive.driveForward(SPD_DRIVE_MED, 6.5);
-//                break;
-//        }
+        switch (goldPosition) {  //DRIVE TO WALL
+            case LEFT:
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+                break;
+            case MIDDLE:
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);
+                break;
+            case RIGHT:
+                myMechDrive.driveForward(SPD_DRIVE_MED, 4.0);
+                break;
+        }
     }
 //crater
     public void wallToDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
@@ -155,11 +167,14 @@ public class MecanumMineralMiner {
             linearOp.idle();
         }
         myMechDrive.stopMotors();
+        myGyro.gyroOrientMecanum(175, myMechDrive);
+        myMechDrive.stopMotors();
 
         myTeamMarker.teamMarkerArmOutside();
-        linearOp.sleep(1000);
+        linearOp.sleep(2000);
         myTeamMarker.teamMarkerArmRaised();
 
+        myGyro.gyroOrientMecanum(130, myMechDrive);
         myMechDrive.driveBackward(SPD_DRIVE_MED, 6);
     }
 
@@ -189,13 +204,13 @@ public class MecanumMineralMiner {
             linearOp.idle();
         }
 
-
-        myGyro.gyroOrientMecanum(42, myMechDrive);
-
-        myTeamMarker.teamMarkerArmOutside ();
-        myTeamMarker.teamMarkerArmRaised();
-
-        myGyro.gyroOrientMecanum(133.5, myMechDrive);
+//
+//        myGyro.gyroOrientMecanum(42, myMechDrive);
+//
+//        myTeamMarker.teamMarkerArmOutside ();
+//        myTeamMarker.teamMarkerArmRaised();
+//
+//        myGyro.gyroOrientMecanum(133.5, myMechDrive);
 
 
 

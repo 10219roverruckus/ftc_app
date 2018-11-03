@@ -7,9 +7,9 @@ public class TeamMarker {
 
     // instance variables
     public Servo teamMarkerArm; // actually the arm
-    public double tMArmRaised = .46; // arm raised position
-    public double tMArmOutside = .9 ; // arm lowered position
-    public double tMArmInside = 0;
+    public double tMArmRaised = .76; // arm raised position
+    public double tMArmOutside = .25 ; // arm lowered position
+    public double tMArmInside = 1;
     public LinearOpMode linearOp = null;
 
     // constructors

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "TEST LIFT - P2 R STICK")
+@TeleOp(name = "TEST LIFT - P2 R STICK - B RESET")
 public class LiftTest extends OpMode {
     DcMotor liftArmMotor;
     double rightJoystick_lift;
@@ -14,6 +14,9 @@ public class LiftTest extends OpMode {
     public void init() {
         liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
 //        liftArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -25,6 +28,10 @@ public class LiftTest extends OpMode {
         }
         else {
             liftArmMotor.setPower(0);
+        }
+        telemetry.addData("LIFT MOTOR POSITION: ", liftArmMotor.getCurrentPosition());
+        if (gamepad2.b) {
+            liftArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
     }
 }

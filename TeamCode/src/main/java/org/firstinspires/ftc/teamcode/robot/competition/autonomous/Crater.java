@@ -88,7 +88,7 @@ public void runOpMode() throws InterruptedException {
             /*
             Will angle robot to be parallel with robot, score in depot, and then go to crater.
              */
-    //        myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
+           myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
 
             active = false;
         }

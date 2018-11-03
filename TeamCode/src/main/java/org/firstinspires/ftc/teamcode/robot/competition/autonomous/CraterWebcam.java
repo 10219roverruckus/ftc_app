@@ -1,41 +1,15 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-package org.firstinspires.ftc.teamcode.DogeCV.Examples;
+package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
-import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -45,6 +19,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +37,19 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@TeleOp(name="GoldAlign Example WEBCAMERA 4.2", group="DogeCV")
+@Autonomous(name = "Crater - competition WEBCAM")
+//@Disabled
+public class CraterWebcam extends LinearOpMode  {
 
-public class GoldAlignExampleCAMERA extends OpMode
-{
+    MecanumDrive myMechDrive;
+
+    GyroCompetition myGyro;
+    MecanumMineralMiner myMineralMiner;
+    RevColorDistance myRevColorDistance;
+
+    LiftMotor myLiftMotor;
+    TeamMarker myTeamMarker;
+
     private GoldAlignDetector detector;
     WebcamName webcamName;
     private ElapsedTime runtime = new ElapsedTime();
@@ -77,10 +66,32 @@ public class GoldAlignExampleCAMERA extends OpMode
     Dogeforia vuforia;
     List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
 
-
-
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
+
+
+
+        final long sleepTime = 100;
+        final double SPD_DRIVE_MED = .5;
+
+
+        myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
+        myMechDrive.setLinearOp(this);
+
+        myGyro = new GyroCompetition(hardwareMap.get(BNO055IMU.class, "imu"));
+        myGyro.setLinearOp(this);
+
+        myMineralMiner = new MecanumMineralMiner();
+        myMineralMiner.setLinearOp(this);
+
+        myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
+        myLiftMotor.setLinearOp(this);
+
+        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
+        myTeamMarker.setLinearOp(this);
+
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
 
@@ -157,37 +168,47 @@ public class GoldAlignExampleCAMERA extends OpMode
         vuforia.enableDogeCV();
         vuforia.showDebug();
         vuforia.start();
-        detector.goldXPos = 0;
 
 
 
+        waitForStart();
+
+        boolean active = true;
+        while (opModeIsActive() && !isStopRequested()) {
+            while (active && !isStopRequested()) {
+                idle();
+            /*
+            Find the correct gold mineral
+             */
+                myMineralMiner.findingMineralCamera(detector.getXPosition());
+                sleep(sleepTime);
+                idle();
+            /*
+            1) drives forward from lander a short distance so doesn't interfere with gyro turn
+            2) angles self with gold mineral based on myMineralMiner.findingMineral
+            3) Drives forward to knock of gold mineral.
+             */
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);
+                sleep(sleepTime);
+                idle();
+            /*
+            1) BACKS UP TO TAPE
+            2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
+            3) GOES STRAIGHT TOWARDS WALL
+             */
+                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);
+                sleep(sleepTime);
+
+                idle();
+            /*
+            Will angle robot to be parallel with robot, score in depot, and then go to crater.
+             */
+                        myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
+
+                active = false;
+            }
+            idle();
+            requestOpModeStop();
+        }
     }
-
-    @Override
-    public void init_loop() {
-    }
-
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {
-
-    }
-
-
-    @Override
-    public void loop() {
-        telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral
-        telemetry.addData("X Pos" , detector.getXPosition()); // Gold X pos.
-    }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-        detector.disable();
-    }
-
 }

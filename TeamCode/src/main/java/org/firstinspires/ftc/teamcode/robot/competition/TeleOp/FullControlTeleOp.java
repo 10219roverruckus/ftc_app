@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.boardArm;
 import org.firstinspires.ftc.teamcode.robot.old.classes.sub.colorSensorArm;
@@ -39,9 +40,12 @@ public class FullControlTeleOp extends OpMode {
     DcMotor liftArmMotor;
     DcMotor intakePositionMotor;
     DcMotor intakeMotor;
-//
-//    Servo teamMarkerArm;
+
+
+    Servo teamMarkerArm;
     Servo intakeExtenderArm;
+
+
 
     double leftStickVal;
     double rightStickVal;
@@ -58,6 +62,9 @@ public class FullControlTeleOp extends OpMode {
 
     double intakeExtensionPower;
     double intakePositionPower;
+    double intakePosition = 0;
+    double intakeIncrement = .001;
+    double teamMarkerPosition = .76;
 
     boolean reverseMode;
 
@@ -67,13 +74,15 @@ public class FullControlTeleOp extends OpMode {
 
     double topHeight = 8.4;
     double lowHeight = 3.2;
+
     //boolean liftSensorOverride = false;
 
 
 //    private DistanceSensor liftDistanceSensor;
 
-    LiftMotor myLiftMotor;
-    IntakeExtenderArm myIntakeExtenderArm;
+     LiftMotor myLiftMotor;
+     IntakeExtenderArm myIntakeExtenderArm;
+//    IntakeRotator myIntakeRotator;
 
     final double SPD_DRIVE_LOW = .20;     //Lowest speed
     final double SPD_DRIVE_MED = .5;      //Default is  SPD_MED
@@ -104,29 +113,19 @@ public class FullControlTeleOp extends OpMode {
         liftArmMotor.setDirection(DcMotor.Direction.REVERSE);
         intakePositionMotor.setDirection(DcMotor.Direction.REVERSE);
 
-//        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
-//        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
+        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
+        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
 
         // need to initilize sensors here
 
         reverseMode = false;
 
         initServos = false;
-    }
-
-
-    //Code runs only ONCE when driver hits PLAY
-
-    @Override
-    public void start () {
-        //SET LIFT MOTOR TO RETRACTED STATE
-//        myLiftMotor.retractLiftMotorFully();
-        // SET INTAKE ARM TO RETRACTED STATE
-//        myIntakeExtenderArm.retractingIntakeArm(SPD_ARM_MED, 1);
+        teamMarkerArm.setPosition(teamMarkerPosition);
+        intakeExtenderArm.setPosition(.5);
     }
 
     @Override
-
     public void loop() {
 
         if (gamepad1.dpad_up) {    //see if the controller is in reverse mode or not (if joysticks are pressed down or not)
@@ -140,76 +139,79 @@ public class FullControlTeleOp extends OpMode {
         drive();
 
 
-        //MOTOR FOR LIFT
+        //align rotator motor
 
 
-        rightJoystick_lift = gamepad2.right_stick_y;    //assigns lift to right stick y
+        rightJoystick_lift = gamepad2.right_stick_y;    //assigns rotator to right stick y
 
         if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-            liftArmMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            liftArmMotor.setPower(0);
-        }
-//        if (gamepad2.dpad_down) { //override distance sensor for lif
-//            telemetry.addData("rightJoystick_lift-if", rightJoystick_lift);
-//
-//            if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-//                liftArmMotor.setPower(rightJoystick_lift);
-//            }
-//            else {
-//                liftArmMotor.setPower(0);
-//            }
-//        }
-//        else { // lift with distance sensor
-//
-//            if (lowHeight <= liftDistanceSensor.getDistance(DistanceUnit.INCH) && topHeight >= liftDistanceSensor.getDistance(DistanceUnit.INCH)) {
-//                rightJoystick_lift = gamepad2.right_stick_y;
-//                if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-//                    liftArmMotor.setPower(rightJoystick_lift);
-//                }
-//                else {
-//                    liftArmMotor.setPower(0);
-//                }
-//
-//            }
-//        }
-
-
-//        intake system
-//        intakeExtensionPower = gamepad2.right_stick_y;      // WIP
-        intakePositionPower = gamepad2.left_stick_y;
-
-        if ( gamepad2.left_stick_y < -.1 || gamepad2.left_stick_y > .1) {
-            intakePositionMotor.setPower(intakePositionPower);
+            intakePositionMotor.setPower(rightJoystick_lift);
         }
         else {
             intakePositionMotor.setPower(0);
         }
 
+        //lift motor up and down
 
-        if (gamepad2.right_trigger > .9 ) {
-            intakeMotor.setPower(1);
+        if (gamepad2.dpad_down) {
+            liftArmMotor.setPower(-1);
+        }
+        else if (gamepad2.dpad_up) {
+            liftArmMotor.setPower(1);
+        }
+        else {
+            liftArmMotor.setPower(0);
         }
 
-        else if (gamepad2.left_trigger > .9) {
+        // extender arm for out and in
+
+
+
+
+        if (gamepad2.left_stick_y > .1) {
+//            intakePosition = intakePosition + intakeIncrement;
+//            intakeExtenderArm.setPosition(intakePosition);
+            intakeExtenderArm.setPosition(1);
+        }
+        else if (gamepad2.left_stick_y < -.1) {
+//            intakePosition = intakePosition - intakeIncrement;
+//            intakeExtenderArm.setPosition(intakePosition);
+            intakeExtenderArm.setPosition(0);
+        }
+        else {
+            intakeExtenderArm.setPosition(.5);
+        }
+
+
+
+        //THIS CAN COME OUT
+        if (gamepad1.right_bumper) {
+            teamMarkerPosition = teamMarkerPosition + intakeIncrement;
+            teamMarkerArm.setPosition(teamMarkerPosition);
+        }
+        else if (gamepad1.left_bumper) {
+            teamMarkerPosition = teamMarkerPosition - intakeIncrement;
+            teamMarkerArm.setPosition(teamMarkerPosition);
+        }
+
+
+
+        if (gamepad2.right_trigger > .1) {
+            intakeMotor.setPower(1);
+        }
+        else if (gamepad2.right_trigger < -.1) {
             intakeMotor.setPower(-1);
         }
         else {
-            intakeMotor.setPower(0);
-        }
-
-
-
-     //   telemetryOutput();
-
-
-
-
+        intakeMotor.setPower(0);
+    }
+    telemetryOutput();
     }
 
-    public void telemetryOutput (){
 
+    public void telemetryOutput (){
+        telemetry.addData("EXTENDER POSITION SERVO: ", intakeExtenderArm.getPosition());
+        telemetry.addData("TEAM MARKER SERVO: ", teamMarkerArm.getPosition());
 //        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
 //        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
 //        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);

@@ -36,7 +36,7 @@ public class GoldAlignDetector extends DogeCVDetector {
     // Results of the detector
     private boolean found    = false; // Is the gold mineral found
     private boolean aligned  = false; // Is the gold mineral aligned
-    private double  goldXPos = 0;     // X Position (in pixels) of the gold element
+    public double  goldXPos = 0;     // X Position (in pixels) of the gold element
 
     // Detector settings
     public boolean debugAlignment = true; // Show debug lines to show alignment settings

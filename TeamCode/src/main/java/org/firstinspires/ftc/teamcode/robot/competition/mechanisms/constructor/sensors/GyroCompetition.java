@@ -58,26 +58,26 @@ public class GyroCompetition {
         linearOp.sleep(1000); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
             while (angles.firstAngle >=  angle + TOLERANCE) {
-                linearOp.telemetry.addLine("GREATER THAN WHILE");
-                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
-                linearOp.telemetry.update();
+//                linearOp.telemetry.addLine("GREATER THAN WHILE");
+//                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//                linearOp.telemetry.update();
                 myMechDrive.setMotorPowerRotateRight(.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
             while (angles.firstAngle <= angle - TOLERANCE) {
-                linearOp.telemetry.addLine("LESS THAN WHILE");
-                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
-                linearOp.telemetry.update();
+//                linearOp.telemetry.addLine("LESS THAN WHILE");
+//                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//                linearOp.telemetry.update();
                 myMechDrive.setMotorPowerRotateLeft(.2);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
-        linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
-        linearOp.telemetry.update();
+//        linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
+//        linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//        linearOp.telemetry.update();
         //linearOp.sleep(1000); //intentionally long sleep for feedback
     }
 
