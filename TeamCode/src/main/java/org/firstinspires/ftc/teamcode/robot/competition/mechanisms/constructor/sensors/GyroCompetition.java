@@ -55,7 +55,7 @@ public class GyroCompetition {
         linearOp.telemetry.addLine("READY TO ORIENT WITH GYRO!");
         linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
         linearOp.telemetry.update();
-        linearOp.sleep(1000); //intentionally long sleep for feedback
+        linearOp.sleep(100); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
             while (angles.firstAngle >=  angle + TOLERANCE) {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");

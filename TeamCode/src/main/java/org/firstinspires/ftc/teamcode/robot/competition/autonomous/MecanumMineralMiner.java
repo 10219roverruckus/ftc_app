@@ -127,7 +127,7 @@ public class MecanumMineralMiner {
         myMechDrive.stopMotors();
         //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
  //       myMechDrive.driveForward(SPD_DRIVE_MED, .3);
-        myGyro.gyroOrientMecanum(74, myMechDrive);  //orients self with red tape so parallel to tape.
+        myGyro.gyroOrientMecanum(72, myMechDrive);  //orients self with red tape so parallel to tape.
 
         //MAY NEED TO BE LESS THAN 90 DEGRESS SO ROBOT DOES NOT HIT THE LANDER LEG!
 
@@ -149,7 +149,7 @@ public class MecanumMineralMiner {
     }
 //crater
     public void wallToDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
-        myGyro.gyroOrientMecanum(130, myMechDrive);
+        myGyro.gyroOrientMecanum(127, myMechDrive); // 130 last night
         myMechDrive.setMotorPowerStrafeRight(.3);
         linearOp.sleep(1000);
         myMechDrive.stopMotors();
@@ -167,15 +167,21 @@ public class MecanumMineralMiner {
             linearOp.idle();
         }
         myMechDrive.stopMotors();
-        myGyro.gyroOrientMecanum(175, myMechDrive);
+        myGyro.gyroOrientMecanum(170, myMechDrive);
         myMechDrive.stopMotors();
+        myMechDrive.strafeLeft(.2, .2);
 
         myTeamMarker.teamMarkerArmOutside();
-        linearOp.sleep(2000);
+        linearOp.sleep(1250);
         myTeamMarker.teamMarkerArmRaised();
-
-        myGyro.gyroOrientMecanum(130, myMechDrive);
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 6);
+        linearOp.sleep(500);
+        myGyro.gyroOrientMecanum(128, myMechDrive);
+        myMechDrive.stopMotors();
+        myMechDrive.strafeRight(.2, .2);
+        myGyro.gyroOrientMecanum(128, myMechDrive);
+        myMechDrive.setMotorPowerStrafeRight(.3);
+        linearOp.sleep(500);
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 6.2);
     }
 
 // depot

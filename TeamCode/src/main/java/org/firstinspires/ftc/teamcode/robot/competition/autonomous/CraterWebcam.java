@@ -169,7 +169,7 @@ public class CraterWebcam extends LinearOpMode  {
         vuforia.showDebug();
         vuforia.start();
 
-
+        myTeamMarker.teamMarkerArmRaised();
 
         waitForStart();
 
