@@ -12,6 +12,11 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
+// import com.disnodeteam.dogecv.CameraViewDisplay;
+// import com.disnodeteam.dogecv.DogeCV;
+// import com.disnodeteam.dogecv.Dogeforia;
+// import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+
 
 @Autonomous(name = "Depot - competition")
 
@@ -63,6 +68,9 @@ public void runOpMode() throws InterruptedException {
             /*
             Find the correct gold mineral
              */
+
+            //detector.goldXPos = 0;
+
             myMineralMiner.findingMineral();
             sleep(sleepTime);
             idle();
@@ -79,8 +87,8 @@ public void runOpMode() throws InterruptedException {
             2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
             3) GOES STRAIGHT TOWARDS WALL
              */
-            myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
-            sleep(sleepTime);
+            //              myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
+            //              sleep(sleepTime);
 
             idle();
             /*

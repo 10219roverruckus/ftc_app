@@ -178,6 +178,10 @@ public class GoldAlignExampleCAMERA extends OpMode
 
     @Override
     public void loop() {
+        if (gamepad1.b) {
+            detector.goldXPos = 0;
+        }
+
         telemetry.addData("IsAligned" , detector.getAligned()); // Is the bot aligned with the gold mineral
         telemetry.addData("X Pos" , detector.getXPosition()); // Gold X pos.
     }

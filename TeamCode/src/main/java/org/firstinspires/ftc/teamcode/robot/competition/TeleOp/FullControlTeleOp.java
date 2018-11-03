@@ -199,11 +199,11 @@ public class FullControlTeleOp extends OpMode {
         if (gamepad2.right_trigger > .1) {
             intakeMotor.setPower(1);
         }
-        else if (gamepad2.right_trigger < -.1) {
+        else if (gamepad2.left_trigger > .1) {
             intakeMotor.setPower(-1);
         }
         else {
-        intakeMotor.setPower(0);
+            intakeMotor.setPower(0);
     }
     telemetryOutput();
     }

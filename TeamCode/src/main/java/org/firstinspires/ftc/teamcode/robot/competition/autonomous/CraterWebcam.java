@@ -180,6 +180,8 @@ public class CraterWebcam extends LinearOpMode  {
             /*
             Find the correct gold mineral
              */
+                detector.goldXPos = 0;
+                sleep(1000);
                 myMineralMiner.findingMineralCamera(detector.getXPosition());
                 sleep(sleepTime);
                 idle();
