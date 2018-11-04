@@ -185,6 +185,7 @@ public class CraterWebcam extends LinearOpMode  {
                 myMineralMiner.findingMineralCamera(detector.getXPosition());
                 sleep(sleepTime);
                 idle();
+                idle();
             /*
             1) drives forward from lander a short distance so doesn't interfere with gyro turn
             2) angles self with gold mineral based on myMineralMiner.findingMineral

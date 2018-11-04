@@ -9,13 +9,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
-
-// import com.disnodeteam.dogecv.CameraViewDisplay;
-// import com.disnodeteam.dogecv.DogeCV;
-// import com.disnodeteam.dogecv.Dogeforia;
-// import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 
 
 @Autonomous(name = "Depot - competition")
@@ -28,8 +24,9 @@ GyroCompetition myGyro;
 MecanumMineralMiner myMineralMiner;
 RevColorDistance myRevColorDistance;
 
-    LiftMotor myLiftMotor;
-    TeamMarker myTeamMarker;
+Webcam myWebcam;
+LiftMotor myLiftMotor;
+TeamMarker myTeamMarker;
 
 @Override
 public void runOpMode() throws InterruptedException {
@@ -56,7 +53,7 @@ public void runOpMode() throws InterruptedException {
     myTeamMarker.setLinearOp(this);
 
     myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-
+    myWebcam = new Webcam();
 
 
     waitForStart();
@@ -68,9 +65,6 @@ public void runOpMode() throws InterruptedException {
             /*
             Find the correct gold mineral
              */
-
-            //detector.goldXPos = 0;
-
             myMineralMiner.findingMineral();
             sleep(sleepTime);
             idle();
@@ -87,14 +81,14 @@ public void runOpMode() throws InterruptedException {
             2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
             3) GOES STRAIGHT TOWARDS WALL
              */
-            //              myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
-            //              sleep(sleepTime);
+            myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);
+            sleep(sleepTime);
 
             idle();
             /*
             Will angle robot to be parallel with robot, score in depot, and then go to crater.
              */
-         //   myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);
+           myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
 
             active = false;
         }
