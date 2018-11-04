@@ -86,6 +86,8 @@ public class MecanumMineralMiner {
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
                 myGyro.gyroOrientMecanum(36, myMechDrive);  // different (34)
+                myMechDrive.stopMotors();
+
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.15); // different (1.8)
                 break;
 
@@ -93,8 +95,10 @@ public class MecanumMineralMiner {
 //                linearOp.telemetry.addData("MINERAL POSITION: ", goldPosition);
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
-                myGyro.gyroOrientMecanum(7, myMechDrive); //turning too much towrads the right EA
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2); // different (1.7)
+                myGyro.gyroOrientMecanum(4, myMechDrive); //turning too much towrads the right EA
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.7); // different (1.7)
                 break;
 
             case RIGHT:
@@ -102,6 +106,8 @@ public class MecanumMineralMiner {
 //                linearOp.telemetry.update();
 //                linearOp.sleep(2000);
                 myGyro.gyroOrientMecanum(-14, myMechDrive);
+                myMechDrive.stopMotors();
+
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2); // different (1.8)
                 break;
         }
@@ -127,7 +133,8 @@ public class MecanumMineralMiner {
         myMechDrive.stopMotors();
         //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
  //       myMechDrive.driveForward(SPD_DRIVE_MED, .3);
-        myGyro.gyroOrientMecanum(74, myMechDrive);  //orients self with red tape so parallel to tape.
+        myGyro.gyroOrientMecanum(74, myMechDrive);
+        myMechDrive.stopMotors();  //orients self with red tape so parallel to tape.
         //different (72)
 
         //MAY NEED TO BE LESS THAN 90 DEGRESS SO ROBOT DOES NOT HIT THE LANDER LEG!
@@ -182,58 +189,106 @@ public class MecanumMineralMiner {
         linearOp.sleep(1250);
         myTeamMarker.teamMarkerArmRaised();
         linearOp.sleep(500);
-//        myMechDrive.strafeRight(.2,.1);
-//        myMechDrive.strafeLeft(.2,.1);
 
-
+        myMechDrive.strafeLeft(SPD_DRIVE_LOW,.2);
+        myMechDrive.driveBackward(SPD_DRIVE_LOW,.7);
 
         myGyro.gyroOrientMecanum(128, myMechDrive);
         myMechDrive.stopMotors();
 
-        myMechDrive.driveBackward(SPD_DRIVE_MED, .2);
-
-        // myMechDrive.
-        myMechDrive.strafeRight(.2, .2);
-        myGyro.gyroOrientMecanum(128, myMechDrive);
-        myMechDrive.setMotorPowerStrafeRight(.3);
+        myMechDrive.setMotorPowerStrafeRight(.3);  // staffe into wall
         linearOp.sleep(1000);
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 5.5); //different then mine (6.2)
+
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0); //Drive to plexiglass seem
+        myGyro.gyroOrientMecanum(128, myMechDrive);   // Gyo correction for plexiglass
+        myMechDrive.stopMotors();
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 3); //Drive past plexiglass seem
+
     }
 
 // depot
     public void mineralToDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
         switch (goldPosition) {
-            case LEFT:
+            case LEFT:   // not working
+                myMechDrive.driveForward(SPD_DRIVE_LOW,1);
+                myMechDrive.driveBackward(SPD_DRIVE_LOW,.2);
+
                 myGyro.gyroOrientMecanum(-28, myMechDrive);  //rotates in toward depot
+                myMechDrive.stopMotors();
 
-            case MIDDLE:
-                myGyro.gyroOrientMecanum(4, myMechDrive); //drive forward towards depo just a little bit
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.2);
 
-            case RIGHT:
-                myGyro.gyroOrientMecanum(31, myMechDrive);  //rotates in toward depot
+                myGyro.gyroOrientMecanum(42, myMechDrive);
+                myMechDrive.stopMotors();
+
+                myMechDrive.strafeLeft(.2,.3);
+
+                myTeamMarker.teamMarkerArmOutside ();
+                linearOp.sleep(1000);
+                myTeamMarker.teamMarkerArmRaised();
+
+                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.stopMotors();
+
+
+            case MIDDLE: // duplicating code
+                myGyro.gyroOrientMecanum(0, myMechDrive); //drive forward towards depo just a little bit
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.1); // push mineral into depot for extra point
+                myMechDrive.driveBackward(SPD_DRIVE_LOW, .2); // back up clear mineral
+
+                myGyro.gyroOrientMecanum(60, myMechDrive); // turn to drop team marker
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED,.3); // inch forward a little bit
+
+                // myMechDrive.strafeLeft(.2,.3); // strafe
+
+                myTeamMarker.teamMarkerArmOutside (); // drop maker
+                linearOp.sleep(1000);
+                myTeamMarker.teamMarkerArmRaised(); // lift servo arm
+
+                myGyro.gyroOrientMecanum(130, myMechDrive); // orient towards depot
+                myMechDrive.stopMotors();
+
+            case RIGHT: // working
+                myMechDrive.driveForward(SPD_DRIVE_LOW,1.1); // pushimg mineral to clear middle mineral
+                myMechDrive.driveBackward(SPD_DRIVE_LOW,.2);  // backup so turn does not hit mineral
+                myGyro.gyroOrientMecanum(32, myMechDrive);  //rotates in toward depot
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.1);
+
+                myGyro.gyroOrientMecanum(60, myMechDrive);
+                myMechDrive.stopMotors();
+
+                myMechDrive.strafeLeft(.2,.3);
+
+                myTeamMarker.teamMarkerArmOutside ();
+                linearOp.sleep(1000);
+                myTeamMarker.teamMarkerArmRaised();
+
+                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.stopMotors();
         }
 
-        Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
-                (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
-                (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
-                hsvValues);
-        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
-            Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
-                    (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
-                    (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
-                    hsvValues);
-            myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
-            linearOp.idle();
-        }
+//
+//        Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
+//                (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
+//                (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
+//                hsvValues);
+//        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
+//            Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
+//                    (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
+//                    (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
+//                    hsvValues);
+//            myMechDrive.setMotorSpeeds(SPD_DRIVE_LOW);
+//            linearOp.idle();
+//        }
 
-//
-        myGyro.gyroOrientMecanum(42, myMechDrive);
-//
-        myTeamMarker.teamMarkerArmOutside ();
-        linearOp.sleep(1000);
-        myTeamMarker.teamMarkerArmRaised();
-//
-        myGyro.gyroOrientMecanum(133.5, myMechDrive);
+        myMechDrive.stopMotors();
+
 
 
 
@@ -242,9 +297,39 @@ public class MecanumMineralMiner {
 //depot
     public void depotToCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
 
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 3);
-        myGyro.gyroOrientMecanum(45, myMechDrive);
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 3);
+        switch (goldPosition) {
+            case LEFT: // not working
+
+                myMechDrive.setMotorPowerStrafeRight(.5);
+                linearOp.sleep(1500);
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
+                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+
+            case MIDDLE:
+                myMechDrive.setMotorPowerStrafeRight(.5);
+                linearOp.sleep(2000);
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
+                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);
+
+            case RIGHT: // working
+                myMechDrive.setMotorPowerStrafeRight(.5);
+                linearOp.sleep(1500);
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
+                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.stopMotors();
+
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);
+        }
+
 
     }
 }

@@ -6,7 +6,6 @@ import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -19,10 +18,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
@@ -37,9 +35,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - competition WEBCAM")
+@Autonomous(name = "Depot - competition WEBCAM")
 //@Disabled
-public class CraterWebcam extends LinearOpMode  {
+public class DepotWebcam extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
 
@@ -199,14 +197,13 @@ public class CraterWebcam extends LinearOpMode  {
             2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
             3) GOES STRAIGHT TOWARDS WALL
              */
-                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);
+                myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
                 sleep(sleepTime);
-
                 idle();
             /*
             Will angle robot to be parallel with robot, score in depot, and then go to crater.
              */
-                myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
+                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);
 
                 active = false;
             }
