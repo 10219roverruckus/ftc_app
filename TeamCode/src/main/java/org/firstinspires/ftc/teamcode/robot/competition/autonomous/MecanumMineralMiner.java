@@ -229,6 +229,7 @@ public class MecanumMineralMiner {
 
                 myGyro.gyroOrientMecanum(130, myMechDrive);
                 myMechDrive.stopMotors();
+                break;
 
 
             case MIDDLE: // duplicating code
@@ -251,6 +252,7 @@ public class MecanumMineralMiner {
 
                 myGyro.gyroOrientMecanum(130, myMechDrive); // orient towards depot
                 myMechDrive.stopMotors();
+                break;
 
             case RIGHT: // working
                 myMechDrive.driveForward(SPD_DRIVE_LOW,1.1); // pushimg mineral to clear middle mineral
@@ -271,6 +273,7 @@ public class MecanumMineralMiner {
 
                 myGyro.gyroOrientMecanum(130, myMechDrive);
                 myMechDrive.stopMotors();
+                break;
         }
 
 //
@@ -308,6 +311,7 @@ public class MecanumMineralMiner {
                 myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+                break;
 
             case MIDDLE:
                 myMechDrive.setMotorPowerStrafeRight(.5);
@@ -318,6 +322,7 @@ public class MecanumMineralMiner {
                 myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);
+                break;
 
             case RIGHT: // working
                 myMechDrive.setMotorPowerStrafeRight(.5);
@@ -328,6 +333,7 @@ public class MecanumMineralMiner {
                 myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);
+                break;
         }
 
 
