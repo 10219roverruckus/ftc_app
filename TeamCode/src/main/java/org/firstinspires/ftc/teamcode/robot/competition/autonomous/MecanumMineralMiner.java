@@ -157,15 +157,13 @@ public class MecanumMineralMiner {
     }
 //crater
     public void wallToDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
-        myGyro.gyroOrientMecanum(127, myMechDrive); // 130 last night
+        myGyro.gyroOrientMecanum(137, myMechDrive); // 127 but it did not mske sense because the other angle was 138 and they were the same angle and then it was too big so now it is 137
+        myMechDrive.stopMotors();
         myMechDrive.setMotorPowerStrafeRight(.3);
-        linearOp.sleep(1000);
+        linearOp.sleep(1500); //was 1000 but it needed to be longer
         myMechDrive.stopMotors();
 
-
-        //myMechDrive.strafeLeft(.2,1);
-        //myGyro.gyroOrientMecanum(127, myMechDrive);
-
+        //myMechDrive.driveForward(SPD_DRIVE_MED, 1.5); was about to try to gyro away from the wall and then back to the wall around the seam
         //myMechDrive.stopMotors();
         myMechDrive.driveForward(SPD_DRIVE_MED, 3);
         Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
@@ -178,6 +176,7 @@ public class MecanumMineralMiner {
                     (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                     hsvValues);
             myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
+
             linearOp.idle();
         }
         myMechDrive.stopMotors();
@@ -193,16 +192,16 @@ public class MecanumMineralMiner {
         myMechDrive.strafeLeft(SPD_DRIVE_LOW,.2);
         myMechDrive.driveBackward(SPD_DRIVE_LOW,.7);
 
-        myGyro.gyroOrientMecanum(128, myMechDrive);
+        myGyro.gyroOrientMecanum(138, myMechDrive); // was 128 but it was to small of the turn
         myMechDrive.stopMotors();
 
         myMechDrive.setMotorPowerStrafeRight(.3);  // staffe into wall
         linearOp.sleep(1000);
 
         myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0); //Drive to plexiglass seem
-        myGyro.gyroOrientMecanum(128, myMechDrive);   // Gyo correction for plexiglass
+        myGyro.gyroOrientMecanum(139, myMechDrive);   // Gyo correction for plexiglass  was 137
         myMechDrive.stopMotors();
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 3); //Drive past plexiglass seem
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3); //Drive past plexiglass seem
 
     }
 
@@ -218,10 +217,10 @@ public class MecanumMineralMiner {
 
                 myMechDrive.driveForward(SPD_DRIVE_MED,2.2);
 
-                myGyro.gyroOrientMecanum(42, myMechDrive);
+                myGyro.gyroOrientMecanum(42, myMechDrive); // turn was 42 (perfect)
                 myMechDrive.stopMotors();
 
-                myMechDrive.strafeLeft(.2,.3);
+                myMechDrive.strafeLeft(.2,.3); // rotations .3 (prefect)
 
                 myTeamMarker.teamMarkerArmOutside ();
                 linearOp.sleep(1000);
@@ -335,6 +334,44 @@ public class MecanumMineralMiner {
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);
                 break;
         }
+
+        //crater
+//        public void craterFromDepotToCrater(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
+//            switch (goldPosition) {
+//                case LEFT: // not working
+//
+//                    myMechDrive.setMotorPowerStrafeRight(.5);
+//                    linearOp.sleep(1500);
+//
+//                    myMechDrive.driveBackward(SPD_DRIVE_MED, 2);
+//                    myGyro.gyroOrientMecanum(134, myMechDrive);
+//                    myMechDrive.stopMotors();
+//
+//                    myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+//                    break;
+//
+//                case MIDDLE:
+//                    myMechDrive.setMotorPowerStrafeRight(.5);
+//                    linearOp.sleep(2000);
+//
+//                    myMechDrive.driveBackward(SPD_DRIVE_MED, 2);
+//                    myGyro.gyroOrientMecanum(134, myMechDrive);
+//                    myMechDrive.stopMotors();
+//
+//                    myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);
+//                    break;
+//
+//                case RIGHT: // working
+//                    myMechDrive.setMotorPowerStrafeRight(.5);
+//                    linearOp.sleep(1500);
+//
+//                    myMechDrive.driveBackward(SPD_DRIVE_MED, 2);
+//                    myGyro.gyroOrientMecanum(134, myMechDrive);
+//                    myMechDrive.stopMotors();
+//
+//                    myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);
+//                    break;
+//        }
 
 
     }
