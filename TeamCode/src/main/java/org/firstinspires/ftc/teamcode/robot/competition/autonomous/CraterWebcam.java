@@ -177,36 +177,33 @@ public class CraterWebcam extends LinearOpMode  {
         while (opModeIsActive() && !isStopRequested()) {
             while (active && !isStopRequested()) {
                 idle();
-            /*
-            Find the correct gold mineral
-             */
-                detector.goldXPos = 0;
+
+                detector.goldXPos = 0;  // sets gold position to zero, so the camera does not guess the position
                 sleep(1000);
-                myMineralMiner.findingMineralCamera(detector.getXPosition());
+                myMineralMiner.findingMineralCamera(detector.getXPosition()); // detect gold position
                 sleep(sleepTime);
                 idle();
                 idle();
-            /*
-            1) drives forward from lander a short distance so doesn't interfere with gyro turn
-            2) angles self with gold mineral based on myMineralMiner.findingMineral
-            3) Drives forward to knock of gold mineral.
-             */
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);
+
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor); // push gold off of little square
                 sleep(sleepTime);
                 idle();
-            /*
+
+                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance); //goes to depot and drops of mineral
+                sleep(sleepTime);
+                            /*
             1) BACKS UP TO TAPE
             2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
             3) GOES STRAIGHT TOWARDS WALL
              */
-                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);
-                sleep(sleepTime);
 
                 idle();
-            /*
-            Will angle robot to be parallel with robot, score in depot, and then go to crater.
-             */
+
                 myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
+                /*
+                goes toward depot to drop of the team marker
+                drive backward
+                 */
 
                 active = false;
             }

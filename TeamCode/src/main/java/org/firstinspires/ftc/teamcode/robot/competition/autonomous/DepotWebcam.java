@@ -178,34 +178,35 @@ public class DepotWebcam extends LinearOpMode  {
             /*
             Find the correct gold mineral
              */
-                detector.goldXPos = 0;
+                detector.goldXPos = 0;  // sets gold position to 0 so the camera does not try to set it to something random
                 sleep(1000);
-                myMineralMiner.findingMineralCamera(detector.getXPosition());
+                myMineralMiner.findingMineralCamera(detector.getXPosition());  // detects mineral with camera
                 sleep(sleepTime);
                 idle();
                 idle();
-            /*
-            1) drives forward from lander a short distance so doesn't interfere with gyro turn
-            2) angles self with gold mineral based on myMineralMiner.findingMineral
-            3) Drives forward to knock of gold mineral.
-             */
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);
-                sleep(sleepTime);
-                idle();
-            /*
-            1) BACKS UP TO TAPE
-            2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
-            3) GOES STRAIGHT TOWARDS WALL
-             */
-                myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
-                sleep(sleepTime);
-                idle();
-            /*
-            Will angle robot to be parallel with robot, score in depot, and then go to crater.
-             */
-                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);
 
-                active = false;
+
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor); // push mineral off the little dot
+                sleep(sleepTime);
+                idle();
+
+                /*
+                push mineral off of little square dot thing
+
+                 */
+
+                myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker); // drive toward depot and drop off team marker
+                sleep(sleepTime);
+                idle();
+                            /*
+                1) adjusts to line up with wall
+                2) drive toward depot
+                3) drop of team marker
+             */
+
+                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance); // drive toward crater to park
+
+                active = false; // gets out of while loop
             }
             idle();
             requestOpModeStop();

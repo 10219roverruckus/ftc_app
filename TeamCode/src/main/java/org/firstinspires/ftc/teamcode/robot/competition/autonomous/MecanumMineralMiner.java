@@ -46,7 +46,7 @@ public class MecanumMineralMiner {
     public MecanumMineralMiner() {
     }
 // both crater and depot
-    public void findingMineral() {
+    public void findingMineral() {          // do not delete backup in case camera does not work
 //        if (cameraGoldLocation < 280) {
 //            goldPosition = GoldPosition.LEFT;
 //        }
@@ -60,6 +60,9 @@ public class MecanumMineralMiner {
     }
 
     public void findingMineralCamera (double cameraGoldLocation) {
+
+        // find location of the mineral using camera
+
         if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
             goldPosition = GoldPosition.MIDDLE;
         }
@@ -78,8 +81,15 @@ public class MecanumMineralMiner {
         linearOp.telemetry.update();
         myLiftMotor.extendLiftMotorFullyEncoders(); //distance sensor
 
+
+        //get away from the lander
         myMechDrive.strafeRight(.3,.3);
         myMechDrive.driveForward(.3, .3); //DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+
+
+
+
+        // based on location go to certain case
         switch (goldPosition) {  //ANGLES SELF AND GOES TOWARD GOLD MINERAL
             case LEFT:
 //                linearOp.telemetry.addData("MINERAL POSITION: ", goldPosition);
@@ -115,7 +125,12 @@ public class MecanumMineralMiner {
 // crater
     public void craterMineralToWall(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
         //Drives back to tape
-        // SHOULD BE ABLE TO USE FOR DETECTING EITHER COLOR.
+
+
+        // goes backward towards tape near lander
+        // detects red or blue
+
+
         myMechDrive.stopMotors();
         Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
@@ -132,40 +147,43 @@ public class MecanumMineralMiner {
         }
         myMechDrive.stopMotors();
         //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
- //       myMechDrive.driveForward(SPD_DRIVE_MED, .3);
+
+
+        //rotate towards wall
         myGyro.gyroOrientMecanum(74, myMechDrive);
         myMechDrive.stopMotors();  //orients self with red tape so parallel to tape.
         //different (72)
 
-        //MAY NEED TO BE LESS THAN 90 DEGRESS SO ROBOT DOES NOT HIT THE LANDER LEG!
-
-
 
         //IN THEORY, THE DRIVE DISTANCE SHOULD BE THE SAME OR CLOSE FOR L / M / R
-        //DRIVES TO WALL
-        switch (goldPosition) {  //DRIVE TO WALL
+        //DRIVES TO WALL not
+
+
+        //drive toward wall distance is different based on distance
+        switch (goldPosition) {
             case LEFT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2); // different but I think it is better
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);   // different distance to wall after backup to tape
                 break;
             case MIDDLE:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.7); // different but I think it is better
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape
                 break;
             case RIGHT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 4.2); // different but I think it is better
+                myMechDrive.driveForward(SPD_DRIVE_MED, 4.2);  // different distance to wall after backup to tape
                 break;
         }
     }
-//crater
-    public void wallToDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
-        myGyro.gyroOrientMecanum(137, myMechDrive); // 127 but it did not mske sense because the other angle was 138 and they were the same angle and then it was too big so now it is 137
-        myMechDrive.stopMotors();
-        myMechDrive.setMotorPowerStrafeRight(.3);
-        linearOp.sleep(1500); //was 1000 but it needed to be longer
-        myMechDrive.stopMotors();
 
-        //myMechDrive.driveForward(SPD_DRIVE_MED, 1.5); was about to try to gyro away from the wall and then back to the wall around the seam
-        //myMechDrive.stopMotors();
-        myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+    //Method used for Crater to drive from along wall to Depot
+
+    public void wallToDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
+
+        myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
+        myMechDrive.stopMotors();                                      // Stop motors
+        myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
+        linearOp.sleep(1500);                              // Time for staffing
+        myMechDrive.stopMotors();                                      // Stop motors
+
+        myMechDrive.driveForward(SPD_DRIVE_MED, 3);   //going toward depot using color sensor
         Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
@@ -179,36 +197,44 @@ public class MecanumMineralMiner {
 
             linearOp.idle();
         }
-        myMechDrive.stopMotors();
-        myGyro.gyroOrientMecanum(170, myMechDrive);
-        myMechDrive.stopMotors();
-        myMechDrive.strafeLeft(.2, .3); // .2 , .2  // different but I think it is better
 
-        myTeamMarker.teamMarkerArmOutside();
+        myMechDrive.stopMotors();                              // Robot is now in Depot
+
+        myGyro.gyroOrientMecanum(170, myMechDrive);     //rotate to drop team marker in sepot
+        myMechDrive.stopMotors();                             // stop motors
+
+        myMechDrive.strafeLeft(.2, .3);       // strafe away so the marker does not get stuck on wall
+
+
+        myTeamMarker.teamMarkerArmOutside();                  // drop team maker
         linearOp.sleep(1250);
         myTeamMarker.teamMarkerArmRaised();
         linearOp.sleep(500);
 
-        myMechDrive.strafeLeft(SPD_DRIVE_LOW,.2);
+        myMechDrive.strafeLeft(SPD_DRIVE_LOW,.2);     // get away from team maker to it does not get caught on the wheel
         myMechDrive.driveBackward(SPD_DRIVE_LOW,.7);
 
-        myGyro.gyroOrientMecanum(138, myMechDrive); // was 128 but it was to small of the turn
+        myGyro.gyroOrientMecanum(138, myMechDrive);     // Orient straight to park in crater... Angle between 136 - 139
         myMechDrive.stopMotors();
 
-        myMechDrive.setMotorPowerStrafeRight(.3);  // staffe into wall
+        myMechDrive.setMotorPowerStrafeRight(.3);                 // staffe into wall
         linearOp.sleep(1000);
 
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0); //Drive to plexiglass seem
-        myGyro.gyroOrientMecanum(139, myMechDrive);   // Gyo correction for plexiglass  was 137
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0);   //Drive to park in crater
+        myGyro.gyroOrientMecanum(138, myMechDrive);         // Gyo correction for plexiglass  was 137
         myMechDrive.stopMotors();
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3); //Drive past plexiglass seem
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3);   //Drive past plexiglass seam
 
     }
 
 // depot
     public void mineralToDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
         switch (goldPosition) {
-            case LEFT:   // not working
+
+            // the left mineral while be pushed toward the wall and then we will rotate toward depot
+            // rotate and strafe to drop team marker
+
+            case LEFT:
                 myMechDrive.driveForward(SPD_DRIVE_LOW,1);
                 myMechDrive.driveBackward(SPD_DRIVE_LOW,.2);
 
@@ -231,7 +257,10 @@ public class MecanumMineralMiner {
                 break;
 
 
-            case MIDDLE: // duplicating code
+            //push mineral into the depo
+            //rotate and strafe to drop into the mineral
+
+            case MIDDLE:
                 myGyro.gyroOrientMecanum(0, myMechDrive); //drive forward towards depo just a little bit
                 myMechDrive.stopMotors();
 
@@ -243,8 +272,6 @@ public class MecanumMineralMiner {
 
                 myMechDrive.driveForward(SPD_DRIVE_MED,.3); // inch forward a little bit
 
-                // myMechDrive.strafeLeft(.2,.3); // strafe
-
                 myTeamMarker.teamMarkerArmOutside (); // drop maker
                 linearOp.sleep(1000);
                 myTeamMarker.teamMarkerArmRaised(); // lift servo arm
@@ -253,7 +280,12 @@ public class MecanumMineralMiner {
                 myMechDrive.stopMotors();
                 break;
 
-            case RIGHT: // working
+
+
+                // push mineral into the other wall and rotate away from depot and drive foward
+                // rotate and strafe to drop of the team marker
+
+            case RIGHT:
                 myMechDrive.driveForward(SPD_DRIVE_LOW,1.1); // pushimg mineral to clear middle mineral
                 myMechDrive.driveBackward(SPD_DRIVE_LOW,.2);  // backup so turn does not hit mineral
                 myGyro.gyroOrientMecanum(32, myMechDrive);  //rotates in toward depot
@@ -275,22 +307,7 @@ public class MecanumMineralMiner {
                 break;
         }
 
-//
-//        Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
-//                (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
-//                (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
-//                hsvValues);
-//        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
-//            Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
-//                    (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
-//                    (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
-//                    hsvValues);
-//            myMechDrive.setMotorSpeeds(SPD_DRIVE_LOW);
-//            linearOp.idle();
-//        }
-
         myMechDrive.stopMotors();
-
 
 
 
@@ -300,41 +317,45 @@ public class MecanumMineralMiner {
     public void depotToCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
 
         switch (goldPosition) {
-            case LEFT: // not working
 
-                myMechDrive.setMotorPowerStrafeRight(.5);
+
+            case LEFT:
+
+                myMechDrive.setMotorPowerStrafeRight(.5);  //align with wall
                 linearOp.sleep(1500);
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
-                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2); //drive half way toward crater
+                myGyro.gyroOrientMecanum(130, myMechDrive); // gyro corrects angle
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3); // drives the rest of the way
                 break;
 
             case MIDDLE:
                 myMechDrive.setMotorPowerStrafeRight(.5);
                 linearOp.sleep(2000);
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
-                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2); //drive half way toward crater
+                myGyro.gyroOrientMecanum(130, myMechDrive); // gyro corrects angle
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2); // drives the rest of the way
                 break;
 
             case RIGHT: // working
                 myMechDrive.setMotorPowerStrafeRight(.5);
                 linearOp.sleep(1500);
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2);
-                myGyro.gyroOrientMecanum(130, myMechDrive);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2); //drive half way toward crater
+                myGyro.gyroOrientMecanum(130, myMechDrive); // gyro corrects angle
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.4); // drives the rest of the way
                 break;
         }
 
+
+        // a method that I was going to do but found out the code is already in another method
         //crater
 //        public void craterFromDepotToCrater(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
 //            switch (goldPosition) {
