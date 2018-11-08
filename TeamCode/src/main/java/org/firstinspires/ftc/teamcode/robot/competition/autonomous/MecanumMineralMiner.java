@@ -130,15 +130,15 @@ public class MecanumMineralMiner {
         myGyro.gyroOrientMecanum(74, myMechDrive);                //orients self with red tape so parallel to tape.
         myMechDrive.stopMotors();
 
-        switch (goldPosition) {                                         //drive toward wall distance is different based on distance
+        switch (goldPosition) {                                          //drive toward wall distance is different based on distance
             case LEFT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.2);   // different distance to wall after backup to tape
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.6);   // different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case MIDDLE:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case RIGHT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 4.2);  // different distance to wall after backup to tape
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.9);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
                 break;
         }
     }
@@ -319,19 +319,20 @@ public class MecanumMineralMiner {
                 break;
         }
 
-
+    }
         // NEW METHODS FOR PLEXIGLASS SOLUTION
 
 
-        // ****** methods used for crater from going to crater from depot using a triangle gyro *******
+        // ****** methods used for crater from going to crater from depot using a triangle gyro ******* //
+        // testing some gyro triangles on the way back to the crater so the robot does not get caught on the seam
 
-        public void MineralToDepotGyro (GyroCompetition myGyro, MecanumDrive
-        myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker){
+        public void wallToDepotGyro (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker){
             myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
             myMechDrive.stopMotors();                                      // Stop motors
 
             myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
-            linearOp.sleep(1500);                               // Time for straffing
+            linearOp.sleep(500);                                // new time = near plexiglass
+            // linearOp.sleep(1500);                                        // Orignial time for strafing into plexiglass
             myMechDrive.stopMotors();                                      // Stop motors
 
             myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
@@ -364,19 +365,24 @@ public class MecanumMineralMiner {
             linearOp.sleep(500);
 
             myMechDrive.strafeLeft(SPD_DRIVE_LOW, .2);         // get away from team maker to it does not get caught on the wheel
-            myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);
+            myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);       // was .7 but the tail of the robot wa hitting the wall
 
-            myGyro.gyroOrientMecanum(137, myMechDrive);         // Orient straight to park in crater... Angle between 136 - 139
-            myMechDrive.stopMotors();                                 // 138 degrees forces us into the plexiglass
-            linearOp.sleep(500);
-            linearOp.idle();
+            //myGyro.gyroOrientMecanum(137, myMechDrive);               // Orignial angle Orient straight to park in crater... Angle between 136 - 139
+            myGyro.gyroOrientMecanum(135.5, myMechDrive);         // new angle to make the triangle around the seam it was 133.1 but it angled too far out
+            myMechDrive.stopMotors();                                   // 138 degrees forces us into the plexiglass
+            //linearOp.sleep(500);                                      // Commenting out 11/8 5:45PM  to see if this is causing a 360 spin
+            //linearOp.idle();                                          // Commenting out 11/8 5:45PM to see if this is causing a 360 spin
 
-            myMechDrive.setMotorPowerStrafeRight(.3);                 // staffing into wall
+            myMechDrive.setMotorPowerStrafeRight(.2);                 // staffing into wall
             linearOp.sleep(1000);
+
+
 
             myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0);    // Drive to park in crater
 
-            myGyro.gyroOrientMecanum(137, myMechDrive);         // Gyro correction for plexiglass. Same angle as above.
+           // myGyro.gyroOrientMecanum(137, myMechDrive);               // Gyro correction for plexiglass. Same angle as above.
+
+            myGyro.gyroOrientMecanum(138.4, myMechDrive);        // new angle to angle back to crater - finishing the triangle
             myMechDrive.stopMotors();
             linearOp.sleep(500);
 

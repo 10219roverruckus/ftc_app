@@ -198,7 +198,7 @@ public class CraterWebcam extends LinearOpMode  {
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+                myMineralMiner.wallToDepotGyro(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
                 active = false;
             }
