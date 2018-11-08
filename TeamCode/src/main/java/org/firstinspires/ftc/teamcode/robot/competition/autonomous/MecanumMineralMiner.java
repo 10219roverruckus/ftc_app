@@ -188,6 +188,7 @@ public class MecanumMineralMiner {
 
         myGyro.gyroOrientMecanum(137, myMechDrive);         // Orient straight to park in crater... Angle between 136 - 139
         myMechDrive.stopMotors();                                 // 138 degrees forces us into the plexiglass
+        linearOp.sleep(500);
         linearOp.idle();
 
         myMechDrive.setMotorPowerStrafeRight(.3);                 // staffing into wall
@@ -197,6 +198,7 @@ public class MecanumMineralMiner {
 
         myGyro.gyroOrientMecanum(137, myMechDrive);         // Gyro correction for plexiglass. Same angle as above.
         myMechDrive.stopMotors();
+        linearOp.sleep(500);
 
         myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3);    //Drive past plexiglass seam
 
@@ -318,6 +320,69 @@ public class MecanumMineralMiner {
         }
 
 
-    }
+        // NEW METHODS FOR PLEXIGLASS SOLUTION
+
+
+        // ****** methods used for crater from going to crater from depot using a triangle gyro *******
+
+        public void MineralToDepotGyro (GyroCompetition myGyro, MecanumDrive
+        myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker){
+            myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
+            myMechDrive.stopMotors();                                      // Stop motors
+
+            myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
+            linearOp.sleep(1500);                               // Time for straffing
+            myMechDrive.stopMotors();                                      // Stop motors
+
+            myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
+
+            Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
+                    (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
+                    (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
+                    hsvValues);
+            while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
+                Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
+                        (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
+                        (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
+                        hsvValues);
+                myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
+
+                linearOp.idle();
+            }
+
+            myMechDrive.stopMotors();                                 // Robot is now in Depot
+
+            myGyro.gyroOrientMecanum(170, myMechDrive);         //rotate to drop team marker into depot
+            myMechDrive.stopMotors();                                 // stop motors
+
+            myMechDrive.strafeLeft(.2, .3);            // strafe away so the marker does not get stuck on wall
+
+
+            myTeamMarker.teamMarkerArmOutside();                      // drop team maker
+            linearOp.sleep(1250);
+            myTeamMarker.teamMarkerArmRaised();
+            linearOp.sleep(500);
+
+            myMechDrive.strafeLeft(SPD_DRIVE_LOW, .2);         // get away from team maker to it does not get caught on the wheel
+            myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);
+
+            myGyro.gyroOrientMecanum(137, myMechDrive);         // Orient straight to park in crater... Angle between 136 - 139
+            myMechDrive.stopMotors();                                 // 138 degrees forces us into the plexiglass
+            linearOp.sleep(500);
+            linearOp.idle();
+
+            myMechDrive.setMotorPowerStrafeRight(.3);                 // staffing into wall
+            linearOp.sleep(1000);
+
+            myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0);    // Drive to park in crater
+
+            myGyro.gyroOrientMecanum(137, myMechDrive);         // Gyro correction for plexiglass. Same angle as above.
+            myMechDrive.stopMotors();
+            linearOp.sleep(500);
+
+            myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3);    //Drive past plexiglass seam
+
+
+        }
 }
 
