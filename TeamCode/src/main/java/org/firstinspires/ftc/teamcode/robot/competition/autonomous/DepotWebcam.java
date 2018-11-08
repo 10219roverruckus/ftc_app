@@ -174,39 +174,30 @@ public class DepotWebcam extends LinearOpMode  {
         boolean active = true;
         while (opModeIsActive() && !isStopRequested()) {
             while (active && !isStopRequested()) {
+
                 idle();
-            /*
-            Find the correct gold mineral
-             */
-                detector.goldXPos = 0;  // sets gold position to 0 so the camera does not try to set it to something random
+
+                detector.goldXPos = 0;                                                              // sets gold position to 0 so the camera does not try to set it to something random
+
                 sleep(1000);
-                myMineralMiner.findingMineralCamera(detector.getXPosition());  // detects mineral with camera
+
+                myMineralMiner.findingMineralCamera(detector.getXPosition());                       // detects mineral with camera
+
                 sleep(sleepTime);
                 idle();
                 idle();
 
-
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor); // push mineral off the little dot
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                      // push mineral off the little dot
                 sleep(sleepTime);
                 idle();
-
-                /*
-                push mineral off of little square dot thing
-
-                 */
 
                 myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker); // drive toward depot and drop off team marker
                 sleep(sleepTime);
                 idle();
-                            /*
-                1) adjusts to line up with wall
-                2) drive toward depot
-                3) drop of team marker
-             */
 
-                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance); // drive toward crater to park
+                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);              // drive from depot toward crater to park
 
-                active = false; // gets out of while loop
+                active = false;                                                                     // gets out of while loop
             }
             idle();
             requestOpModeStop();

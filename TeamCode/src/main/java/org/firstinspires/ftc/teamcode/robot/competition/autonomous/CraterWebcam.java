@@ -176,34 +176,29 @@ public class CraterWebcam extends LinearOpMode  {
         boolean active = true;
         while (opModeIsActive() && !isStopRequested()) {
             while (active && !isStopRequested()) {
+
                 idle();
 
-                detector.goldXPos = 0;  // sets gold position to zero, so the camera does not guess the position
+                detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
                 sleep(1000);
-                myMineralMiner.findingMineralCamera(detector.getXPosition()); // detect gold position
+
+                myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
+
                 sleep(sleepTime);
                 idle();
                 idle();
 
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor); // push gold off of little square
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                     // push gold off of little square
+
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance); //goes to depot and drops of mineral
-                sleep(sleepTime);
-                            /*
-            1) BACKS UP TO TAPE
-            2) TURNS TO A) MISS LANDER AND AND B) MISS MINERALS WHEN GOING STRAIGHT
-            3) GOES STRAIGHT TOWARDS WALL
-             */
+                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
 
+                sleep(sleepTime);
                 idle();
 
-                myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);
-                /*
-                goes toward depot to drop of the team marker
-                drive backward
-                 */
+                myMineralMiner.wallToDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
                 active = false;
             }
