@@ -283,7 +283,6 @@ public class MecanumMineralMiner {
 
         switch (goldPosition) {
 
-
             case LEFT:
 
                 myMechDrive.setMotorPowerStrafeRight(.5);                //straffe to align with wall
