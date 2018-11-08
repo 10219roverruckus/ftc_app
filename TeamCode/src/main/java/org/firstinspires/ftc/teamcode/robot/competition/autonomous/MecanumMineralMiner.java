@@ -281,6 +281,7 @@ public class MecanumMineralMiner {
 
     public void depotToCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
 
+
         switch (goldPosition) {
 
             case LEFT:
