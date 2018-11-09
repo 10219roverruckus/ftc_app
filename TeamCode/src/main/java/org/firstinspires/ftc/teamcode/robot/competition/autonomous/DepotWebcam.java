@@ -195,7 +195,9 @@ public class DepotWebcam extends LinearOpMode  {
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);              // drive from depot toward crater to park
+                //myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);              // drive from depot toward crater to park
+
+                myMineralMiner.depotToCraterGyro(myGyro, myMechDrive, myRevColorDistance);
 
                 active = false;                                                                     // gets out of while loop
             }
