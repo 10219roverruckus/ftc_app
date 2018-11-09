@@ -429,7 +429,7 @@ public class MecanumMineralMiner {
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);        //drive second leg of triangle
 
                 break;
-
+//
             case RIGHT:
                 myMechDrive.setMotorPowerStrafeRight(.3);                     //straffe to align with wall
                 linearOp.sleep(550);
