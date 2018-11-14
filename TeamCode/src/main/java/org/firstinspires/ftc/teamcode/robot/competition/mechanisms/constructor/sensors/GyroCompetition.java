@@ -23,7 +23,7 @@ public class GyroCompetition {
     public LinearOpMode linearOp = null;
 
 
-    public final double TOLERANCE = 1;   //variation from target angle allowed.
+    public final double TOLERANCE = .5;   //variation from target angle allowed.       was 1 but Mr. Acker wanted to test it to see if it would make the angles more precise
 
     //created in constructior
     //    public BNO055IMU imu;

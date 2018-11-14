@@ -177,28 +177,17 @@ public class MecanumMineralMiner {
 
         myMechDrive.strafeLeft(.2, .3);            // strafe away so the marker does not get stuck on wall
 
-        linearOp.telemetry.addLine("DROPPING TEAM MARKER STUFF");
-        linearOp.telemetry.update();
-
         myTeamMarker.teamMarkerArmOutside();                      // drop team maker
         linearOp.sleep(1250);
         myTeamMarker.teamMarkerArmRaised();
         linearOp.sleep(500);
-        linearOp.telemetry.addLine("DDRIVE BACK AFTER MARKER");
-        linearOp.telemetry.update();
+
         myMechDrive.strafeLeft(SPD_DRIVE_LOW, .2);         // get away from team maker to it does not get caught on the wheel
         myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);
 
-        linearOp.telemetry.addLine("ROTATE RIGHT POWER");
-        linearOp.telemetry.update();
-        myMechDrive.setMotorPowerRotateRight(.4);             //for testing delete after today
-        linearOp.sleep(500);                        //DELETE
+
         myMechDrive.stopMotors();
-        linearOp.telemetry.addLine("ROTATE RIGHT SLEEP");
-        linearOp.telemetry.update();
-        linearOp.sleep(1000);
-        linearOp.telemetry.addLine("ROTATE RIGHT GYRO");
-        linearOp.telemetry.update();
+
         myGyro.gyroOrientMecanum(137, myMechDrive);         // Orient straight to park in crater... Angle between 136 - 139
         myMechDrive.stopMotors();                                 // 138 degrees forces us into the plexiglass
         linearOp.sleep(500);
@@ -510,6 +499,8 @@ public class MecanumMineralMiner {
         myMechDrive.strafeLeft(SPD_DRIVE_LOW, .2);         // get away from team maker to it does not get caught on the wheel
         myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);       // was .7 but the tail of the robot wa hitting the wall
 
+        // testing for next line
+        myMechDrive.rotateRight(SPD_DRIVE_MED, .3);          // adding angle to make sure the strafing does not mess up the angle making it go over the line
         //myGyro.gyroOrientMecanum(137, myMechDrive);               // Orignial angle Orient straight to park in crater... Angle between 136 - 139
         myGyro.gyroOrientMecanum(135.5, myMechDrive);         // new angle to make the triangle around the seam it was 133.1 but it angled too far out
         myMechDrive.stopMotors();                                   // 138 degrees forces us into the plexiglass
