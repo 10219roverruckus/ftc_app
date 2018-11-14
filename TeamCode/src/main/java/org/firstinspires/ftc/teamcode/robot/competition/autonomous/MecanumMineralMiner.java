@@ -510,16 +510,23 @@ public class MecanumMineralMiner {
         myMechDrive.setMotorPowerStrafeRight(.2);                 // staffing into wall
         linearOp.sleep(1000);
 
+        // for testing 11/14/18
+        myGyro.gyroOrientMecanum(132, myMechDrive);         // correcting angle so the robot does not go into the wall was 133 but the angle
+
 
         myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0);    // Drive to park in crater
 
         // myGyro.gyroOrientMecanum(137, myMechDrive);               // Gyro correction for plexiglass. Same angle as above.
 
-        myGyro.gyroOrientMecanum(138.4, myMechDrive);        // new angle to angle back to crater - finishing the triangle
+        myGyro.gyroOrientMecanum(135, myMechDrive);        // new angle to angle back to crater - finishing the triangle was 139 but I redid gyro
         myMechDrive.stopMotors();
         linearOp.sleep(500);
 
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 3.3);    //Drive past plexiglass seam
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 1.5);    //Drive past plexiglass seam was 3.3 but then we split it up to make it more accurate
+
+        myGyro.gyroOrientMecanum(136.5, myMechDrive);       // readjust robot towards crater
+
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 2.2);    // drive the rest of the way
 
 
     }
