@@ -48,7 +48,6 @@ public class MecanumMineralMiner {
 //        }
 //        else if (cameraGoldLocation > 500) {
 //            goldPosition = GoldPosition.RIGHT;
-//        }
 //        else {
 //            goldPosition = GoldPosition.MIDDLE;
 //        }
@@ -61,16 +60,16 @@ public class MecanumMineralMiner {
     public void findingMineralCamera(double cameraGoldLocation) {
 
         // find location of the mineral using camera
+//
+//        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
+//            goldPosition = GoldPosition.MIDDLE;                           commented out while camera does not work
+//        } else if (cameraGoldLocation > 300) {                            program works perfectly DO NOT CHANGE THE CODE
+//            goldPosition = GoldPosition.RIGHT;
+//        } else {
+//            goldPosition = GoldPosition.LEFT;
+//        }
 
-        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
-            goldPosition = GoldPosition.MIDDLE;
-        } else if (cameraGoldLocation > 300) {
-            goldPosition = GoldPosition.RIGHT;
-        } else {
-            goldPosition = GoldPosition.LEFT;
-        }
-
-        goldPosition = goldPosition.LEFT;
+        goldPosition = goldPosition.RIGHT;
     }
 
     //************  Method used by both crater and depot to push off mineral   ***********  //
@@ -350,7 +349,7 @@ public class MecanumMineralMiner {
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.2);
 
-                myGyro.gyroOrientMecanum(42, myMechDrive);        // 42 places team marker close to tape
+                myGyro.gyroOrientMecanum(88, myMechDrive);        // it was 42  which places the team marker close to tape
                 myMechDrive.stopMotors();                               // Recommend to adjust with adding degrees to turn
 
                 myMechDrive.strafeLeft(.2, .3);           // Straffes so that team marker does not hit glass
@@ -370,7 +369,7 @@ public class MecanumMineralMiner {
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.1);    // push mineral into depotfor extra point
                 myMechDrive.driveBackward(SPD_DRIVE_LOW, .2);   // back up to clear mineral when turning
 
-                myGyro.gyroOrientMecanum(60, myMechDrive);        // turn to drop team marker
+                myGyro.gyroOrientMecanum(88, myMechDrive);        // turn to drop team marker was 60 but it was to small of an angle
                 myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, .3);    // inch forward a little bit to ensure team marker drops in depot
@@ -391,7 +390,7 @@ public class MecanumMineralMiner {
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.1);     // driving forward into depot
 
-                myGyro.gyroOrientMecanum(60, myMechDrive);         // turn to drop team marker in depot
+                myGyro.gyroOrientMecanum(88, myMechDrive);         // turn to drop team marker in depot was 60 but it was to small of an angle
                 myMechDrive.stopMotors();
 
                 myMechDrive.strafeLeft(.2, .3);            // straffe so team marker does not hit glass
@@ -539,7 +538,7 @@ public class MecanumMineralMiner {
             case LEFT:
 
                 myMechDrive.setMotorPowerStrafeRight(.3);                   //straffe to align with wall
-                linearOp.sleep(550);                            // was 1500 but I wanted to make it close to the wall and not hit the wall
+                linearOp.sleep(1000);                            // was 1500 but I wanted to make it close to the wall and not hit the wall
 
                 myMechDrive.driveForward(SPD_DRIVE_MED,.5);         // added another drive forward to delay the triangle to later
 
@@ -551,13 +550,13 @@ public class MecanumMineralMiner {
                 myGyro.gyroOrientMecanum(132.6, myMechDrive);         // re-orient robot for second triangle leg toward depot
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);       //drive second leg of triangle
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.8);       //drive second leg of triangle
 
                 break;
 
             case MIDDLE:
                 myMechDrive.setMotorPowerStrafeRight(.3);                   //straffe to align with wall
-                linearOp.sleep(550);
+                linearOp.sleep(1000);
 
                 myMechDrive.driveForward(SPD_DRIVE_MED,.5);         // added another drive forward to delay the triangle to later
 
@@ -569,25 +568,25 @@ public class MecanumMineralMiner {
                 myGyro.gyroOrientMecanum(132.6, myMechDrive);           // re-orient robot for second triangle leg toward depot
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);        //drive second leg of triangle
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.8);        //drive second leg of triangle
 
                 break;
 //
             case RIGHT:
                 myMechDrive.setMotorPowerStrafeRight(.3);                     //straffe to align with wall
-                linearOp.sleep(550);
+                linearOp.sleep(1000);
 
                 myMechDrive.driveForward(SPD_DRIVE_MED,.5);          // added another drive forward to delay the triangle to later
 
                 myGyro.gyroOrientMecanum(138.2, myMechDrive);           //  was 141.1 but too big of an angle rotate away from wall to making triangle
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.5);        // drive first leg of the triangle
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2);        // drive first leg of the triangle
 
-                myGyro.gyroOrientMecanum(132.6, myMechDrive);          // re-orient robot for second triangle leg toward depot
+                myGyro.gyroOrientMecanum(129, myMechDrive);          // re-orient robot for second triangle leg toward depot was 132.6 but it ran into the wall to much then it was 130 but it was still too big
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.5);       //drive second leg of triangle
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3);       //drive second leg of triangle
 
                 break;
 
