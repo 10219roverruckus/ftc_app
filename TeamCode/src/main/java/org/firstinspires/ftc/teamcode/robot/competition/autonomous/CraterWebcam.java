@@ -47,6 +47,10 @@ public class CraterWebcam extends LinearOpMode  {
     MecanumMineralMiner myMineralMiner;
     RevColorDistance myRevColorDistance;
 
+    MecanumMineralMinerCrater myMineralMinerCrater;
+    MecanumMineralMinerDepot myMineralMinerDepot;
+    MecanumMineralMinerAll myMineralMinerAll;
+
     LiftMotor myLiftMotor;
     TeamMarker myTeamMarker;
 
@@ -93,6 +97,15 @@ public class CraterWebcam extends LinearOpMode  {
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        myMineralMinerCrater = new MecanumMineralMinerCrater();
+        myMineralMinerCrater.setLinearOp(this);
+
+        myMineralMinerDepot = new MecanumMineralMinerDepot();
+        myMineralMinerDepot.setLinearOp(this);
+
+        myMineralMinerAll = new MecanumMineralMinerAll();
+        myMineralMinerAll.setLinearOp(this);
 
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());

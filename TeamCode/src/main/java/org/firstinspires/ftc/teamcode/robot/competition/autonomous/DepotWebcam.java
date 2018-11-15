@@ -48,6 +48,10 @@ public class DepotWebcam extends LinearOpMode  {
     LiftMotor myLiftMotor;
     TeamMarker myTeamMarker;
 
+    MecanumMineralMinerAll myMineralMinerAll;
+    MecanumMineralMinerCrater myMineralMinerCrater;
+    MecanumMineralMinerDepot myMineralMinerDepot;
+
     private GoldAlignDetector detector;
     WebcamName webcamName;
     private ElapsedTime runtime = new ElapsedTime();
@@ -92,6 +96,15 @@ public class DepotWebcam extends LinearOpMode  {
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
+
+        myMineralMinerCrater = new MecanumMineralMinerCrater();
+        myMineralMinerCrater.setLinearOp(this);
+
+        myMineralMinerDepot = new MecanumMineralMinerDepot();
+        myMineralMinerDepot.setLinearOp(this);
+
+        myMineralMinerAll = new MecanumMineralMinerAll();
+        myMineralMinerAll.setLinearOp(this);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
