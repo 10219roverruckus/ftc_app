@@ -30,6 +30,7 @@ public class IntakeExtenderArm {
         intakeExtenderArm = inArm;
 
         intakeExtenderArm.setDirection(DcMotor.Direction.FORWARD);
+        intakeExtenderArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
@@ -39,21 +40,18 @@ public class IntakeExtenderArm {
     public void intakelinearOp (LinearOpMode Op) {
         intakeLinearOp = Op;
     }
-//    public void stopIntakeMotors () {
-//        intakeExtenderArm.setPower(0);
-//    }
 
-//    public void setIntakeArmRunModes (DcMotor.RunMode mode) {
-//        intakeExtenderArm.setMode(mode);
-//    }
-
-
-
-    public void extendingIntakeArm() { //deleted rotations and speed
-        currentPosition = currentPosition + rateOfChange;
+    public void extendIntakeArm () {
+        intakeExtenderArm.setPower(1);
     }
 
-    public void retractingIntakeArm() { // deleted rotations and speed
-        currentPosition = currentPosition - rateOfChange;
+    public void retractIntactArm () {
+        intakeExtenderArm.setPower(-1);
     }
+
+    public void stopIntakeArm () {
+        intakeExtenderArm.setPower(0);
+    }
+
+
 }

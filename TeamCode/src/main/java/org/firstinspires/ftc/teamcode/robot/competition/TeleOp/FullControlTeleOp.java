@@ -43,7 +43,7 @@ public class FullControlTeleOp extends OpMode {
 
 
     Servo teamMarkerArm;
-    Servo intakeExtenderArm;
+   // DcMotor myintakeExtenderArm;
 
 
 
@@ -104,6 +104,7 @@ public class FullControlTeleOp extends OpMode {
         intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
         intakeMotor = hardwareMap.dcMotor.get("intake_motor");
 
+        myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -114,7 +115,7 @@ public class FullControlTeleOp extends OpMode {
         intakePositionMotor.setDirection(DcMotor.Direction.REVERSE);
 
         teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
-        intakeExtenderArm = hardwareMap.servo.get("intake_extender_arm");
+
 
         // need to initilize sensors here
 
@@ -122,7 +123,7 @@ public class FullControlTeleOp extends OpMode {
 
         initServos = false;
         teamMarkerArm.setPosition(teamMarkerPosition);
-        intakeExtenderArm.setPosition(.5);
+
     }
 
     @Override
@@ -171,15 +172,15 @@ public class FullControlTeleOp extends OpMode {
         if (gamepad2.left_stick_y > .1) {
 //            intakePosition = intakePosition + intakeIncrement;
 //            intakeExtenderArm.setPosition(intakePosition);
-            intakeExtenderArm.setPosition(1);
+            myIntakeExtenderArm.extendIntakeArm();
         }
         else if (gamepad2.left_stick_y < -.1) {
 //            intakePosition = intakePosition - intakeIncrement;
 //            intakeExtenderArm.setPosition(intakePosition);
-            intakeExtenderArm.setPosition(0);
+            myIntakeExtenderArm.retractIntactArm();
         }
         else {
-            intakeExtenderArm.setPosition(.5);
+            myIntakeExtenderArm.stopIntakeArm();
         }
 
 
@@ -205,12 +206,11 @@ public class FullControlTeleOp extends OpMode {
         else {
             intakeMotor.setPower(0);
     }
-    telemetryOutput();
+//    telemetryOutput();
     }
 
 
     public void telemetryOutput (){
-        telemetry.addData("EXTENDER POSITION SERVO: ", intakeExtenderArm.getPosition());
         telemetry.addData("TEAM MARKER SERVO: ", teamMarkerArm.getPosition());
 //        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
 //        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
