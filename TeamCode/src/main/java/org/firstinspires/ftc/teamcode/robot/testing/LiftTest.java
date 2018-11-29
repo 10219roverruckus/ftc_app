@@ -55,12 +55,14 @@ public class LiftTest extends OpMode {
             ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
         }
 
-        rightJoystick_lift = gamepad2.right_stick_y;    //assigns lift to right stick y
+        rightJoystick_lift = -gamepad2.right_stick_y;    //assigns lift to right stick y
 
         if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
+            telemetry.addLine("JOYSTICK IF");
             liftArmMotor.setPower(rightJoystick_lift);
         }
         else {
+            telemetry.addLine("JOYSTICK 0");
             liftArmMotor.setPower(0);
         }
 
@@ -83,16 +85,13 @@ public class LiftTest extends OpMode {
         }
 
         telemetry.addData("LED Pos VAR: ", ledPosition);
-        telemetry.addData("LED getPosition: ", ledStrip.getPosition());
+        telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
         telemetry.addData("LIFT MOTOR POSITION: ", liftArmMotor.getCurrentPosition());
+        telemetry.addData("Right Joystick Y VAR: ", rightJoystick_lift);
+        telemetry.addData("Right Joystick Y RAW: ", gamepad2.right_stick_y);
 
         if (gamepad2.b) {
             liftArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
-
-
-
-
-
     }
 }
