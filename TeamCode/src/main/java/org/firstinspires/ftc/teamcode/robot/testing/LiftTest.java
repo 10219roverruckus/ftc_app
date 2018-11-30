@@ -83,10 +83,9 @@ public class LiftTest extends OpMode {
         if (liftPosition >= minLiftRange && liftPosition <= maxLiftENC - maxLiftRange) {        // setting the LED lights to Green
             // if the lift position is in between the range then the light will turn Green
         }
-
+        telemetry.addData("LIFT MOTOR POSITION: ", liftArmMotor.getCurrentPosition());
         telemetry.addData("LED Pos VAR: ", ledPosition);
         telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
-        telemetry.addData("LIFT MOTOR POSITION: ", liftArmMotor.getCurrentPosition());
         telemetry.addData("Right Joystick Y VAR: ", rightJoystick_lift);
         telemetry.addData("Right Joystick Y RAW: ", gamepad2.right_stick_y);
 

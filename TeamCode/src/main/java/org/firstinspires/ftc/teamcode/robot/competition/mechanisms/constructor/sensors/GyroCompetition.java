@@ -61,7 +61,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateRight(.2);
+                myMechDrive.setMotorPowerRotateRight(.34);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
@@ -70,7 +70,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateLeft(.2);
+                myMechDrive.setMotorPowerRotateLeft(.34);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
