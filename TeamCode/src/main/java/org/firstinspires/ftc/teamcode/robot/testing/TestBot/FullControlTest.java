@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.competition.TeleOp;
+package org.firstinspires.ftc.teamcode.robot.testing.TestBot;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -25,9 +25,9 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
  */
 
 //@Disabled
-@TeleOp(name = "Full Control - Main Channel Robot")
+@TeleOp(name = "Full Control Test - TestBot")
 
-public class FullControlTeleOp extends OpMode {
+public class FullControlTest extends OpMode {
 
     // left stick y axis controls forward/backward rotation of left motors
     // right stick y axis controls forward/backward rotation of right motors (tank drive)
@@ -37,15 +37,6 @@ public class FullControlTeleOp extends OpMode {
     DcMotor frontRightMotor;
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
-    DcMotor liftArmMotor;
-    DcMotor intakePositionMotor;
-    DcMotor intakeMotor;
-
-
-    Servo teamMarkerArm;
-   // DcMotor myintakeExtenderArm;
-
-
 
     double leftStickVal;
     double rightStickVal;
@@ -60,11 +51,6 @@ public class FullControlTeleOp extends OpMode {
 
     double rightJoystick_lift;
 
-    double intakeExtensionPower;
-    double intakePositionPower;
-    double intakePosition = 0;
-    double intakeIncrement = .001;
-    double teamMarkerPosition = .76;
 
     boolean reverseMode;
 
@@ -80,9 +66,6 @@ public class FullControlTeleOp extends OpMode {
 
 //    private DistanceSensor liftDistanceSensor;
 
-     LiftMotor myLiftMotor;
-     IntakeExtenderArm myIntakeExtenderArm;
-//    IntakeRotator myIntakeRotator;
 
     final double SPD_DRIVE_LOW = .20;     //Lowest speed
     final double SPD_DRIVE_MED = .5;      //Default is  SPD_MED
@@ -99,30 +82,17 @@ public class FullControlTeleOp extends OpMode {
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
         rearRightMotor = hardwareMap.dcMotor.get("rear_right_motor");
-        liftArmMotor = hardwareMap.dcMotor.get("lift_motor");
-     //   liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
-        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
-        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
-
-        myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftArmMotor.setDirection(DcMotor.Direction.REVERSE);
-        intakePositionMotor.setDirection(DcMotor.Direction.REVERSE);
-
-        teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
-
 
         // need to initilize sensors here
 
         reverseMode = false;
 
         initServos = false;
-        teamMarkerArm.setPosition(teamMarkerPosition);
 
     }
 
@@ -138,80 +108,11 @@ public class FullControlTeleOp extends OpMode {
         }
 
         drive();
-
-
-        //align rotator motor
-
-
-        rightJoystick_lift = gamepad2.right_stick_y;    //assigns rotator to right stick y
-
-        if (rightJoystick_lift < -.1 || rightJoystick_lift > .1) {
-            intakePositionMotor.setPower(rightJoystick_lift);
-        }
-        else {
-            intakePositionMotor.setPower(0);
-        }
-
-        //lift motor up and down
-
-        if (gamepad2.dpad_down) {
-            liftArmMotor.setPower(-1);
-        }
-        else if (gamepad2.dpad_up) {
-            liftArmMotor.setPower(1);
-        }
-        else {
-            liftArmMotor.setPower(0);
-        }
-
-        // extender arm for out and in
-
-
-
-
-        if (gamepad2.left_stick_y > .1) {
-//            intakePosition = intakePosition + intakeIncrement;
-//            intakeExtenderArm.setPosition(intakePosition);
-            myIntakeExtenderArm.extendIntakeArm();
-        }
-        else if (gamepad2.left_stick_y < -.1) {
-//            intakePosition = intakePosition - intakeIncrement;
-//            intakeExtenderArm.setPosition(intakePosition);
-            myIntakeExtenderArm.retractIntactArm();
-        }
-        else {
-            myIntakeExtenderArm.stopIntakeArm();
-        }
-
-
-
-        //THIS CAN COME OUT
-        if (gamepad1.right_bumper) {
-            teamMarkerPosition = teamMarkerPosition + intakeIncrement;
-            teamMarkerArm.setPosition(teamMarkerPosition);
-        }
-        else if (gamepad1.left_bumper) {
-            teamMarkerPosition = teamMarkerPosition - intakeIncrement;
-            teamMarkerArm.setPosition(teamMarkerPosition);
-        }
-
-
-
-        if (gamepad2.right_trigger > .1) {
-            intakeMotor.setPower(1);
-        }
-        else if (gamepad2.left_trigger > .1) {
-            intakeMotor.setPower(-1);
-        }
-        else {
-            intakeMotor.setPower(0);
-    }
-//    telemetryOutput();
     }
 
 
     public void telemetryOutput (){
-        telemetry.addData("TEAM MARKER SERVO: ", teamMarkerArm.getPosition());
+
 //        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
 //        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
 //        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);

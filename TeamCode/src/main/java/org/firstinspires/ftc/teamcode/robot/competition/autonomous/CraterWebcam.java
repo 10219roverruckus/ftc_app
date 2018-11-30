@@ -199,7 +199,6 @@ public class CraterWebcam extends LinearOpMode  {
 
                 sleep(sleepTime);
                 idle();
-                idle();
 
                 myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                     // push gold off of little square
 

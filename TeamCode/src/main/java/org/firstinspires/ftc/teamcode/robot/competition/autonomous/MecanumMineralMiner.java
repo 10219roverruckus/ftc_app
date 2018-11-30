@@ -15,16 +15,18 @@ public class MecanumMineralMiner {
     public LinearOpMode linearOp = null;
     public final int RED_THRESHOLD = 30;                //maybe a higher threshold (12.5)
     public final int BLUE_THRESHOLD = 100;              //maybe a higher threshold (12.5)
+    public final int COLOR_HUE_THRESHOLD = 125;
     float hsvValues[] = {0F, 0F, 0F};
 
     // created constant variables that are used for speed (different setting)
 
-    final double SPD_DRIVE_LOW = .20;                  //Lowest speed
-    final double SPD_DRIVE_MED = .4;                   //Default is  SPD_MED
+    final double SPD_DRIVE_LOW = .34;                  //Lowest speed
+    final double SPD_DRIVE_MED = .38;                   //Default is  SPD_MED
+    final double SPD_COLOR_REDUCE = 0.02;
     final double SPD_DRIVE_HIGH = .75;
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
-    final long sleepTime = 0;
+    final long sleepTime = 100;
 
     // variables and constants used by color sensor
 
@@ -51,7 +53,7 @@ public class MecanumMineralMiner {
 //        else {
 //            goldPosition = GoldPosition.MIDDLE;
 //        }
-        goldPosition = goldPosition.MIDDLE;
+        goldPosition = goldPosition.RIGHT;
     }
 
 
@@ -80,27 +82,34 @@ public class MecanumMineralMiner {
         linearOp.telemetry.update();
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
 
-        myMechDrive.strafeRight(.3, .3);                    // get away from the lander
-        myMechDrive.driveForward(.3, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
-
+        myMechDrive.strafeRight(SPD_DRIVE_LOW, .3);                    // get away from the lander
+        linearOp.sleep(sleepTime);
+        myMechDrive.driveForward(SPD_DRIVE_MED, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+        linearOp.sleep(sleepTime);
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
-                myGyro.gyroOrientMecanum(36, myMechDrive);           // different (34)
+                myGyro.gyroOrientMecanum(34, myMechDrive);           // different (34)
                 myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.15);    // Moves forward to push off mineral (Originally 1.8)
+                linearOp.sleep(sleepTime);
                 break;
 
             case MIDDLE:
                 myGyro.gyroOrientMecanum(4, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
                 myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);      // Moves forward to push off mineral
+                linearOp.sleep(sleepTime);
                 break;
 
             case RIGHT:
-                myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
+                myGyro.gyroOrientMecanum(-30, myMechDrive);          // Gyro angles appears correct.
                 myMechDrive.stopMotors();
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2);        // Moves forward to push off mineral (Originally 1.8)
+                linearOp.sleep(sleepTime);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);        // Moves forward to push off mineral (Originally 1.8)
+                linearOp.sleep(sleepTime);
                 break;
         }
     }
@@ -115,20 +124,31 @@ public class MecanumMineralMiner {
                 (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                 hsvValues);
-        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
+//        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
+//            Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
+//                    (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
+//                    (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
+//                    hsvValues);
+//            myMechDrive.setMotorSpeeds(-SPD_DRIVE_MED);
+//            //myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
+//            linearOp.idle();
+//        }
+
+        while (hsvValues[0] < COLOR_HUE_THRESHOLD) {
             Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                     (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                     (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                     hsvValues);
-            myMechDrive.setMotorSpeeds(-SPD_DRIVE_MED);
+            myMechDrive.setMotorSpeeds(-SPD_DRIVE_MED + SPD_COLOR_REDUCE);
             //myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
             linearOp.idle();
         }
-        myMechDrive.stopMotors();                                       //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
 
+        myMechDrive.stopMotors();                                       //DRIVE FUNCTION DOESN'T HAVE A STOP.MOTORS IN IT
+        linearOp.sleep(sleepTime);
         myGyro.gyroOrientMecanum(74, myMechDrive);                //orients self with red tape so parallel to tape.
         myMechDrive.stopMotors();
-
+        linearOp.sleep(sleepTime);
         switch (goldPosition) {                                          //drive toward wall distance is different based on distance
             case LEFT:
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.6);   // different distance to wall after backup to tape DO NOT CHANGE
@@ -137,9 +157,10 @@ public class MecanumMineralMiner {
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case RIGHT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.9);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.8);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
                 break;
         }
+        linearOp.sleep(sleepTime);
     }
 
     // *****   Method used for Crater to drive from along wall to Depot  ********//
@@ -458,76 +479,94 @@ public class MecanumMineralMiner {
     // testing some gyro triangles on the way back to the crater so the robot does not get caught on the seam
 
     public void wallToDepotGyro(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
-        myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
+        myGyro.gyroOrientMecanum(129, myMechDrive);              // Orient for straight drive to depot
         myMechDrive.stopMotors();                                      // Stop motors
-
-        myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
-        linearOp.sleep(500);                                // new time = near plexiglass
+        linearOp.sleep(sleepTime);
+//        myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
+//        linearOp.sleep(500);                                // new time = near plexiglass
+//        myMechDrive.stopMotors();                                      // Stop motors
+        myMechDrive.strafeRight(SPD_DRIVE_LOW, .4);
         // linearOp.sleep(1500);                                        // Orignial time for strafing into plexiglass
-        myMechDrive.stopMotors();                                      // Stop motors
-
-        myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
+        linearOp.sleep(sleepTime);
+//        myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
 
         Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                 (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                 hsvValues);
-        while (hsvValues[0] > RED_THRESHOLD && hsvValues[0] < BLUE_THRESHOLD) {
+        while (hsvValues[0] < COLOR_HUE_THRESHOLD) {
             Color.RGBToHSV((int) (myRevColorDisance.revColorSensor.red() * SCALE_FACTOR),
                     (int) (myRevColorDisance.revColorSensor.green() * SCALE_FACTOR),
                     (int) (myRevColorDisance.revColorSensor.blue() * SCALE_FACTOR),
                     hsvValues);
-            myMechDrive.setMotorSpeeds(SPD_DRIVE_MED);
-
+            myMechDrive.setMotorSpeeds(SPD_DRIVE_MED - SPD_COLOR_REDUCE);
             linearOp.idle();
         }
 
         myMechDrive.stopMotors();                                 // Robot is now in Depot
-
+        linearOp.sleep(sleepTime);
+        myMechDrive.driveBackward(SPD_DRIVE_MED, .05);
+        linearOp.sleep(sleepTime);
         myGyro.gyroOrientMecanum(175, myMechDrive);         //rotate to drop team marker into depot was 170 but it needed to be a bigger angle
         myMechDrive.stopMotors();                                 // stop motors
+        linearOp.sleep(sleepTime);
+        myMechDrive.strafeLeft(.3, .3);            // strafe away so the marker does not get stuck on wall
 
-        myMechDrive.strafeLeft(.2, .3);            // strafe away so the marker does not get stuck on wall
-
-
+        linearOp.sleep(sleepTime);
         myTeamMarker.teamMarkerArmOutside();                      // drop team maker
         linearOp.sleep(1250);
         myTeamMarker.teamMarkerArmRaised();
         linearOp.sleep(500);
 
+
+
+
+
+
         myMechDrive.strafeLeft(SPD_DRIVE_LOW, .2);         // get away from team maker to it does not get caught on the wheel
+        linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_LOW, .7);       // was .7 but the tail of the robot wa hitting the wall
+        linearOp.sleep(sleepTime);
 
         // testing for next line
         myMechDrive.rotateRight(SPD_DRIVE_MED, .3);          // adding angle to make sure the strafing does not mess up the angle making it go over the line
+        linearOp.sleep(sleepTime);
         //myGyro.gyroOrientMecanum(137, myMechDrive);               // Orignial angle Orient straight to park in crater... Angle between 136 - 139
         myGyro.gyroOrientMecanum(135.5, myMechDrive);         // new angle to make the triangle around the seam it was 133.1 but it angled too far out
-        myMechDrive.stopMotors();                                   // 138 degrees forces us into the plexiglass
+//        myMechDrive.stopMotors();                                   // 138 degrees forces us into the plexiglass
+        linearOp.sleep(sleepTime);
         //linearOp.sleep(500);                                      // Commenting out 11/8 5:45PM  to see if this is causing a 360 spin
         //linearOp.idle();                                          // Commenting out 11/8 5:45PM to see if this is causing a 360 spin
 
-        myMechDrive.setMotorPowerStrafeRight(.2);                 // staffing into wall
-        linearOp.sleep(1000);
+//        myMechDrive.setMotorPowerStrafeRight(.2);                 // staffing into wall
+//        linearOp.sleep(1000);
+        myGyro.gyroOrientMecanum(132.5, myMechDrive);         // correcting angle so the robot does not go into the wall was 133 but the angle
+        linearOp.sleep(sleepTime);
+        myMechDrive.strafeRight(SPD_DRIVE_LOW, .35);
+        myMechDrive.stopMotors();
+        linearOp.sleep(sleepTime);
 
         // for testing 11/14/18
-        myGyro.gyroOrientMecanum(132, myMechDrive);         // correcting angle so the robot does not go into the wall was 133 but the angle
+        //was 133
+        //was 131
+        myGyro.gyroOrientMecanum(132.5, myMechDrive);         // correcting angle so the robot does not go into the wall was 133 but the angle
+        linearOp.sleep(sleepTime);
 
-
-        myMechDrive.driveBackward(SPD_DRIVE_MED, 2.0);    // Drive to park in crater
+// GO BACK TO CRATER!!!!
+        myMechDrive.driveBackward(SPD_DRIVE_MED, 5.5);    // Drive to park in crater
+        linearOp.sleep(sleepTime);
 
         // myGyro.gyroOrientMecanum(137, myMechDrive);               // Gyro correction for plexiglass. Same angle as above.
-
+/*
         myGyro.gyroOrientMecanum(135, myMechDrive);        // new angle to angle back to crater - finishing the triangle was 139 but I redid gyro
-        myMechDrive.stopMotors();
-        linearOp.sleep(500);
-
+        linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_MED, 1.5);    //Drive past plexiglass seam was 3.3 but then we split it up to make it more accurate
-
+        linearOp.sleep(sleepTime);
         myGyro.gyroOrientMecanum(136.5, myMechDrive);       // readjust robot towards crater
-
+        linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_MED, 2.2);    // drive the rest of the way
-
-
+        linearOp.sleep(sleepTime);
+        */
     }
 //**********      method used by Depot for driving from Depot to Crater   *****************//
 
