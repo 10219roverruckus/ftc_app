@@ -35,7 +35,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Depot - competition WEBCAM")
+@Autonomous(name = "Depot - competition WEBCAM1")
 //@Disabled
 public class DepotWebcam extends LinearOpMode  {
 
@@ -190,17 +190,16 @@ public class DepotWebcam extends LinearOpMode  {
 
                 idle();
 
-                detector.goldXPos = 0;                                                              // sets gold position to 0 so the camera does not try to set it to something random
+                detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
+                sleep(100);
 
-                sleep(1000);
-
-                myMineralMiner.findingMineralCamera(detector.getXPosition());                       // detects mineral with camera
+                myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
                 sleep(sleepTime);
                 idle();
-                idle();
 
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                      // push mineral off the little dot
+                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                     // push gold off of little square
+
                 sleep(sleepTime);
                 idle();
 

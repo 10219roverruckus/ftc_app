@@ -193,7 +193,7 @@ public class CraterWebcam extends LinearOpMode  {
                 idle();
 
                 detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
-                sleep(1000);
+                sleep(100);
 
                 myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
