@@ -13,15 +13,15 @@ public class MecanumMineralMiner {
 
     public GoldPosition goldPosition = null;
     public LinearOpMode linearOp = null;
-    public final int RED_THRESHOLD = 30;                //maybe a higher threshold (12.5)
-    public final int BLUE_THRESHOLD = 100;              //maybe a higher threshold (12.5)
-    public final int COLOR_HUE_THRESHOLD = 125;
+    public final int RED_THRESHOLD = 30;                //maybe a higher threshold (12.5)  // with color sensor elevated
+    public final int BLUE_THRESHOLD = 100;              //maybe a higher threshold (12.5)  // with color sensor elevated
+    public final int COLOR_HUE_THRESHOLD = 150;
     float hsvValues[] = {0F, 0F, 0F};
 
     // created constant variables that are used for speed (different setting)
 
-    final double SPD_DRIVE_LOW = .41;                  //Lowest speed
-    final double SPD_DRIVE_MED = .38;                   //Default is  SPD_MED
+    final double SPD_DRIVE_LOW = .46;                  //Lowest speed
+    final double SPD_DRIVE_MED = .5;                   //Default is  SPD_MED
     final double SPD_COLOR_REDUCE = 0.02;
     final double SPD_DRIVE_HIGH = .75;
     final double SPD_DRIVE_MAX = 1.0;
@@ -87,7 +87,7 @@ public class MecanumMineralMiner {
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
-                myGyro.gyroOrientMecanum(39, myMechDrive);           // different (34)
+                myGyro.gyroOrientMecanum(40, myMechDrive);           // different (34)
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.15);    // Moves forward to push off mineral (Originally 1.8)
@@ -152,7 +152,7 @@ public class MecanumMineralMiner {
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.3);   // different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case MIDDLE:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.35);  // was 3.8 but it was too big of a distance different distance to wall after backup to tape DO NOT CHANGE
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.45);  // was 3.8 but it was too big of a distance different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case RIGHT:
                 myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
@@ -169,7 +169,7 @@ public class MecanumMineralMiner {
         myMechDrive.stopMotors();                                      // Stop motors
 
         myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
-        linearOp.sleep(1500);                               // Time for straffing
+        linearOp.sleep(1500);                               // was 1500 but it was too long Time for straffing
         myMechDrive.stopMotors();                                      // Stop motors
 
         myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
@@ -392,7 +392,7 @@ public class MecanumMineralMiner {
                 break;
 
             case MIDDLE:                                                //pushes middle mineral into the depot to score
-                myGyro.gyroOrientMecanum(0, myMechDrive);         // drive forward towards depot just a little bit
+                myGyro.gyroOrientMecanum(-.5, myMechDrive);         // was 0 drive forward towards depot just a little bit
 //                myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2.4);    // push mineral into depot for extra point
@@ -498,7 +498,7 @@ public class MecanumMineralMiner {
 //        myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
 //        linearOp.sleep(500);                                // new time = near plexiglass
 //        myMechDrive.stopMotors();                                      // Stop motors
-        myMechDrive.strafeRight(SPD_DRIVE_LOW, .21);
+        myMechDrive.strafeRight(SPD_DRIVE_LOW, .1);
         // linearOp.sleep(1500);                                        // Orignial time for strafing into plexiglass
         linearOp.sleep(sleepTime);
 //        myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
@@ -549,6 +549,7 @@ public class MecanumMineralMiner {
         //-48
         myGyro.gyroOrientMecanum(-47, myMechDrive);
         myGyro.gyroOrientMecanum(-47, myMechDrive);
+        myMechDrive.strafeRight(SPD_DRIVE_LOW,.15);
         linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_MED, 3);    // Drive to park in crater
         linearOp.sleep(sleepTime);
@@ -624,9 +625,9 @@ public class MecanumMineralMiner {
 //                myMechDrive.driveForward(SPD_DRIVE_MED, 3.8);       //drive second leg of triangle
                 myMechDrive.driveForward(SPD_DRIVE_MED, 4);
                 linearOp.sleep(sleepTime);
-                myMechDrive.strafeRight(SPD_DRIVE_LOW, .265);
+                myMechDrive.strafeRight(SPD_DRIVE_LOW, .65);
                 linearOp.sleep(sleepTime);
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.6);
+                myMechDrive.driveForward(SPD_DRIVE_MED, 1.5);
 
                 break;
 
@@ -640,8 +641,8 @@ public class MecanumMineralMiner {
                 linearOp.sleep(sleepTime);
                 myMechDrive.driveForward(SPD_DRIVE_MED,4.5);
                 linearOp.sleep(sleepTime);
-                myMechDrive.strafeRight(SPD_DRIVE_LOW, .23);
-                myMechDrive.driveForward(SPD_DRIVE_MED, .8);
+                myMechDrive.strafeRight(SPD_DRIVE_LOW, .6);
+                myMechDrive.driveForward(SPD_DRIVE_MED, .7);        // was .8 but it was getting really close to not breaking the plane
 //                myGyro.gyroOrientMecanum(138.2, myMechDrive);         // rotate away from wall to making triangle was 141.1 but too big of an angle
 //                myMechDrive.stopMotors();
 
@@ -664,15 +665,18 @@ public class MecanumMineralMiner {
                 myMechDrive.stopMotors();
 
                 myMechDrive.driveForward(SPD_DRIVE_MED, 2);        // drive first leg of the triangle
-
+                myMechDrive.strafeRight(SPD_DRIVE_LOW,.35);
                 myGyro.gyroOrientMecanum(129, myMechDrive);          // re-orient robot for second triangle leg toward depot was 132.6 but it ran into the wall to much then it was 130 but it was still too big
                 myMechDrive.stopMotors();
 
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3);       //drive second leg of triangle
+                myMechDrive.driveForward(SPD_DRIVE_MED, 2.8);       //drive second leg of triangle
 
                 break;
 
         }
+        linearOp.sleep(1000);
+        myMechDrive.driveForward(SPD_DRIVE_MED, .1);
+        linearOp.sleep(sleepTime);
     }
 }
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.outreach;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,6 +17,7 @@ import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
 @TeleOp(name = "Outreach Robot")
+@Disabled
 public class OutreachRobot extends OpMode {
 
     OutreachMotors myOutreachMotors;

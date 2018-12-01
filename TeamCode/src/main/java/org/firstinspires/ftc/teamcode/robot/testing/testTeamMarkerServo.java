@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.testing;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 //import org.opencv.core.Range;
 
 @TeleOp(name = "TEST - TEAM MARKER SERVO")
-
+@Disabled
 public class testTeamMarkerServo extends OpMode {
     Servo teamMarkerArm;
 
