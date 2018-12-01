@@ -8,6 +8,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -21,6 +22,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
@@ -44,6 +48,10 @@ public class DepotWebcam extends LinearOpMode  {
     GyroCompetition myGyro;
     MecanumMineralMiner myMineralMiner;
     RevColorDistance myRevColorDistance;
+    DcMotor intakePositionMotor;
+    DcMotor intakeMotor;
+    IntakeExtenderArm myIntakeExtenderArm;
+
 
     LiftMotor myLiftMotor;
     TeamMarker myTeamMarker;
@@ -86,11 +94,18 @@ public class DepotWebcam extends LinearOpMode  {
         myMineralMiner = new MecanumMineralMiner();
         myMineralMiner.setLinearOp(this);
 
+
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
         myTeamMarker.setLinearOp(this);
+
+        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
+        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
+        myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
+        intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 

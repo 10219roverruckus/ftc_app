@@ -61,17 +61,15 @@ public class MecanumMineralMiner {
 
     public void findingMineralCamera(double cameraGoldLocation) {
 
-        // find location of the mineral using camera
-//
-//        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
-//            goldPosition = GoldPosition.MIDDLE;                           commented out while camera does not work
-//        } else if (cameraGoldLocation > 300) {                            program works perfectly DO NOT CHANGE THE CODE
-//            goldPosition = GoldPosition.RIGHT;
-//        } else {
-//            goldPosition = GoldPosition.LEFT;
-//        }
+         // find location of the mineral using camera
 
-        goldPosition = goldPosition.RIGHT;
+        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
+            goldPosition = GoldPosition.MIDDLE;                           //commented out while camera does not work
+        } else if (cameraGoldLocation > 300) {                            //program works perfectly DO NOT CHANGE THE CODE
+            goldPosition = GoldPosition.RIGHT;
+        } else {
+            goldPosition = GoldPosition.LEFT;
+        }
     }
 
     //************  Method used by both crater and depot to push off mineral   ***********  //
@@ -151,13 +149,13 @@ public class MecanumMineralMiner {
         linearOp.sleep(sleepTime);
         switch (goldPosition) {                                          //drive toward wall distance is different based on distance
             case LEFT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.4);   // different distance to wall after backup to tape DO NOT CHANGE
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.3);   // different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case MIDDLE:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.55);  // was 3.8 but it was too big of a distance different distance to wall after backup to tape DO NOT CHANGE
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.35);  // was 3.8 but it was too big of a distance different distance to wall after backup to tape DO NOT CHANGE
                 break;
             case RIGHT:
-                myMechDrive.driveForward(SPD_DRIVE_MED, 3.8);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
+                myMechDrive.driveForward(SPD_DRIVE_MED, 3.7);  // different distance to wall after backup to tape used to be 4.2 but was too long DO NOT CHANGE
                 break;
         }
         linearOp.sleep(sleepTime);
@@ -500,7 +498,7 @@ public class MecanumMineralMiner {
 //        myMechDrive.setMotorPowerStrafeRight(.3);                      // Align to wall
 //        linearOp.sleep(500);                                // new time = near plexiglass
 //        myMechDrive.stopMotors();                                      // Stop motors
-        myMechDrive.strafeRight(SPD_DRIVE_LOW, .36);
+        myMechDrive.strafeRight(SPD_DRIVE_LOW, .21);
         // linearOp.sleep(1500);                                        // Orignial time for strafing into plexiglass
         linearOp.sleep(sleepTime);
 //        myMechDrive.driveForward(SPD_DRIVE_MED, 3);           //going toward depot using color sensor
@@ -547,6 +545,7 @@ public class MecanumMineralMiner {
         linearOp.sleep(sleepTime);
 
         myGyro.gyroReset();
+        myMechDrive.strafeRight(SPD_DRIVE_MED, .5);         //was .3
         //-48
         myGyro.gyroOrientMecanum(-47, myMechDrive);
         myGyro.gyroOrientMecanum(-47, myMechDrive);
@@ -556,6 +555,8 @@ public class MecanumMineralMiner {
 //-43
         myGyro.gyroOrientMecanum(-42, myMechDrive);
         myGyro.gyroOrientMecanum(-42, myMechDrive);
+        linearOp.sleep(sleepTime);
+        myMechDrive.strafeRight(SPD_DRIVE_MED, .4);
         linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_MED, 2.3);    // Drive to park in crater
         linearOp.sleep(sleepTime);

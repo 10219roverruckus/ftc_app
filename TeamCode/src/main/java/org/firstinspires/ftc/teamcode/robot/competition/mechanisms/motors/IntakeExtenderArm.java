@@ -41,12 +41,13 @@ public class IntakeExtenderArm {
         intakeLinearOp = Op;
     }
 
-    public void extendIntakeArm () {
-        intakeExtenderArm.setPower(1);
+    public void extendIntakeArm (double motorPower) {
+
+        intakeExtenderArm.setPower(motorPower);
     }
 
-    public void retractIntactArm () {
-        intakeExtenderArm.setPower(-1);
+    public void retractIntactArm (double motorPower) {
+        intakeExtenderArm.setPower(motorPower);
     }
 
     public void stopIntakeArm () {
