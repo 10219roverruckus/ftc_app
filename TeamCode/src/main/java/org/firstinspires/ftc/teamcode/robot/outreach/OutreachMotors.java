@@ -69,7 +69,7 @@ public class OutreachMotors {
     public void arcadeDrive (double forwardSpeed, double turnRate) {
         leftMotorValue = forwardSpeed + turnRate;
         rightMotorValue = forwardSpeed - turnRate;
-        //clip left & right motor values to stay within [-1,+1]
+        //clip left & right motor values to stay within [-1, +1]
         leftMotorValue = Range.clip(leftMotorValue, -1, 1);
         rightMotorValue = Range.clip(rightMotorValue, -1, 1);
         leftMotor.setPower(leftMotorValue);

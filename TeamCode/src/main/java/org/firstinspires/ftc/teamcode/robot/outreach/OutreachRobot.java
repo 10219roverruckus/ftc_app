@@ -66,7 +66,7 @@ public class OutreachRobot extends OpMode {
         driveModeChecks();
         //drive the robot!!!!
         driveRobot();
-        //control LEDs manually - use left & right bumpers.
+        //control LEDs manually - use left & right bumpers
         controlLEDs();
         telemetryOutput();
     }
