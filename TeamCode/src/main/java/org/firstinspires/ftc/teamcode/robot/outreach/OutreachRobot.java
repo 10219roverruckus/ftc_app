@@ -28,6 +28,8 @@ public class OutreachRobot extends OpMode {
     double leftY;
     //value for right joystick
     double rightY;
+    double leftX;
+    double rightX;
 
     double triggerLeft;
     double triggerRight;
@@ -42,7 +44,7 @@ public class OutreachRobot extends OpMode {
 
     public DriveMode driveMode = null;
     public DriveDirection driveDirection = null;
-
+    boolean driveForward = true;
 
     boolean bumperAllow = true;
 
@@ -53,62 +55,88 @@ public class OutreachRobot extends OpMode {
         ledStrip.setPosition(ledPosition);
         driveMode = driveMode.START;
         driveDirection = driveDirection.START;
+
     }
 
     @Override
     public void loop() {
+        //assigns left and right joysticks
+        gamePadAssignments();
+        //checks for TANK / ARCADE / FORWARD / REVERSE drive modes.
+        driveModeChecks();
+        //drive the robot!!!!
+        driveRobot();
+        //control LEDs manually - use left & right bumpers.
+        controlLEDs();
+        telemetryOutput();
+    }
 
+    public void driveRobot () {
         switch (driveMode) {
             case START:
                 telemetry.addLine("Waiting for user to select DRIVE MODE");
                 break;
             case TANK:
-                if (gamepad1.right_bumper) {
-                    ledPosition = ledPosition + ledIncrementValue;
-                    ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+                if (driveDirection == DriveDirection.FORWARD) {
+                    myOutreachMotors.driveTank(leftY, rightY);
                 }
-
-                if (gamepad1.left_bumper) {
-                    ledPosition = ledPosition - ledIncrementValue;
-                    ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+                else if (driveDirection == DriveDirection.REVERSE) {
+                    myOutreachMotors.driveTank(-leftY, -rightY);
                 }
-                leftY = gamepad1.left_stick_y;
-                rightY = gamepad1.right_stick_y;
                 break;
             case ARCADE:
+                myOutreachMotors.arcadeDrive(gamepad1);
                 break;
         }
+    }
 
-        //OR USE BOOLEAN W/ BOOLEAN FORWARD_MODE??
-        switch (driveDirection) {
-            case START:
-                break;
-            case FORWARD:
-                if (driveMode == driveMode.TANK) {
-                    myOutreachMotors.drive(leftY, rightY);
-                }
-                break;
-            case REVERSE:
-                if (driveMode == driveMode.TANK) {
-                    myOutreachMotors.drive(-leftY, -rightY);
-                }
-                break;
+    public void driveModeChecks () {
+        if (gamepad1.dpad_up){
+            driveForward = true;
+            driveDirection = DriveDirection.FORWARD;
         }
-
-
-        if (ledPosition != ledStrip.getPosition()) {
-            ledStrip.setPosition(ledPosition);
+        if (gamepad1.dpad_down) {
+            driveForward = false;
+            driveDirection = DriveDirection.REVERSE;
         }
-        telemetryOutput();
+        if (gamepad1.dpad_right) {
+            driveMode = DriveMode.ARCADE;
+        }
+        if (gamepad1.dpad_left) {
+            driveMode = DriveMode.TANK;
+        }
+    }
+
+    public void gamePadAssignments () {
+        leftY = gamepad1.left_stick_y;
+        rightY = gamepad1.right_stick_y;
+        leftX = gamepad1.left_stick_x;
+        rightX = gamepad1.right_stick_x;
+    }
+
+    public void controlLEDs () {
+        if (gamepad1.left_bumper) {
+            ledPosition = ledPosition - ledIncrementValue;
+            ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+        }
+        if (gamepad1.right_bumper) {
+            ledPosition = ledPosition + ledIncrementValue;
+            ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+        }
+//        if (ledPosition != ledStrip.getPosition()) {
+//            ledStrip.setPosition(ledPosition);
+//        }
+        ledStrip.setPosition(ledPosition);
     }
 
     public void telemetryOutput () {
-        telemetry.addData("DRIVE MODE", driveMode);
-        telemetry.addData("DRIVE DIRECTTION", driveDirection);
         telemetry.addData("LED Pos VAR: ", ledPosition);
-        telemetry.addData("LED getPosition: ", ledStrip.getPosition());
-        telemetry.addData("Left Y: ", leftY);
-        telemetry.addData("Right Y: ", rightY);
+//        telemetry.addData("LED getPosition: ", ledStrip.getPosition());
+
+        telemetry.addData("DRIVE MODE ", driveMode);
+        telemetry.addData("DRIVE FORWARD: ", driveForward);
+//        telemetry.addData("Left Y: ", leftY);
+//        telemetry.addData("Right Y: ", rightY);
         telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
         telemetry.addLine("D_PAD LEFT FOR TANK DRIVE");
         telemetry.addLine("D_UP FOR FORWARD MODE");
