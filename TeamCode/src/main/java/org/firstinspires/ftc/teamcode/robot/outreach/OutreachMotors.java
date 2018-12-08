@@ -11,6 +11,8 @@ public class OutreachMotors {
 
     public double leftMotorValue, rightMotorValue;
 
+    public double leftSquaredValue, rightSquaredValue;
+
 
     public LinearOpMode linearOp = null;
 
@@ -43,24 +45,37 @@ public class OutreachMotors {
     }
 
     public void driveTank (double leftMotorPower, double rightMotorPower) {
-//        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-//        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-
         leftMotorPower = Range.clip(leftMotorPower,-1,+1);
         rightMotorPower = Range.clip(rightMotorPower, -1 ,1);
-        if (leftMotorPower < -.1 || leftMotorPower > .1) {
+        if (leftMotorPower < -.01 || leftMotorPower > .01) {
             leftMotor.setPower(leftMotorPower);
         }
         else {
             leftMotor.setPower(0);
         }
-        if (rightMotorPower < -.1 || rightMotorPower > .1) {
+        if (rightMotorPower < -.01 || rightMotorPower > .01) {
             rightMotor.setPower(rightMotorPower);
         }
         else {
             rightMotor.setPower(0);
         }
     }
+
+    public void driveTank (double leftValue, double rightValue, boolean squareInputs) {
+        if (squareInputs) {
+            leftSquaredValue = leftValue * leftValue;
+            rightSquaredValue = rightValue * rightValue;
+            if (leftValue < 0) {
+                leftSquaredValue = -leftSquaredValue;
+            }
+            if (rightValue < 0) {
+                rightSquaredValue = - rightSquaredValue;
+            }
+        }
+        driveTank(leftSquaredValue, rightSquaredValue);
+    }
+
+
 
     public void arcadeDrive (Gamepad gamepad) {
         arcadeDrive(-gamepad.left_stick_y, gamepad.left_stick_x);
@@ -76,39 +91,14 @@ public class OutreachMotors {
         rightMotor.setPower(rightMotorValue);
     }
 
+    public void arcadeDrive (double forwardSpeed, double turnRate, boolean squareInputs) {
+        //empty as example
+    }
+
     public void stopMotors () {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
-
-/*
-    public void drivePID (double power, double distance) {
-////        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-////        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-////
-
-////
-//        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //linearOp.idle();
-        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        targetDistance = distance * TICKS_PER_ROTATION;
-        linearOp.telemetry.addData("CURRENT POSITION BEFORE", rightMotor.getCurrentPosition());
-        linearOp.telemetry.addData("TARGET POSITION", targetDistance);
-        linearOp.telemetry.update();
-        leftMotor.setPower(.5);
-        rightMotor.setPower(.5);
-        linearOp.sleep(2000);
-        stopMotors();
-        linearOp.telemetry.addData("CURRENT POSITION AFTER", rightMotor.getCurrentPosition());
-        linearOp.telemetry.addData("TARGET POSITION", targetDistance);
-        linearOp.telemetry.update();
-        linearOp.sleep (2000);
-    }
-
-*/
-
 
     public void drivePID (double power, double distance) {
         //setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -166,5 +156,4 @@ public class OutreachMotors {
         //stopMotors();
         linearOp.idle();
     }
-
 }

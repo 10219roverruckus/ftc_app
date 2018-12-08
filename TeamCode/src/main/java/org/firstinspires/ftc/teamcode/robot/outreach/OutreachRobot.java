@@ -78,10 +78,10 @@ public class OutreachRobot extends OpMode {
                 break;
             case TANK:
                 if (driveDirection == DriveDirection.FORWARD) {
-                    myOutreachMotors.driveTank(leftY, rightY);
+                    myOutreachMotors.driveTank(leftY, rightY, true);
                 }
                 else if (driveDirection == DriveDirection.REVERSE) {
-                    myOutreachMotors.driveTank(-leftY, -rightY);
+                    myOutreachMotors.driveTank(-leftY, -rightY, true);
                 }
                 break;
             case ARCADE:
