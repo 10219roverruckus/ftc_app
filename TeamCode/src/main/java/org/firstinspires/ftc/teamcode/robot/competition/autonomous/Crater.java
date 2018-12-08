@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMa
 
 
 @Autonomous(name = "Crater - competition")
+@Disabled
 
 public class Crater extends LinearOpMode  {
 

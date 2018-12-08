@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -23,6 +24,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
@@ -37,7 +39,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater1 - competition WEBCAM")
+@Autonomous(name = "Crater - competition WEBCAM")
 //@Disabled
 public class CraterWebcam extends LinearOpMode  {
 
@@ -53,6 +55,10 @@ public class CraterWebcam extends LinearOpMode  {
 
     LiftMotor myLiftMotor;
     TeamMarker myTeamMarker;
+
+    DcMotor intakePositionMotor;
+    DcMotor intakeMotor;
+    IntakeExtenderArm myIntakeExtenderArm;
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -93,7 +99,11 @@ public class CraterWebcam extends LinearOpMode  {
 
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
         myTeamMarker.setLinearOp(this);
-
+        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
+        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
+        myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
+        intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
@@ -193,7 +203,7 @@ public class CraterWebcam extends LinearOpMode  {
                 idle();
 
                 detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
-                sleep(1000);
+                sleep(100);
 
                 myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
 

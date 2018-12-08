@@ -9,12 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 import org.firstinspires.ftc.teamcode.robot.outreach.OutreachMotors;
 
 @Autonomous (name = "Auto Testing - IGNORE")
+@Disabled
 public class johnTest extends LinearOpMode  {
 
     //MecanumDrive myMechDrive;

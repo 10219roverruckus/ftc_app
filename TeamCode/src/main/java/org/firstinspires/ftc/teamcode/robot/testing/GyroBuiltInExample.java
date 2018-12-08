@@ -54,7 +54,7 @@ import java.util.Locale;
  *
  * @see <a href="http://www.adafruit.com/products/2472">Adafruit IMU</a>
  */
-@TeleOp(name = "IMU BUILT IN EXAMPLE CODE", group = "Sensor")
+@TeleOp(name = "IMU BUILT IN EXAMPLE CODE b reset", group = "Sensor")
 //@Disabled                            // Comment this out to add to the opmode list
 public class GyroBuiltInExample extends LinearOpMode
 {
@@ -103,6 +103,10 @@ public class GyroBuiltInExample extends LinearOpMode
 
         // Loop and update the dashboard
         while (opModeIsActive()) {
+            if (gamepad1.b) {
+                telemetry.addLine("RESEST GYRO");
+                imu.initialize(parameters);
+            }
             telemetry.update();
         }
     }

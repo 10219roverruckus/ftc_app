@@ -52,16 +52,16 @@ public class GyroCompetition {
     // NEED TO ADD CODE FOR WHEN GOING FROM +180 TO -180
     public void gyroOrientMecanum (double angle, MecanumDrive myMechDrive) {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        linearOp.telemetry.addLine("READY TO ORIENT WITH GYRO!");
-        linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
+//        linearOp.telemetry.addLine("READY TO ORIENT WITH GYRO!");
+//        linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
         linearOp.telemetry.update();
-        linearOp.sleep(100); //intentionally long sleep for feedback
+        linearOp.sleep(50); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
             while (angles.firstAngle >=  angle + TOLERANCE) {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateRight(.34);
+                myMechDrive.setMotorPowerRotateRight(.3);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
@@ -70,10 +70,11 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateLeft(.34);
+                myMechDrive.setMotorPowerRotateLeft(.3);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
+        myMechDrive.stopMotors();
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //        linearOp.telemetry.addLine("DONE POSITIOING WITH GYRO");
 //        linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
@@ -126,4 +127,9 @@ public class GyroCompetition {
         linearOp.sleep(1000); //intentionally long sleep for feedback
     }
 
+    public void gyroReset () {
+        BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
+//        imu = I;
+        imu.initialize(parametersimu);
+    }
 }

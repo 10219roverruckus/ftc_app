@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
  */
 
 //@Disabled
-@TeleOp(name = "Full Control - Main Channel Robot")
+@TeleOp(name = "Full Control - Worlds Robot1")
 
 public class FullControlTeleOp extends OpMode {
 
@@ -113,6 +113,8 @@ public class FullControlTeleOp extends OpMode {
         liftArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArmMotor.setDirection(DcMotor.Direction.REVERSE);
         intakePositionMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         teamMarkerArm = hardwareMap.servo.get("team_marker_arm");
 
@@ -155,10 +157,10 @@ public class FullControlTeleOp extends OpMode {
         //lift motor up and down
 
         if (gamepad2.dpad_down) {
-            liftArmMotor.setPower(-1);
+            liftArmMotor.setPower(1);
         }
         else if (gamepad2.dpad_up) {
-            liftArmMotor.setPower(1);
+            liftArmMotor.setPower(-1);
         }
         else {
             liftArmMotor.setPower(0);
@@ -172,12 +174,12 @@ public class FullControlTeleOp extends OpMode {
         if (gamepad2.left_stick_y > .1) {
 //            intakePosition = intakePosition + intakeIncrement;
 //            intakeExtenderArm.setPosition(intakePosition);
-            myIntakeExtenderArm.extendIntakeArm();
+            myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
         }
         else if (gamepad2.left_stick_y < -.1) {
 //            intakePosition = intakePosition - intakeIncrement;
 //            intakeExtenderArm.setPosition(intakePosition);
-            myIntakeExtenderArm.retractIntactArm();
+            myIntakeExtenderArm.retractIntactArm(gamepad2.left_stick_y);
         }
         else {
             myIntakeExtenderArm.stopIntakeArm();

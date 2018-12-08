@@ -4,6 +4,7 @@ import android.sax.TextElementListener;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -22,7 +23,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 
 
     @Autonomous(name = "AUTO Testing - Outreach Crater")
-
+@Disabled
 public class AutoTesting extends LinearOpMode  {
 
     //MecanumDrive myMechDrive;
