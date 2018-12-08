@@ -38,20 +38,20 @@ public class OutreachMotors {
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void drive (double leftY, double rightY) {
+    public void drive (double leftMotorPower, double rightMotorPower) {
 //        leftMotor.setDirection(DcMotor.Direction.REVERSE);
 //        rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        leftY = Range.clip(leftY,-1,+1);
-        rightY = Range.clip(rightY, -1 ,1);
-        if (leftY < -.1 || leftY > .1) {
-            leftMotor.setPower(leftY);
+        leftMotorPower = Range.clip(leftMotorPower,-1,+1);
+        rightMotorPower = Range.clip(rightMotorPower, -1 ,1);
+        if (leftMotorPower < -.1 || leftMotorPower > .1) {
+            leftMotor.setPower(leftMotorPower);
         }
         else {
             leftMotor.setPower(0);
         }
-        if (rightY < -.1 || rightY > .1) {
-            rightMotor.setPower(rightY);
+        if (rightMotorPower < -.1 || rightMotorPower > .1) {
+            rightMotor.setPower(rightMotorPower);
         }
         else {
             rightMotor.setPower(0);
