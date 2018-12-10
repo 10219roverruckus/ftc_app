@@ -77,18 +77,24 @@ public class OutreachMotors {
 
 
 
-    public void arcadeDrive (Gamepad gamepad) {
-        arcadeDrive(-gamepad.left_stick_y, gamepad.left_stick_x);
+    public void arcadeDrive (Gamepad gamepad, DriveDirection driveDirection) {
+        arcadeDrive(-gamepad.left_stick_y, gamepad.left_stick_x, driveDirection);
     }
 
-    public void arcadeDrive (double forwardSpeed, double turnRate) {
+    public void arcadeDrive (double forwardSpeed, double turnRate, DriveDirection driveDirection) {
         leftMotorValue = forwardSpeed + turnRate;
         rightMotorValue = forwardSpeed - turnRate;
         //clip left & right motor values to stay within [-1, +1]
         leftMotorValue = Range.clip(leftMotorValue, -1, 1);
         rightMotorValue = Range.clip(rightMotorValue, -1, 1);
-        leftMotor.setPower(leftMotorValue);
-        rightMotor.setPower(rightMotorValue);
+        if (driveDirection == DriveDirection.FORWARD) {
+            leftMotor.setPower(leftMotorValue);
+            rightMotor.setPower(rightMotorValue);
+        }
+        if (driveDirection == DriveDirection.REVERSE) {
+            leftMotor.setPower(-leftMotorValue);
+            rightMotor.setPower(-rightMotorValue);
+        }
     }
 
     public void arcadeDrive (double forwardSpeed, double turnRate, boolean squareInputs) {

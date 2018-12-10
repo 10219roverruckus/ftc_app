@@ -38,15 +38,13 @@ public class OutreachRobot extends OpMode {
     double minLedPosition = 0.2525;
     double maxLedPosition = 0.7475;
     double ledPosition = minLedPosition;
-    double ledIncrementValue = 0.0001;
+    double ledIncrementValue = 0.0002;
 
     Servo ledStrip;
 
     public DriveMode driveMode = null;
     public DriveDirection driveDirection = null;
-    boolean driveForward = true;
 
-    boolean bumperAllow = true;
 
     @Override
     public void init() {
@@ -54,7 +52,7 @@ public class OutreachRobot extends OpMode {
         ledStrip = hardwareMap.servo.get("led_strip");
         ledStrip.setPosition(ledPosition);
         driveMode = driveMode.START;
-        driveDirection = driveDirection.START;
+        driveDirection = driveDirection.FORWARD;
 
     }
 
@@ -78,25 +76,23 @@ public class OutreachRobot extends OpMode {
                 break;
             case TANK:
                 if (driveDirection == DriveDirection.FORWARD) {
-                    myOutreachMotors.driveTank(-leftY, -rightY, true);
+                    myOutreachMotors.driveTank(-leftY, -rightY);
                 }
                 else if (driveDirection == DriveDirection.REVERSE) {
-                    myOutreachMotors.driveTank(leftY, rightY, true);
+                    myOutreachMotors.driveTank(leftY, rightY);
                 }
                 break;
             case ARCADE:
-                myOutreachMotors.arcadeDrive(gamepad1);
+                myOutreachMotors.arcadeDrive(gamepad1, driveDirection);
                 break;
         }
     }
 
     public void driveModeChecks () {
         if (gamepad1.dpad_up){
-            driveForward = true;
             driveDirection = DriveDirection.FORWARD;
         }
         if (gamepad1.dpad_down) {
-            driveForward = false;
             driveDirection = DriveDirection.REVERSE;
         }
         if (gamepad1.dpad_right) {
@@ -123,6 +119,20 @@ public class OutreachRobot extends OpMode {
             ledPosition = ledPosition + ledIncrementValue;
             ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
         }
+        if (gamepad1.left_stick_y > .1) {
+            ledPosition = ledPosition - ledIncrementValue;
+            ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+        }
+        if (gamepad1.left_stick_y < -.1) {
+            ledPosition = ledPosition + ledIncrementValue;
+            ledPosition = Range.clip(ledPosition,minLedPosition,maxLedPosition);
+        }
+        if (gamepad1.left_trigger == 1){
+            ledPosition = minLedPosition;
+        }
+        if (gamepad1.right_trigger == 1) {
+            ledPosition = maxLedPosition;
+        }
 //        if (ledPosition != ledStrip.getPosition()) {
 //            ledStrip.setPosition(ledPosition);
 //        }
@@ -131,10 +141,10 @@ public class OutreachRobot extends OpMode {
 
     public void telemetryOutput () {
         telemetry.addData("LED Pos VAR: ", ledPosition);
-//        telemetry.addData("LED getPosition: ", ledStrip.getPosition());
+        telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
 
         telemetry.addData("DRIVE MODE ", driveMode);
-        telemetry.addData("DRIVE FORWARD: ", driveForward);
+        telemetry.addData("DRIVE DIRECTION: ", driveDirection);
 //        telemetry.addData("Left Y: ", leftY);
 //        telemetry.addData("Right Y: ", rightY);
         telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
