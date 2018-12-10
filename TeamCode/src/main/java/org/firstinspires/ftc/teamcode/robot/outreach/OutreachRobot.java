@@ -18,7 +18,7 @@ import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
 @TeleOp(name = "Outreach Robot")
-@Disabled
+//@Disabled
 public class OutreachRobot extends OpMode {
 
     OutreachMotors myOutreachMotors;
@@ -78,10 +78,10 @@ public class OutreachRobot extends OpMode {
                 break;
             case TANK:
                 if (driveDirection == DriveDirection.FORWARD) {
-                    myOutreachMotors.driveTank(leftY, rightY, true);
+                    myOutreachMotors.driveTank(-leftY, -rightY, true);
                 }
                 else if (driveDirection == DriveDirection.REVERSE) {
-                    myOutreachMotors.driveTank(-leftY, -rightY, true);
+                    myOutreachMotors.driveTank(leftY, rightY, true);
                 }
                 break;
             case ARCADE:

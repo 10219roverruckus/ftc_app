@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
+package org.firstinspires.ftc.teamcode.robot.competition.oldClasses;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
@@ -15,21 +15,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.liftArm;
 
-import java.sql.Time;
-import java.util.Timer;
-
-@Autonomous(name = " Old Crater Both", group = "Red - Blue")
+@Autonomous(name = "Old Team Marker Both", group = "Red - Blue")
 @Disabled
-public class redCrater extends LinearOpMode {
+public class redTeamMarker extends LinearOpMode {
     private int movement = 0;
+    MecanumDrive myMechDrive;
+    LiftMotor myLiftArm;
     private GoldPosition goldPosition = GoldPosition.MIDDLE;
 
     //info for gyro
@@ -40,21 +39,21 @@ public class redCrater extends LinearOpMode {
 
 
     TeamMarker myTeamMarker;
-    MecanumDrive myMechDrive;
-    MineralLift myMineralLift;
-    LiftMotor myLiftMotor;
-    IntakeMotor myIntakeMotor;
-    IntakeExtenderArm myIntakeExtenderArm;
-    IntakeRotator myIntakeRotator;
+    IntakeExtenderArm myIntakeArm;
 //    DistanceSensor liftDistanceSensor;
+
+
+
+
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-
         myMechDrive = new MecanumDrive(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
+        myLiftArm = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
 //        liftDistanceSensor = hardwareMap.get(DistanceSensor.class, "lift_distance_sensor");
+
 
         BNO055IMU.Parameters parametersimu = new BNO055IMU.Parameters();
         parametersimu.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -104,12 +103,11 @@ public class redCrater extends LinearOpMode {
         myMechDrive.setLinearOp(this);
 
         myTeamMarker.teamMarkerArmRaised();
+
         waitForStart();
 
         telemetry.addData("pressed start", movement);
         telemetry.update();
-
-        this.getRuntime();
 
         //not use camera yet - DELETE WHEN CAMERA IN PLACE!
        // goldPosition = goldPosition.LEFT;
@@ -127,33 +125,33 @@ public class redCrater extends LinearOpMode {
                     else {
                         goldPosition = GoldPosition.MIDDLE;
                     }
-
                     goldPosition = GoldPosition.LEFT;
                     movement++;   // Increments to next space
                     break;
                 case 1: //land robot and adjust robot and get robot away from the lander, so it can collect minerals
-//                    telemetry.addData("case START: ", movement);
-//                    telemetry.update();
-//                  angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//                  gravity = imu.getGravity();
-                    //LOWER ROBOT DOWN TO PLAYING FIELD
-                    myLiftMotor.extendLiftMotorFully(); //distance sensor
+                    telemetry.addData("case START: ", movement);
+                    telemetry.update();
+//                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//                    gravity = imu.getGravity();
+//                    //myLiftArm.extend();
+//                    sleep(100);
+
+                    myLiftArm.extendLiftMotorFully(); //distance sensor
                     sleep(sleepTime);
                     myMechDrive.strafeRight(SPD_DRIVE_MED,.5);
                     sleep(sleepTime);
-                    //RETRACT LIFT ARM
-//                    myLiftMotor.retractLiftMotorFully(liftDistanceSensor);
-//                    sleep(sleepTime);
-                    myMechDrive.driveForward(SPD_DRIVE_MED, .65); // move away from the lander toward crater
+                    myMechDrive.driveForward(SPD_DRIVE_MED, .5); // move away from the lander toward crater
                     sleep(sleepTime);
                     myMechDrive.rotateLeft(SPD_DRIVE_MED,1);
                     sleep(sleepTime);
-                    myMechDrive.driveForward(SPD_DRIVE_MED,.6);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,1);
                     sleep(sleepTime);
-//                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.1);
-//                    sleep(sleepTime);
+                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.2);
+                    sleep(sleepTime);
+                    myMechDrive.driveForward(SPD_DRIVE_MED,1.2);
+                    sleep(sleepTime);
 
-                    // moving off lander
+
 //                    sleep(100 );
 //                    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //                    if (angles.firstAngle > .5){
@@ -170,126 +168,125 @@ public class redCrater extends LinearOpMode {
 //
 //                        }
 //                    }
+//                    myMechDrive.stopMotors();
                     telemetry.addData("done with case: ", movement);
                     movement ++;  // increments to case 2
                     break;
                 case 2:           // move to correct mineral / knock it off
-//                    telemetry.addData("case START ", movement);
-//                    telemetry.update();
+                    telemetry.addData("case START ", movement);
+                    telemetry.update();
                     //sleep(1000);
                     switch (goldPosition) {
                         case LEFT: { //mineral left
-//                            telemetry.addLine("Left");
-//                            telemetry.update();
-//                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.6);
+                            telemetry.addLine("Left");
+                            telemetry.update();
+//                            myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.5);
 //                            sleep(sleepTime);
-//                            myMechDrive.rotateLeft(SPD_DRIVE_MED,1);
+//                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.0);
 //                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.rotateRight(SPD_DRIVE_LOW, 1);
                             sleep(sleepTime);
-                            myMechDrive.rotateRight(SPD_DRIVE_MED, 1.3);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,1.8);
                             sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1.2);  // knocks mineral off!
+                            //myMechDrive.rotateRight(SPD_DRIVE_MED,.2);
+                              myTeamMarker.teamMarkerArmOutside();
+                              sleep(500);
+                            myTeamMarker.teamMarkerArmRaised();
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1.7);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
+                            myMechDrive.setMotorPowerStrafeLeft(.25);
+
+                            sleep(100);
+                            myMechDrive.alignLeftFront(.5);
+                            sleep(500);
+                            myMechDrive.alignLeftBack(.5);
+                            sleep(500);
+                            myMechDrive.stopMotors();
+                            sleep(120);
+//                            myMechDrive.stopMotors();
+
+
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 3.7);
                             sleep(sleepTime);
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1);
                             break;
                         }
                         case RIGHT: { //mineral right
                             telemetry.addLine("Right");
                             telemetry.update();
-                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.4);
+                            myMechDrive.strafeRight(SPD_DRIVE_MED, 1.2);
                             sleep(sleepTime);
                             myMechDrive.driveForward(SPD_DRIVE_MED, .8);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
-                            sleep(sleepTime);
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.2);
-                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 2);
+//                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55); // can remove
+
+                            myMechDrive.rotateLeft(SPD_DRIVE_LOW, .3);
+//                            myIntakeArm.extendingIntakeArm (SPD_ARM_MED, 1);
+//                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,1);
+//
+                            myTeamMarker.teamMarkerArmOutside();
+                            sleep(1000);
+                            myTeamMarker.teamMarkerArmRaised();
+
+
+                            myMechDrive.driveBackward(SPD_DRIVE_MED, 1);
+                            myMechDrive.setMotorPowerStrafeLeft(.3);
+                            sleep(1000);
+
+                            sleep(1000);
+                            myMechDrive.alignLeftFront(.5);
+                            sleep(500);
+                            myMechDrive.alignLeftBack(.5);
+                            sleep(500);
+                            myMechDrive.stopMotors();
+                            sleep(1200);
+                            myMechDrive.stopMotors();
+
+                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
                         case MIDDLE: { // mineral straight
                             telemetry.addLine("Middle");
                             telemetry.update();
-                            myMechDrive.driveForward(SPD_DRIVE_MED, .8);
+                            myMechDrive.driveForward(SPD_DRIVE_MED, 2.5);
                             sleep(sleepTime);
-                            myMechDrive.driveBackward(SPD_DRIVE_MED, .55);
-                            sleep(sleepTime);
-                            myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.2);
-                            sleep(sleepTime);
-                            myMechDrive.driveForward(SPD_DRIVE_MED, 1);
+
+//                            myIntakeArm.extendingIntakeArm(SPD_ARM_MED, 1);
+//                            myIntakeArm.retractingIntakeArm(SPD_ARM_MED, -1);
+
+                            myMechDrive.rotateRight(SPD_DRIVE_MED,.5);
+
+                            myTeamMarker.teamMarkerArmOutside();
+                            sleep(1000);
+                            myTeamMarker.teamMarkerArmRaised();
+
+                            myMechDrive.rotateRight(SPD_DRIVE_MED, .9);
+                            myMechDrive.driveForward(SPD_DRIVE_MED,3.5);
                             break;
                         }
                     }
-                    sleep(100);
+                    sleep(2000);
                     movement++;
                     break;
-                case 3: //driving towards wall
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 1.5);
-                    sleep(sleepTime);
-//                    myMechDrive.rotateLeft(SPD_DRIVE_MED,.37);
-                    //sleep(100);
-                    myMechDrive.rotateLeft(SPD_DRIVE_MED, .57); //rotate at wall
-                    sleep(sleepTime);
-                    myMechDrive.setMotorPowerStrafeRight(.3);
-                    sleep (1200); //orient self with wall
-//
-//                    sleep(1000);
-//                    myMechDrive.alignLeftFront(.5);
-//                    sleep(500);
-//                    myMechDrive.alignLeftBack(.5);
-//                    sleep(500);
-//                    myMechDrive.stopMotors();
-//                    sleep(1200);
-//                    myMechDrive.stopMotors();
-
-                    myMechDrive.driveForward(SPD_DRIVE_MED, 3.2 ); // 3.5
-                    sleep(sleepTime);
-                    myMechDrive.strafeLeft(SPD_DRIVE_MED,.5);
-                    sleep(sleepTime);
-                    myMechDrive.rotateRight(SPD_DRIVE_MED, 1.05);
-                    sleep (sleepTime);
-
-//1.05 + 1.05 = 2.1
-                    myTeamMarker.teamMarkerArmOutside();
-                    sleep(50);
-
-                    myTeamMarker.teamMarkerArmRaised();
-
-                    myMechDrive.rotateRight(SPD_DRIVE_MED,1.05);
-                    sleep(sleepTime);
-                    myMechDrive.setMotorPowerStrafeLeft(.3);
-                    sleep(50); //go into the wall!
-                    myMechDrive.stopMotors();
-                    sleep(sleepTime);
-                    myMechDrive.driveForward(SPD_DRIVE_MED,6);
-                    sleep(sleepTime);
+                case 3: //Vuphoria  we don't know how to do this part yet
 
                     movement++;
                     break;
 
-                case 4: // place team marker / servo arm
+//                case 4: // place team marker / servo arm
 //                    myTeamMarker.teamMarkerArmLowered();
 //                    sleep(100);
 //                    myTeamMarker.teamMarkerArmRaised();
-                    movement++;
-                    break;
-
-                case 5: // park in crater need to look at different pathways that we could take
-                    //myMechDrive.driveBackward(SPD_DRIVE_MED, -3.2);
-                    sleep(sleepTime);
-                    movement++;
-                    break;
-//
-//                case 6: //testing servo arm
-//                    myTeamMarker.teamMarkerArmLowered();
-//                    sleep(sleepTime);
-//                    myTeamMarker.teamMarkerArmRaised();
-//                    sleep(sleepTime);
-//                    //        movement++;
+//                    movement++;
 //                    break;
+//
+//                case 5: // park in crater need to look at different pathways that we could take
+//
+////                    myMechDrive.TeamMarkerToCrater();
+////                    movement++;
+////                    break;
 
             }
 
