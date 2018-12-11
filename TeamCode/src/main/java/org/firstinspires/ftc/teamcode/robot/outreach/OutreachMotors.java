@@ -2,12 +2,15 @@ package org.firstinspires.ftc.teamcode.robot.outreach;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
 public class OutreachMotors {
     public DcMotor leftMotor;
     public DcMotor rightMotor;
+
+    public DcMotor frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
 
     public double leftMotorValue, rightMotorValue;
 
@@ -29,7 +32,7 @@ public class OutreachMotors {
     }
 
 
-
+    //2 drive motors
     public OutreachMotors (DcMotor lm, DcMotor rm) {
         leftMotor = lm;
         rightMotor = rm;
@@ -37,31 +40,87 @@ public class OutreachMotors {
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void driveTank (double leftMotorPower, double rightMotorPower) {
-        leftMotorPower = Range.clip(leftMotorPower,-1,+1);
-        rightMotorPower = Range.clip(rightMotorPower, -1 ,1);
-        if (leftMotorPower < -.01 || leftMotorPower > .01) {
-            leftMotor.setPower(leftMotorPower);
-        }
-        else {
-            leftMotor.setPower(0);
-        }
-        if (rightMotorPower < -.01 || rightMotorPower > .01) {
-            rightMotor.setPower(rightMotorPower);
-        }
-        else {
-            rightMotor.setPower(0);
-        }
+    //4 drive motors
+    public OutreachMotors (DcMotor fLM, DcMotor fRM, DcMotor rLM, DcMotor rRM) {
+        frontLeftMotor = fLM;
+        frontRightMotor = fRM;
+        rearLeftMotor = rLM;
+        rearRightMotor = rRM;
+
+
+        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void driveTank (double leftValue, double rightValue, boolean squareInputs) {
+
+    public void driveTank (Gamepad gamepad, DriveDirection driveDirection) {
+        driveTank(gamepad.left_stick_y, gamepad.right_stick_y, driveDirection);
+    }
+
+    public void driveTank (double leftPower, double rightPower, DriveDirection driveDirection) {
+        leftPower = Range.clip(leftPower,-1,+1);
+        rightPower = Range.clip(rightPower, -1 ,1);
+        switch (driveDirection) {
+            case FORWARD:
+                if (leftPower < -.01 || leftPower > .01) {
+                    frontLeftMotor.setPower(leftPower);
+                    rearLeftMotor.setPower(leftPower);
+                }
+                else {
+                    frontLeftMotor.setPower(0);
+                    rearLeftMotor.setPower(0);
+                }
+                if (rightPower < -.01 || rightPower > .01) {
+                    frontRightMotor.setPower(rightPower);
+                    rearRightMotor.setPower(rightPower);
+                }
+                else {
+                    frontRightMotor.setPower(0);
+                    rearRightMotor.setPower(0);
+                }
+                break;
+            case REVERSE:
+                if (leftPower < -.01 || leftPower > .01) {
+                    frontLeftMotor.setPower(-leftPower);
+                    rearLeftMotor.setPower(-leftPower);
+                }
+                else {
+                    leftMotor.setPower(0);
+                }
+                if (rightPower < -.01 || rightPower > .01) {
+                    frontRightMotor.setPower(-rightPower);
+                    rearRightMotor.setPower(-rightPower);
+                }
+                else {
+                    rightMotor.setPower(0);
+                }
+                break;
+        }
+
+    }
+
+    //Not used at the moment.
+    public void driveTank (double leftValue, double rightValue, boolean squareInputs, DriveDirection driveDirection) {
         if (squareInputs) {
             leftSquaredValue = leftValue * leftValue;
             rightSquaredValue = rightValue * rightValue;
@@ -72,7 +131,7 @@ public class OutreachMotors {
                 rightSquaredValue = - rightSquaredValue;
             }
         }
-        driveTank(leftSquaredValue, rightSquaredValue);
+        driveTank(leftSquaredValue, rightSquaredValue, driveDirection);
     }
 
 
@@ -97,13 +156,13 @@ public class OutreachMotors {
         }
     }
 
-    public void arcadeDrive (double forwardSpeed, double turnRate, boolean squareInputs) {
-        //empty as example
-    }
-
     public void stopMotors () {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
+        frontLeftMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearRightMotor.setPower(0);
     }
 
     public void drivePID (double power, double distance) {
@@ -163,3 +222,5 @@ public class OutreachMotors {
         linearOp.idle();
     }
 }
+
+

@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.CatapultA
 import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
-@TeleOp(name = "Outreach Robot - 2 Drive Motors")
-@Disabled
-public class OutreachRobot extends OpMode {
+@TeleOp(name = "Outreach Robot - 4 Drive Motors")
+//@Disabled
+public class OutreachRobot4DriveMotors extends OpMode {
 
     OutreachMotors myOutreachMotors;
 
@@ -48,7 +48,7 @@ public class OutreachRobot extends OpMode {
 
     @Override
     public void init() {
-        myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("left_drive_motor"), hardwareMap.dcMotor.get("right_drive_motor"));
+        myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
         ledStrip = hardwareMap.servo.get("led_strip");
         ledStrip.setPosition(ledPosition);
         driveMode = driveMode.START;
@@ -75,12 +75,7 @@ public class OutreachRobot extends OpMode {
                 telemetry.addLine("Waiting for user to select DRIVE MODE");
                 break;
             case TANK:
-                if (driveDirection == DriveDirection.FORWARD) {
-//                    myOutreachMotors.driveTank(-leftY, -rightY, gamepad1);
-                }
-                else if (driveDirection == DriveDirection.REVERSE) {
-//                    myOutreachMotors.driveTank(leftY, rightY);
-                }
+                myOutreachMotors.driveTank(gamepad1, driveDirection);
                 break;
             case ARCADE:
                 myOutreachMotors.arcadeDrive(gamepad1, driveDirection);
@@ -142,11 +137,10 @@ public class OutreachRobot extends OpMode {
     public void telemetryOutput () {
         telemetry.addData("LED Pos VAR: ", ledPosition);
         telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
-
         telemetry.addData("DRIVE MODE ", driveMode);
         telemetry.addData("DRIVE DIRECTION: ", driveDirection);
-//        telemetry.addData("Left Y: ", leftY);
-//        telemetry.addData("Right Y: ", rightY);
+        telemetry.addData("Left Y: ", gamepad1.left_stick_y);
+        telemetry.addData("Right Y: ", gamepad1.right_stick_y);
         telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
         telemetry.addLine("D_PAD LEFT FOR TANK DRIVE");
         telemetry.addLine("D_UP FOR FORWARD MODE");
