@@ -8,7 +8,6 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,14 +17,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
-
-import java.sql.Time;
-import java.util.Timer;
 
 @Autonomous(name = " Old Crater Both", group = "Red - Blue")
 @Disabled
@@ -44,7 +40,7 @@ public class redCrater extends LinearOpMode {
     MecanumDrive myMechDrive;
     MineralLift myMineralLift;
     LiftMotor myLiftMotor;
-    IntakeMotor myIntakeMotor;
+    IntakeServo myIntakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
 //    DistanceSensor liftDistanceSensor;

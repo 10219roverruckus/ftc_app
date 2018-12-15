@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
+package org.firstinspires.ftc.teamcode.robot.competition.oldClasses;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
@@ -19,14 +19,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerAllOld;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerCraterOld;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerDepotOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,26 +41,26 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Depot - competition WEBCAM1")
+@Autonomous(name = "Crater - competition WEBCAM")
 //@Disabled
-public class DepotWebcam extends LinearOpMode  {
+public class CraterWebcam extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
     MecanumMineralMiner myMineralMiner;
     RevColorDistance myRevColorDistance;
-    DcMotor intakePositionMotor;
-    DcMotor intakeMotor;
-    IntakeExtenderArm myIntakeExtenderArm;
 
+    MecanumMineralMinerCraterOld myMineralMinerCrater;
+    MecanumMineralMinerDepotOld myMineralMinerDepot;
+    MecanumMineralMinerAllOld myMineralMinerAll;
 
     LiftMotor myLiftMotor;
     TeamMarker myTeamMarker;
 
-    MecanumMineralMinerAll myMineralMinerAll;
-    MecanumMineralMinerCrater myMineralMinerCrater;
-    MecanumMineralMinerDepot myMineralMinerDepot;
+    DcMotor intakePositionMotor;
+    DcMotor intakeMotor;
+    IntakeExtenderArm myIntakeExtenderArm;
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -94,32 +96,29 @@ public class DepotWebcam extends LinearOpMode  {
         myMineralMiner = new MecanumMineralMiner();
         myMineralMiner.setLinearOp(this);
 
-
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
         myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
         myTeamMarker.setLinearOp(this);
-
         intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
         intakeMotor = hardwareMap.dcMotor.get("intake_motor");
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
-
-        myMineralMinerCrater = new MecanumMineralMinerCrater();
+        myMineralMinerCrater = new MecanumMineralMinerCraterOld();
         myMineralMinerCrater.setLinearOp(this);
 
-        myMineralMinerDepot = new MecanumMineralMinerDepot();
+        myMineralMinerDepot = new MecanumMineralMinerDepotOld();
         myMineralMinerDepot.setLinearOp(this);
 
-        myMineralMinerAll = new MecanumMineralMinerAll();
+        myMineralMinerAll = new MecanumMineralMinerAllOld();
         myMineralMinerAll.setLinearOp(this);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -218,15 +217,14 @@ public class DepotWebcam extends LinearOpMode  {
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.mineralToDepot (myGyro, myMechDrive, myRevColorDistance, myTeamMarker); // drive toward depot and drop off team marker
+                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
+
                 sleep(sleepTime);
                 idle();
 
-                //myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);              // drive from depot toward crater to park
+                myMineralMiner.wallToDepotGyro(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
-                myMineralMiner.depotToCraterGyro(myGyro, myMechDrive, myRevColorDistance);
-
-                active = false;                                                                     // gets out of while loop
+                active = false;
             }
             idle();
             requestOpModeStop();

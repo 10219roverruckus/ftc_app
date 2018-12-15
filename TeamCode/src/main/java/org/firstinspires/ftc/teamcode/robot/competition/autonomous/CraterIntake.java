@@ -6,7 +6,6 @@ import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,13 +19,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
+import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerAll;
+import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerCrater;
+import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerDepot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +45,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 @Autonomous(name = "Crater - competition WEBCAM")
 //@Disabled
-public class CraterWebcam extends LinearOpMode  {
+public class CraterIntake extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
 
@@ -59,6 +63,8 @@ public class CraterWebcam extends LinearOpMode  {
     DcMotor intakePositionMotor;
     DcMotor intakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
+    IntakeRotator myIntakeRotator;
+    IntakeServo myIntakeServo;
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -205,22 +211,32 @@ public class CraterWebcam extends LinearOpMode  {
                 detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
                 sleep(100);
 
-                myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
+                myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.driveMineral(myGyro, myMechDrive, myLiftMotor);                     // push gold off of little square
+                myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm);                     // push gold off of little square
 
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.craterMineralToWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
+                myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
 
                 sleep(sleepTime);
                 idle();
 
-                myMineralMiner.wallToDepotGyro(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+                myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+
+                sleep(sleepTime);
+                idle();
+
+                myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
+
+                sleep(sleepTime);
+                idle();
+
+                myMineralMinerCrater.DriveParkInCrater(myMechDrive);
 
                 active = false;
             }

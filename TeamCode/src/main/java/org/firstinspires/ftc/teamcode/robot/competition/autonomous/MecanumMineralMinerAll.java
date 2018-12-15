@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 
 public class MecanumMineralMinerAll {
@@ -38,6 +36,8 @@ public class MecanumMineralMinerAll {
         linearOp = Op;
     }
         //in future, will pass Camera as Parameter
+
+
     public MecanumMineralMinerAll() {
     }
 
@@ -57,39 +57,4 @@ public class MecanumMineralMinerAll {
         goldPosition = goldPosition.RIGHT;
     }
 
-
-
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor) {
-
-        linearOp.telemetry.addData("MINERAL", goldPosition);
-        linearOp.telemetry.update();
-        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-
-        myMechDrive.strafeRight(.3, .3);                    // get away from the lander
-        myMechDrive.driveForward(.3, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
-
-
-        switch (goldPosition) {                                            //Gyro angles robot to push off mineral
-            case LEFT:
-                myGyro.gyroOrientMecanum(36, myMechDrive);           // different (34)
-                myMechDrive.stopMotors();
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2.15);    // Moves forward to push off mineral (Originally 1.8)
-                break;
-
-            case MIDDLE:
-                myGyro.gyroOrientMecanum(4, myMechDrive);            //turning too much towards the right. Need to adjust?
-                myMechDrive.stopMotors();
-                myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);      // Moves forward to push off mineral
-                break;
-
-            case RIGHT:
-                myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
-                myMechDrive.stopMotors();
-                myMechDrive.driveForward(SPD_DRIVE_MED, 2);        // Moves forward to push off mineral (Originally 1.8)
-                break;
-        }
-    }
-
-
 }
-
