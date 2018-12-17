@@ -19,17 +19,18 @@ public class IntakeExtenderArm {
     public LinearOpMode linearOp = null;
 
     public final double TICKS_PER_ROTATION = 538;
+    public final double autononomousPower = .75;
 
     public double rateOfChange = .001;
     public double currentPosition;
 
     // instance variables for auto
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    double getMaxIntakeArmExtendTimeEncoder = 3;
-    double maxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int intakeArmTargetPosition = -6700;
+    double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
+    int intakeArmExtendTargetPosition = -6700;
+    int intakeArmRetractTargetPosition = -10;
 
-    public ElapsedTime armRunTime;
+    public ElapsedTime ExtenderArmRunTime;
 
 
 
@@ -57,7 +58,6 @@ public class IntakeExtenderArm {
     }
 
     public void extendIntakeArm (double motorPower) {
-
         intakeExtenderArm.setPower(Math.abs(motorPower));
     }
 
@@ -73,29 +73,34 @@ public class IntakeExtenderArm {
     // autonomous methods
 
     public void extendIntakeArmAuto () {
-        armRunTime.reset();
-        while (intakeExtenderArm.getCurrentPosition() > intakeArmTargetPosition) {
-            linearOp.telemetry.addData("ENCODER", intakeExtenderArm.getCurrentPosition());
-            linearOp.telemetry.update();
-            intakeExtenderArm.setPower(-.75);
-            if (armRunTime.time() >= getMaxIntakeArmExtendTimeEncoder) {
-                linearOp.telemetry.addLine("BREAK");
-                linearOp.telemetry.update();
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPosition) {
+//            linearOp.telemetry.addData("extender encode EXTEND ", intakeExtenderArm.getCurrentPosition());
+//            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(-autononomousPower);
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
                 break;
             }
             linearOp.idle();
         }
-        intakeExtenderArm.setPower(0);
-
+        stopIntakeArm();
     }
 
     public void retractIntakeArmAuto () {
-        armRunTime.reset();
-        while (armRunTime.time() <= maxIntakeArmExtendTime) {
-            intakeExtenderArm.setPower(1);
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() <  intakeArmRetractTargetPosition) {
+//            linearOp.telemetry.addData("extender encoder RETRACT ", intakeExtenderArm.getCurrentPosition());
+//            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(autononomousPower);
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
         }
-        intakeExtenderArm.setPower(0);
+        stopIntakeArm();
     }
-
-
 }

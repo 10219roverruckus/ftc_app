@@ -22,10 +22,11 @@ public class IntakeRotator {
 
 
     double maxRotatorExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    double getMaxRotatorExtendTimeEncoder = 3;
     double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int RotatorTargetPosition = -2000;
+    int RotatorTargetPositionLower = -2000;
+    int RotatorTargetPositionRaise = -10;
 
+    public double autonomousPower = .75;
     public ElapsedTime armRunTime;
 
 
@@ -71,13 +72,13 @@ public class IntakeRotator {
 
     public void mineralRotateLowerEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() > RotatorTargetPosition) {
-            linearOp.telemetry.addData("ENCODER", intakeRotator.getCurrentPosition());
-            linearOp.telemetry.update();
-            intakeRotator.setPower(-.75);
-            if (armRunTime.time() >= getMaxRotatorExtendTimeEncoder) {
-                linearOp.telemetry.addLine("BREAK");
-                linearOp.telemetry.update();
+        while (intakeRotator.getCurrentPosition() > RotatorTargetPositionLower) {
+//            linearOp.telemetry.addData("ENCODER", intakeRotator.getCurrentPosition());
+//            linearOp.telemetry.update();
+            intakeRotator.setPower(-autonomousPower);
+            if (armRunTime.time() >= maxRotatorExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
                 break;
             }
             linearOp.idle();
@@ -89,12 +90,19 @@ public class IntakeRotator {
 
     public void mineralRotateRaiseEncoder () {
         armRunTime.reset();
-        while (armRunTime.time() <= maxArmRetractTime) {
-            intakeRotator.setPower(1);
+        while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise) {
+//            linearOp.telemetry.addData("extender encoder RETRACT ", intakeExtenderArm.getCurrentPosition());
+//            linearOp.telemetry.update();
+            intakeRotator.setPower(autonomousPower);
+            if (armRunTime.time() >= maxRotatorExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
         }
         intakeRotator.setPower(0);
     }
-
 
     }
 

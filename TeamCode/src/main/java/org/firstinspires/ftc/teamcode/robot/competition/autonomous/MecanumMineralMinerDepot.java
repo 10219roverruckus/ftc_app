@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
@@ -46,7 +47,7 @@ public class MecanumMineralMinerDepot {
     // new Methods
 
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm) {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
@@ -63,10 +64,11 @@ public class MecanumMineralMinerDepot {
 
                 myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);         // fixing Gyro issue
                 myGyro.gyroOrientMecanum(36, myMechDrive);           // different (34)
-
                 myMechDrive.stopMotors();
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
+
+                myIntakeServo.IntakeServoReverseTime();
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();
@@ -80,6 +82,10 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
+
+
+                myIntakeServo.IntakeServoReverseTime();
+
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();
@@ -95,6 +101,9 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
+
+
+                myIntakeServo.IntakeServoReverseTime();
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();

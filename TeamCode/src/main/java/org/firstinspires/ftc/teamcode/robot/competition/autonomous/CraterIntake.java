@@ -212,7 +212,7 @@ public class CraterIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm);                     // push gold off of little square
+        myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
         sleep(sleepTime);
         idle();

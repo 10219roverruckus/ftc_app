@@ -91,7 +91,7 @@ public class OutreachRobot4DriveMotors extends OpMode {
             driveDirection = DriveDirection.REVERSE;
         }
         if (gamepad1.dpad_right) {
-            driveMode = DriveMode.ARCADE;
+//            driveMode = DriveMode.ARCADE;
         }
         if (gamepad1.dpad_left) {
             driveMode = DriveMode.TANK;

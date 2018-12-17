@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
@@ -55,6 +56,7 @@ public class DepotIntake extends LinearOpMode  {
     DcMotor intakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
+    IntakeServo myIntakeServo;
 
 
     LiftMotor myLiftMotor;
@@ -102,14 +104,19 @@ public class DepotIntake extends LinearOpMode  {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
-        myTeamMarker.setLinearOp(this);
+//        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
+//        myTeamMarker.setLinearOp(this);
+
+        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_servo_left"), hardwareMap.servo.get("intake_servo_right"));
+        myIntakeServo.setLinearOp(this);
 
         intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
         intakeMotor = hardwareMap.dcMotor.get("intake_motor");
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
 
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
@@ -214,7 +221,7 @@ public class DepotIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm );                     // push gold off of little square
+        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
         sleep(sleepTime);
         idle();

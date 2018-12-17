@@ -50,7 +50,7 @@ public class MecanumMineralMinerCrater {
     // new methods for this class
 
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm) {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
@@ -68,6 +68,8 @@ public class MecanumMineralMinerCrater {
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
 
+                myIntakeServo.IntakeServoReverseTime();
+
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();
                 //        myMechDrive.driveForward(SPD_DRIVE_MED, 2.15);    // Moves forward to push off mineral (Originally 1.8)
@@ -78,6 +80,8 @@ public class MecanumMineralMinerCrater {
                 myMechDrive.stopMotors();
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
+
+                myIntakeServo.IntakeServoReverseTime();
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();
@@ -90,6 +94,8 @@ public class MecanumMineralMinerCrater {
                 myMechDrive.stopMotors();
                 myIntakeRotator.mineralRotateLowerEncoder();
                 myIntakeExtenderArm.extendIntakeArmAuto();
+
+                myIntakeServo.IntakeServoReverseTime();
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 myIntakeRotator.mineralRotateRaiseEncoder();
