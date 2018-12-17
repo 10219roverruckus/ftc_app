@@ -203,37 +203,30 @@ public class DepotIntake extends LinearOpMode  {
 
         waitForStart();
 
-        boolean active = true;
-        while (opModeIsActive() && !isStopRequested()) {
-            while (active && !isStopRequested()) {
 
-                idle();
+        idle();
 
-                detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
-                sleep(100);
+        detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
+        sleep(100);
 
-                myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
+        myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
-                sleep(sleepTime);
-                idle();
+        sleep(sleepTime);
+        idle();
 
-                myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm );                     // push gold off of little square
+        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm );                     // push gold off of little square
 
-                sleep(sleepTime);
-                idle();
+        sleep(sleepTime);
+        idle();
 
-                myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
-                sleep(sleepTime);
-                idle();
+        myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
+        sleep(sleepTime);
+        idle();
 
-                //myMineralMiner.depotToCrater(myGyro, myMechDrive, myRevColorDistance);              // drive from depot toward crater to park
+        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive);
 
-                myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive);
 
-                active = false;                                                                     // gets out of while loop
-            }
-            idle();
-            requestOpModeStop();
-        }
     }
+
+
 }

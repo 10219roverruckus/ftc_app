@@ -202,46 +202,40 @@ public class CraterIntake extends LinearOpMode  {
 
         waitForStart();
 
-        boolean active = true;
-        while (opModeIsActive() && !isStopRequested()) {
-            while (active && !isStopRequested()) {
+        idle();
 
-                idle();
+        detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
+        sleep(100);
 
-                detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
-                sleep(100);
+        myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
-                myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
+        sleep(sleepTime);
+        idle();
 
-                sleep(sleepTime);
-                idle();
+        myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm);                     // push gold off of little square
 
-                myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm);                     // push gold off of little square
+        sleep(sleepTime);
+        idle();
 
-                sleep(sleepTime);
-                idle();
+        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
 
-                myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
+        sleep(sleepTime);
+        idle();
 
-                sleep(sleepTime);
-                idle();
+        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
-                myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+        sleep(sleepTime);
+        idle();
 
-                sleep(sleepTime);
-                idle();
+        myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
 
-                myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
+        sleep(sleepTime);
+        idle();
 
-                sleep(sleepTime);
-                idle();
+        myMineralMinerCrater.DriveParkInCrater(myMechDrive);
 
-                myMineralMinerCrater.DriveParkInCrater(myMechDrive);
 
-                active = false;
             }
-            idle();
-            requestOpModeStop();
-        }
-    }
+
+
 }
