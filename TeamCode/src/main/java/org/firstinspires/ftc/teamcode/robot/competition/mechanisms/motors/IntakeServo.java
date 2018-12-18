@@ -16,7 +16,6 @@ public class IntakeServo {
     public double extendPosition = 1;    // help confused
     public int retractPosition = 0;   // help confused
 
-    public LinearOpMode intakeLinearOp = null;
     public LinearOpMode linearOp = null;
 
     public final double TICKS_PER_ROTATION = 538;
@@ -37,11 +36,16 @@ public class IntakeServo {
 
     // constructors
     public IntakeServo (Servo inServoL, Servo inServoR) {
-        inServoL = intakeServoL;
-        inServoR = intakeServoR;
+        //emma code
+//        inServoL = intakeServoL;
+//        inServoR = intakeServoR;
 
-        intakeServoL.setDirection(Servo.Direction.FORWARD);
-        intakeServoR.setDirection(Servo.Direction.REVERSE);
+        //duval code
+        intakeServoR = inServoR;
+        intakeServoL = inServoL;
+
+//        intakeServoL.setDirection(Servo.Direction.FORWARD);
+//        intakeServoR.setDirection(Servo.Direction.REVERSE);
 
     }
 
@@ -51,9 +55,6 @@ public class IntakeServo {
     }
 
     // methods
-    public void intakelinearOp (LinearOpMode Op) {
-        intakeLinearOp = Op;
-    }
 
     public void stopIntakeServo () {
         intakeServoL.setPosition(.5);

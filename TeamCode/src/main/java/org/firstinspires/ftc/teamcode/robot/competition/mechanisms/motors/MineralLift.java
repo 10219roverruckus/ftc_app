@@ -13,29 +13,28 @@ public class MineralLift {
     public double extendPosition = 1;    // help confused
     public int retractPosition = 0;   // help confused
 
-    public LinearOpMode mineralLiftLinearOp = null;
+    public LinearOpMode linearOp = null;
 
     public final double TICKS_PER_ROTATION = 538;
 
 
 
     // constructors
-    public void MineralLift (DcMotor MinM) {
+    public MineralLift (DcMotor MinM) {
         mineralLift = MinM;
 
         mineralLift.setDirection(DcMotor.Direction.FORWARD);
         setMineralLiftRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         setMineralLiftRunModes(currentRunMode);
     }
 
+    public void setLinearOp (LinearOpMode Op) {
+        linearOp = Op;
+    }
 
 
     // methods
-    public void mineralLiftlinearOp (LinearOpMode Op) {
-        mineralLiftLinearOp = Op;
-    }
-    public void stopIntakeMotors () {
+    public void stopMotors () {
         mineralLift.setPower(0);
     }
 

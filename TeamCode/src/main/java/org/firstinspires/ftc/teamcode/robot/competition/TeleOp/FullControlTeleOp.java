@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Minera
  */
 
 //@Disabled
-@TeleOp(name = "Full Control - Worlds Robot1")
+@TeleOp(name = "Full Control - Worlds Robot")
 
 public class FullControlTeleOp extends OpMode {
 
@@ -39,18 +39,6 @@ public class FullControlTeleOp extends OpMode {
     DcMotor frontRightMotor;
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
-//    DcMotor liftArmMotor;
-
-//    DcMotor intakeRotater;
-
-
-//    Servo intakeServoL;
-//    Servo intakeServoR;
-    //DcMotor intakeMotor;
-
-   // DcMotor myintakeExtenderArm;
-
-
 
     double leftStickVal;
     double rightStickVal;
@@ -63,53 +51,28 @@ public class FullControlTeleOp extends OpMode {
     double rearLeftSpeed;
     double rearRightSpeed;
 
-    double rightJoystick_lift;
-
-    double intakeExtensionPower;
-    double intakePositionPower;
-    double intakePosition = 0;
-    double intakeIncrement = .001;
-
     boolean reverseModeToggle;
 
     boolean initServos;
 
     double powerThreshold = 0.1;
 
-    double topHeight = 8.4;
-    double lowHeight = 3.2;
-
-    //boolean liftSensorOverride = false;
-
-
-//    private DistanceSensor liftDistanceSensor;
-
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
-    RevColorDistance myRevColorDistance;
-
-//    LanderMotor myLanderMotor;
+    //lifts x-rails to the lander - MOTOR
+    MineralLift myMineralLift;
     // 3 servos...
     // 2 for rotating lander scorer
     // 1 transfer mineral gate
     LanderServo myLanderServo;
-    //lifts x-rails to the lander - MOTOR
-    MineralLift myMineralLift;
-
-
-    final double SPD_DRIVE_LOW = .20;     //Lowest speed
-    final double SPD_DRIVE_MED = .5;      //Default is  SPD_MED
-    final double SPD_DRIVE_HIGH = .75;
-    final double SPD_DRIVE_MAX = 1.0;
-    final double SPD_ARM_MED = .5;
-    final long sleepTime = 200;
-
+    RevColorDistance myRevColorDistance;
 
     @Override
     public void init() {
 
+        //map  & set up devices.
         frontLeftMotor = hardwareMap.dcMotor.get("front_left_motor");
         frontRightMotor = hardwareMap.dcMotor.get("front_right_motor");
         rearLeftMotor = hardwareMap.dcMotor.get("rear_left_motor");
@@ -124,20 +87,13 @@ public class FullControlTeleOp extends OpMode {
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
-//        myLanderMotor = new LanderMotor(hardwareMap.dcMotor.get("mineral_lift_motor"));
+        myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
         myLanderServo = new LanderServo (hardwareMap.servo.get("right_mineral_dumper"), hardwareMap.servo.get("left_mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
-
-
-
-        // need to initilize sensors here
-
+        //set initial toggles
         reverseModeToggle = false;
-
         initServos = false;
-
-
     }
 
     @Override
@@ -156,8 +112,7 @@ public class FullControlTeleOp extends OpMode {
         //controls extending arm for intake mechansim.
         extenderArm();
 
-
-        //control spinnding hungyr hungry hippo
+        //control spinning hungry hungry hippo doohikkie
         spinnerIntake();
 
         // rotate the intake up and down
@@ -172,8 +127,8 @@ public class FullControlTeleOp extends OpMode {
         // dumps the minerals into the lander when the lift is at the top
         mineralDump();
 
-
-        //telemetryOutput();
+        //output telemetry
+        telemetryOutput();
     }
 
 
@@ -182,6 +137,8 @@ public class FullControlTeleOp extends OpMode {
         telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
         telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
         telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+        telemetry.addData("Left joystick Y (gp2): ", gamepad2.left_stick_y);
+        telemetry.addData("Right joystick Y (gp2): ", gamepad2.right_stick_y);
         telemetry.update();
 
 //         generic DistanceSensor methods.
@@ -222,10 +179,10 @@ public class FullControlTeleOp extends OpMode {
     }
 
     public void spinnerIntake () {
-        if (gamepad2.right_trigger > .1) {
+        if (gamepad2.right_trigger > powerThreshold) {
             myIntakeServo.IntakeServoForward();
         }
-        else if (gamepad2.left_trigger > .1) {
+        else if (gamepad2.left_trigger > powerThreshold) {
             myIntakeServo.IntakeServoReverse();
         }
         else {
@@ -265,14 +222,14 @@ public class FullControlTeleOp extends OpMode {
     }
 
     public void mineralLift () {
-        if (gamepad2.left_stick_y > .1) {
+        if (gamepad2.left_stick_y > powerThreshold) {
             myMineralLift.RaiseMineralLift(gamepad2.left_stick_y);
         }
-        else if (gamepad2.left_stick_y < -.1) {
+        else if (gamepad2.left_stick_y < -powerThreshold) {
             myMineralLift.LowerMineralLift(gamepad2.left_stick_y);
         }
         else {
-            myMineralLift.stopIntakeMotors();
+            myMineralLift.stopMotors();
         }
     }
 

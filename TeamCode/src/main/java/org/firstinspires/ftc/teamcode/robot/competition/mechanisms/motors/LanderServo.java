@@ -13,7 +13,6 @@ public class LanderServo {
     public Servo landerServoR;
     public Servo transferGateServo;
 
-    public LinearOpMode landerServoLinearOp = null;
     public LinearOpMode linearOp = null;
 
     public double LSScore = 1;
@@ -24,14 +23,18 @@ public class LanderServo {
     // constructor
 
     public LanderServo ( Servo LSR, Servo LSL, Servo TGS) {
-        LSR = landerServoL;
-        LSL = landerServoR;
-        TGS = transferGateServo;
+        //emma
+//        LSR = landerServoL;
+//        LSL = landerServoR;
+//        TGS = transferGateServo;
 
+        //duval
+        landerServoL = LSR;
+        landerServoR = LSL;
+        transferGateServo = TGS;
 
-
-        landerServoL.setDirection(Servo.Direction.FORWARD);
-        landerServoR.setDirection(Servo.Direction.REVERSE);
+//        landerServoL.setDirection(Servo.Direction.FORWARD);
+//        landerServoR.setDirection(Servo.Direction.REVERSE);
     }
 
     // methods
