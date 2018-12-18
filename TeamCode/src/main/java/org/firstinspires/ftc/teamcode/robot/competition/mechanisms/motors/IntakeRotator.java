@@ -66,6 +66,14 @@ public class IntakeRotator {
         intakeRotator.setMode(currentRunMode);
     }
 
+    public void RaiseIntakeRotater () {
+        intakeRotator.setPower(1);
+    }
+
+    public void LowerIntakeRotater () {
+        intakeRotator.setPower(-1);
+    }
+
 
     // autonomous methods
     // methods are for knocking off the minerals

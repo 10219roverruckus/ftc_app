@@ -58,10 +58,6 @@ public class CraterIntake extends LinearOpMode  {
     MecanumMineralMinerAll myMineralMinerAll;
 
     LiftMotor myLiftMotor;
-    TeamMarker myTeamMarker;
-
-    DcMotor intakePositionMotor;
-    DcMotor intakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
@@ -103,14 +99,17 @@ public class CraterIntake extends LinearOpMode  {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
-        myTeamMarker.setLinearOp(this);
-        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
-        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
+        myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
+        myIntakeRotator.setLinearOp(this);
+
+        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
+        myIntakeServo.setLinearOp(this);
+
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
-        intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        myIntakeExtenderArm.setLinearOp(this);
+
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -198,7 +197,6 @@ public class CraterIntake extends LinearOpMode  {
         vuforia.showDebug();
         vuforia.start();
 
-        myTeamMarker.teamMarkerArmRaised();
 
         waitForStart();
 
@@ -222,7 +220,7 @@ public class CraterIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance, myTeamMarker);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
         sleep(sleepTime);
         idle();

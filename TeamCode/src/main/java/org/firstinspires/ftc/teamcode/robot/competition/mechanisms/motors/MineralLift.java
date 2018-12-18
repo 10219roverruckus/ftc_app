@@ -52,4 +52,12 @@ public class MineralLift {
     public void retractingMineralLift(double speed, double rotations) {
         mineralLift.setMode(currentRunMode);
     }
+
+    public void RaiseMineralLift (double power) {
+        mineralLift.setPower(power);
+    }
+
+    public void LowerMineralLift (double power) {
+        mineralLift.setPower(power);
+    }
 }

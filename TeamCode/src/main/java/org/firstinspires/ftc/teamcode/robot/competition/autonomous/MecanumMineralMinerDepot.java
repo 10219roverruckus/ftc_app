@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 
 public class MecanumMineralMinerDepot {

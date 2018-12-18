@@ -107,7 +107,7 @@ public class DepotIntake extends LinearOpMode  {
 //        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
 //        myTeamMarker.setLinearOp(this);
 
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_servo_left"), hardwareMap.servo.get("intake_servo_right"));
+        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
         myIntakeServo.setLinearOp(this);
 
         intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");

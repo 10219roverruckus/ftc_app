@@ -58,10 +58,7 @@ public class LiftMotor {
 
 
     // methods
-    public void liftMotorlinearOp (LinearOpMode Op) {
-        liftMotorLinearOp = Op;
-    }
-    public void stopIntakeMotors () {
+    public void stopMotors () {
         liftMotor.setPower(0);
     }
 
@@ -71,13 +68,12 @@ public class LiftMotor {
 
 
 
-    public void extendingLiftMotor(double speed, double rotations) {
-        liftMotor.setMode(currentRunMode);
+    public void extendLift() {
+        liftMotor.setPower(1);
     }
 
-    public void retractingLiftMotor(double speed, double rotations) {
-        liftMotor.setMode(currentRunMode);
-
+    public void retractLift() {
+        liftMotor.setPower(-1);
     }
 
 

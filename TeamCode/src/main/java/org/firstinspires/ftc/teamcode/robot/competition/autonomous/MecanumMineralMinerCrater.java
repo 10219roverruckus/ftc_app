@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 
 public class MecanumMineralMinerCrater {
@@ -148,7 +147,7 @@ public class MecanumMineralMinerCrater {
 
 
 
-    public void RotateDriveTowardDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance, TeamMarker myTeamMarker) {
+    public void RotateDriveTowardDepot(GyroCompetition myGyro, MecanumDrive myMechDrive, RevColorDistance myRevColorDisance) {
         myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);              // fixing Gyro issue
         myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
         myMechDrive.stopMotors();                                      // Stop motors
