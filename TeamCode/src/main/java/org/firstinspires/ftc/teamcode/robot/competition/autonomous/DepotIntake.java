@@ -226,11 +226,11 @@ public class DepotIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
+        //myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive);
+        //myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive);
 
 
     }

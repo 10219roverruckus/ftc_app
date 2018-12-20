@@ -131,27 +131,85 @@ public class MecanumDrive {
         double ticks = rotations * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
-
-
             while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
                 setMotorSpeeds(speed);
             }
             stopMotors();
         }
 
+    public void driveForwardPID ( double rotations, double speed) {
+        double minSPD = .3;
+        double midSPD = .4;
+        double maxSPD = speed;
+        double targetDistnace = rotations * TICKS_PER_ROTATION;
 
-     // Driving Backward
+       while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+            if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(minSPD);
+            }
+            else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
+                frontLeftMotor.setPower(midSPD);
+                frontRightMotor.setPower(midSPD);
+                rearLeftMotor.setPower(midSPD);
+                rearRightMotor.setPower(midSPD);
+            }
+            else {
+                frontLeftMotor.setPower(maxSPD);
+                frontRightMotor.setPower(maxSPD);
+                rearLeftMotor.setPower(maxSPD);
+                rearRightMotor.setPower(maxSPD);
+            }
+        }
+
+
+    }
+
+    // Driving Backward
     public void driveBackward ( double speed, double rotations){
 
         double ticks = rotations * (-1) * TICKS_PER_ROTATION;
         setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMotorRunModes(currentMotorRunMode);
 
-            while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
-                setMotorSpeeds(-speed);
-            }
-            stopMotors();
+        while (frontLeftMotor.getCurrentPosition() > ticks && linearOp.opModeIsActive()) {
+            setMotorSpeeds(-speed);
         }
+        stopMotors();
+    }
+
+
+    public void driveBackwardPID (double rotations, double speed) {
+        double minSPD = -.3;
+        double midSPD = -.4;
+        double maxSPD = speed;
+        double targetDistnace = rotations * TICKS_PER_ROTATION;
+
+        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+            if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(minSPD);
+            }
+            else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
+                frontLeftMotor.setPower(midSPD);
+                frontRightMotor.setPower(midSPD);
+                rearLeftMotor.setPower(midSPD);
+                rearRightMotor.setPower(midSPD);
+            }
+            else {
+                frontLeftMotor.setPower(maxSPD);
+                frontRightMotor.setPower(maxSPD);
+                rearLeftMotor.setPower(maxSPD);
+                rearRightMotor.setPower(maxSPD);
+            }
+        }
+    }
+
+
 
 
     // Strafing left

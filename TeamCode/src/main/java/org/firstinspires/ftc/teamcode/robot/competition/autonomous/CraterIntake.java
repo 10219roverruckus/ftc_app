@@ -215,22 +215,22 @@ public class CraterIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
+        //myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
 
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+        //myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
+        //myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
 
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.DriveParkInCrater(myMechDrive);
+        //myMineralMinerCrater.DriveParkInCrater(myMechDrive);
 
 
             }
