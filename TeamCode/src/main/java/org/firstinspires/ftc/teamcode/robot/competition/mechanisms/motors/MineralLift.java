@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class MineralLift {
     //instance variables
@@ -23,7 +24,7 @@ public class MineralLift {
     public MineralLift (DcMotor MinM) {
         mineralLift = MinM;
 
-        mineralLift.setDirection(DcMotor.Direction.FORWARD);
+        mineralLift.setDirection(DcMotor.Direction.REVERSE);
         setMineralLiftRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMineralLiftRunModes(currentRunMode);
     }
