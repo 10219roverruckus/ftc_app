@@ -54,7 +54,6 @@ public class MecanumMineralMinerAll {
             goldPosition = GoldPosition.LEFT;
         }
 
-        goldPosition = goldPosition.RIGHT;
     }
 
 }

@@ -26,7 +26,7 @@ public class MecanumMineralMinerDepot {
     final double SPD_DRIVE_HIGH = .75;
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
-    final long sleepTime = 0;
+    final long sleepTime = 100;
 
     // variables and constants used by color sensor
 
@@ -51,80 +51,117 @@ public class MecanumMineralMinerDepot {
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-
+        linearOp.sleep(sleepTime);
         myMechDrive.strafeRight(.3, .3);                    // get away from the lander
+        linearOp.sleep(sleepTime);
         myMechDrive.driveForward(.3, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
-
+        linearOp.sleep(sleepTime);
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
 
-                myMechDrive.strafeRight(SPD_DRIVE_MED, 1.5);
+                myMechDrive.strafeLeft(SPD_DRIVE_MED, 1.5);
+                linearOp.sleep(sleepTime);
+                myMechDrive.rotateRight(SPD_DRIVE_MED, .5);         // fixing Gyro issue
+                linearOp.sleep(sleepTime);
 
-                myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);         // fixing Gyro issue
                 myGyro.gyroOrientMecanum(36, myMechDrive);           // different (34)
                 myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+
                 myIntakeRotator.mineralRotateLowerEncoder();
+                linearOp.sleep(sleepTime);
+
                 myIntakeExtenderArm.extendIntakeArmAuto();
+                linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverseTime();
+                linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
+                linearOp.sleep(sleepTime);
+
                 myIntakeRotator.mineralRotateRaiseEncoder();
-                //        myMechDrive.driveForward(SPD_DRIVE_MED, 2.15);    // Moves forward to push off mineral (Originally 1.8)
+                linearOp.sleep(sleepTime);
                 break;
 
             case MIDDLE:
-                myMechDrive.strafeRight(SPD_DRIVE_MED, .3);
+                myMechDrive.strafeLeft(SPD_DRIVE_MED, .3);
+                linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(4, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+
                 myIntakeRotator.mineralRotateLowerEncoder();
+                linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.extendIntakeArmAuto();
+                linearOp.sleep(sleepTime);
 
 
                 myIntakeServo.IntakeServoReverseTime();
+                linearOp.sleep(sleepTime);
 
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
+                linearOp.sleep(sleepTime);
                 myIntakeRotator.mineralRotateRaiseEncoder();
-                //        myMechDrive.driveForward(SPD_DRIVE_MED, 1.7);      // Moves forward to push off mineral
+                linearOp.sleep(sleepTime);
                 break;
 
             case RIGHT:
 
-                myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);
-
-                myMechDrive.rotateRight(SPD_DRIVE_MED, .3);        // fixing Gyro issue
+                myMechDrive.strafeRight(SPD_DRIVE_MED, .5);
+                linearOp.sleep(sleepTime);
+                myMechDrive.rotateLeft(SPD_DRIVE_MED, .3);        // fixing Gyro issue
+                linearOp.sleep(sleepTime);
                 myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
                 myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
                 myIntakeRotator.mineralRotateLowerEncoder();
+                linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.extendIntakeArmAuto();
-
+                linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverseTime();
+                linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
+                linearOp.sleep(sleepTime);
+
                 myIntakeRotator.mineralRotateRaiseEncoder();
-                //        myMechDrive.driveForward(SPD_DRIVE_MED, 2);        // Moves forward to push off mineral (Originally 1.8)
+                linearOp.sleep(sleepTime);
                 break;
         }
     }
 
 
     public void RotateDriveTowardCrater (GyroCompetition myGyro, MecanumDrive myMechDrive) {
+        //myMechDrive.driveBackward(SPD_DRIVE_MED,.1);
         myMechDrive.rotateLeft(.7, SPD_DRIVE_MED);                      // fixing Gyro issue
+        linearOp.sleep(sleepTime);
         myGyro.gyroOrientMecanum(-84.2, myMechDrive);                   // gyro towards the crater after dropping tm
 
-        myMechDrive.driveForward(SPD_DRIVE_MED,2);                  // drive toward the wall near the crater
+        switch (goldPosition) {
+            case LEFT:
+                myMechDrive.driveForward(SPD_DRIVE_MED,1.5);                  // drive toward the wall near the crater
 
+            case MIDDLE:
+                myMechDrive.driveForward(SPD_DRIVE_MED,1.9);                 // drive toward the wall near the crater
+
+            case RIGHT:
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.2);                 // drive toward the wall near the crater
+
+        }
     }
 
     public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive) {
-        myMechDrive.strafeRight(SPD_DRIVE_LOW, .2);
-
         myMechDrive.rotateLeft(SPD_DRIVE_MED,.5);                    // fixing Gyro issue
+        linearOp.sleep(sleepTime);
         myGyro.gyroOrientMecanum(-134.6, myMechDrive);                 // gyroing at the crater
+        linearOp.sleep(sleepTime);
+        myMechDrive.strafeRight(SPD_DRIVE_MED,.3);
+        linearOp.sleep(sleepTime);
         myMechDrive.driveForward(SPD_DRIVE_MED, .5);                // drive a little to break the plane of the crater
     }
 

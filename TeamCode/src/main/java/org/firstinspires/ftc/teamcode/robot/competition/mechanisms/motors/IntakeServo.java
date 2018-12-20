@@ -36,16 +36,9 @@ public class IntakeServo {
 
     // constructors
     public IntakeServo (Servo inServoL, Servo inServoR) {
-        //emma code
-//        inServoL = intakeServoL;
-//        inServoR = intakeServoR;
 
-        //duval code
         intakeServoR = inServoR;
         intakeServoL = inServoL;
-
-//        intakeServoL.setDirection(Servo.Direction.FORWARD);
-//        intakeServoR.setDirection(Servo.Direction.REVERSE);
 
     }
 
@@ -69,12 +62,12 @@ public class IntakeServo {
     // autonomous methods
 
     public void IntakeServoReverse () {
-        intakeServoL.setPosition(0);
+        intakeServoL.setPosition(1);
         intakeServoR.setPosition(0);
     }
 
     public void IntakeServoForward () {
-        intakeServoL.setPosition(1);
+        intakeServoL.setPosition(0);
         intakeServoR.setPosition(1);
     }
 
@@ -87,8 +80,8 @@ public class IntakeServo {
     }
 
     public void IntakeServoReverseTime () {
+        intakeServoL.setPosition(1);
         intakeServoR.setPosition(0);
-        intakeServoL.setPosition(0);
         linearOp.sleep(sleepTime);
         linearOp.idle();
         stopIntakeServo();

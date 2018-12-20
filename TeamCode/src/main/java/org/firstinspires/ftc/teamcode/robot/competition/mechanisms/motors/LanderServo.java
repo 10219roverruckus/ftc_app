@@ -23,18 +23,9 @@ public class LanderServo {
     // constructor
 
     public LanderServo ( Servo LSR, Servo LSL, Servo TGS) {
-        //emma
-//        LSR = landerServoL;
-//        LSL = landerServoR;
-//        TGS = transferGateServo;
-
-        //duval
         landerServoL = LSR;
         landerServoR = LSL;
         transferGateServo = TGS;
-
-//        landerServoL.setDirection(Servo.Direction.FORWARD);
-//        landerServoR.setDirection(Servo.Direction.REVERSE);
     }
 
     // methods
