@@ -182,24 +182,30 @@ public class MecanumDrive {
 
 
     public void driveBackwardPID (double rotations, double speed) {
+        //only need one non-maxSPD.
         double minSPD = -.3;
         double midSPD = -.4;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
         while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+            //beginning of PID - looks fine.
             if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
                 frontLeftMotor.setPower(minSPD);
                 frontRightMotor.setPower(minSPD);
                 rearLeftMotor.setPower(minSPD);
                 rearRightMotor.setPower(minSPD);
             }
+            //middle of PID
+            //this should be MAX SPEED (go fastest is middle)
             else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
                 frontLeftMotor.setPower(midSPD);
                 frontRightMotor.setPower(midSPD);
                 rearLeftMotor.setPower(midSPD);
                 rearRightMotor.setPower(midSPD);
             }
+            //end of PID
+            // set to non-maxSPD
             else {
                 frontLeftMotor.setPower(maxSPD);
                 frontRightMotor.setPower(maxSPD);
