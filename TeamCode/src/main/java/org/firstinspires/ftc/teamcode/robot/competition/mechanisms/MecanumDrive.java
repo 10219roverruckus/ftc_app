@@ -137,9 +137,8 @@ public class MecanumDrive {
             stopMotors();
         }
 
-    public void driveForwardPID ( double rotations, double speed) {
+    public void driveForwardPID ( double speed, double rotations) {
         double minSPD = .3;
-        double midSPD = .4;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
@@ -151,16 +150,16 @@ public class MecanumDrive {
                 rearRightMotor.setPower(minSPD);
             }
             else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
-                frontLeftMotor.setPower(midSPD);
-                frontRightMotor.setPower(midSPD);
-                rearLeftMotor.setPower(midSPD);
-                rearRightMotor.setPower(midSPD);
-            }
-            else {
                 frontLeftMotor.setPower(maxSPD);
                 frontRightMotor.setPower(maxSPD);
                 rearLeftMotor.setPower(maxSPD);
                 rearRightMotor.setPower(maxSPD);
+            }
+            else {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(minSPD);
             }
         }
 
@@ -181,10 +180,9 @@ public class MecanumDrive {
     }
 
 
-    public void driveBackwardPID (double rotations, double speed) {
+    public void driveBackwardPID (double speed, double rotations) {
         //only need one non-maxSPD.
         double minSPD = -.3;
-        double midSPD = -.4;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
@@ -199,18 +197,18 @@ public class MecanumDrive {
             //middle of PID
             //this should be MAX SPEED (go fastest is middle)
             else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
-                frontLeftMotor.setPower(midSPD);
-                frontRightMotor.setPower(midSPD);
-                rearLeftMotor.setPower(midSPD);
-                rearRightMotor.setPower(midSPD);
-            }
-            //end of PID
-            // set to non-maxSPD
-            else {
                 frontLeftMotor.setPower(maxSPD);
                 frontRightMotor.setPower(maxSPD);
                 rearLeftMotor.setPower(maxSPD);
                 rearRightMotor.setPower(maxSPD);
+            }
+            //end of PID
+            // set to non-maxSPD
+            else {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(minSPD);
             }
         }
     }
@@ -267,6 +265,33 @@ public class MecanumDrive {
             }
             stopMotors();
     }
+
+    public void strafeRightPID (double speed, double rotations) {
+        double minSPD = .3;
+        double maxSPD = speed;
+        double targetDistnace = rotations * TICKS_PER_ROTATION;
+
+        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+            if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(-minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(-minSPD);
+            }
+            else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
+                frontLeftMotor.setPower(maxSPD);
+                frontRightMotor.setPower(-maxSPD);
+                rearLeftMotor.setPower(maxSPD);
+                rearRightMotor.setPower(-maxSPD);
+            }
+            else {
+                frontLeftMotor.setPower(minSPD);
+                frontRightMotor.setPower(-minSPD);
+                rearLeftMotor.setPower(minSPD);
+                rearRightMotor.setPower(-minSPD);
+            }
+        }
+    }
     // rotating clockwise
     public void strafeLeft (double speed, double rotations) {
         double ticks = Math.abs(rotations) * (-1) *  TICKS_PER_ROTATION;
@@ -280,6 +305,33 @@ public class MecanumDrive {
                 rearRightMotor.setPower(speed);
             }
         stopMotors();
+    }
+
+    public void strafeLeftPID (double speed, double rotations) {
+        double minSPD = .3;
+        double maxSPD = speed;
+        double targetDistnace = rotations * TICKS_PER_ROTATION;
+
+        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+            if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
+                frontLeftMotor.setPower(-minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(-minSPD);
+                rearRightMotor.setPower(minSPD);
+            }
+            else if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .6) {
+                frontLeftMotor.setPower(-maxSPD);
+                frontRightMotor.setPower(maxSPD);
+                rearLeftMotor.setPower(-maxSPD);
+                rearRightMotor.setPower(maxSPD);
+            }
+            else {
+                frontLeftMotor.setPower(-minSPD);
+                frontRightMotor.setPower(minSPD);
+                rearLeftMotor.setPower(-minSPD);
+                rearRightMotor.setPower(minSPD);
+            }
+        }
     }
 
 
