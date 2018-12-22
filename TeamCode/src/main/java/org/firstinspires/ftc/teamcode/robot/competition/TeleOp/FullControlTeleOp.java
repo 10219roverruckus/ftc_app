@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.robot.competition.TeleOp;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,6 +16,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.LEDLights;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
@@ -23,7 +27,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Minera
 
 
 /**
- * Created by blake_shafer on 8/23/17.
+ * Created by the team on 8/23/17.
  */
 
 //@Disabled
@@ -68,6 +72,17 @@ public class FullControlTeleOp extends OpMode {
     // 1 transfer mineral gate
     LanderServo myLanderServo;
     RevColorDistance myRevColorDistance;
+    LEDLights myLEDStrip;
+
+    boolean mineralLiftAllowed;
+
+    boolean hookLiftAllowed;
+
+    boolean extenderAllowed;
+
+    int LEDRed = 1000;
+    int LEDBlue = 1000;
+    int LEDGreen = 1000;
 
     @Override
     public void init() {
@@ -89,7 +104,10 @@ public class FullControlTeleOp extends OpMode {
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
         myLanderServo = new LanderServo (hardwareMap.servo.get("right_mineral_dumper"), hardwareMap.servo.get("left_mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+
+        myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
+       myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+
 
         //set initial toggles
         reverseModeToggle = false;
@@ -98,6 +116,8 @@ public class FullControlTeleOp extends OpMode {
 
     @Override
     public void loop() {
+
+
 
         //reverse mode - reverse DRIVE CONTROL motors.
         reverseMode();
@@ -129,6 +149,16 @@ public class FullControlTeleOp extends OpMode {
 
         //output telemetry
         telemetryOutput();
+
+        // LED lights for lift (hook)
+        EncoderColorChangesHookLift();
+
+        // LED lights for mineral lift
+        EncoderColorChangesMineralLift();
+
+        // LED lights for extender
+        EnocderColorChangesExtenderLift();
+
     }
 
 
@@ -154,7 +184,7 @@ public class FullControlTeleOp extends OpMode {
 
     //controls motor to lift and lower robot
     public void hangingLiftMotor () {
-        if (gamepad2.dpad_down) {
+        if (gamepad2.dpad_down && myRevColorDistance.checkSensorHookLift()) {
             myLiftMotor.retractLift();
         }
         else if (gamepad2.dpad_up) {
@@ -170,7 +200,7 @@ public class FullControlTeleOp extends OpMode {
         if (gamepad2.left_stick_y > .1) {
             myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
         }
-        else if (gamepad2.left_stick_y < -.1) {
+        else if (gamepad2.left_stick_y < -.1 && myRevColorDistance.checkSensorExtender() == true) {
             myIntakeExtenderArm.retractIntactArm(gamepad2.left_stick_y);
         }
         else {
@@ -222,16 +252,53 @@ public class FullControlTeleOp extends OpMode {
     }
 
     public void mineralLift () {
+
         if (gamepad2.left_stick_y > powerThreshold) {
             myMineralLift.RaiseMineralLift(gamepad2.left_stick_y);
-        }
-        else if (gamepad2.left_stick_y < -powerThreshold) {
+        } else if (gamepad2.left_stick_y < -powerThreshold && myRevColorDistance.checkSensorMineralLift() == true) {
             myMineralLift.LowerMineralLift(gamepad2.left_stick_y);
-        }
-        else {
+        } else {
             myMineralLift.stopMotors();
         }
     }
+
+
+        public void EncoderColorChangesMineralLift () {
+            if (myMineralLift.mineralLift.getCurrentPosition() < 100) {
+                myLEDStrip.LEDred();
+
+            }
+            else if (myMineralLift.mineralLift.getCurrentPosition() < 900) {
+                myLEDStrip.LEDblue();
+            }
+            else {
+                myLEDStrip.LEDgreen();
+            }
+        }
+
+        public void EncoderColorChangesHookLift () {
+            if (myLiftMotor.liftMotor.getCurrentPosition() < 100) {
+                myLEDStrip.LEDred();
+            }
+            else if (myLiftMotor.liftMotor.getCurrentPosition() < 900) {
+                myLEDStrip.LEDblue();
+            }
+            else {
+                myLEDStrip.LEDgreen();
+            }
+        }
+
+        public void EnocderColorChangesExtenderLift () {
+            if (myIntakeExtenderArm.intakeExtenderArm.getCurrentPosition() < 100) {
+                myLEDStrip.LEDred();
+            }
+            else if (myIntakeExtenderArm.intakeExtenderArm.getCurrentPosition() < 900) {
+                myLEDStrip.LEDblue();
+            }
+            else {
+                myLEDStrip.LEDgreen();
+            }
+        }
 
     public void drive () {
         leftStickVal = -gamepad1.left_stick_y;

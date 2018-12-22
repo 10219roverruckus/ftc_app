@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 
 public class MineralLift {
     //instance variables
@@ -60,4 +65,5 @@ public class MineralLift {
     public void LowerMineralLift (double power) {
         mineralLift.setPower(power);
     }
+
 }
