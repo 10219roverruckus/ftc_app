@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -57,9 +58,17 @@ public class FullControlTeleOp extends OpMode {
 
     boolean reverseModeToggle;
 
-    boolean initServos;
+    boolean initTeleOpToggle;
+
 
     double powerThreshold = 0.1;
+
+    public ElapsedTime TeleOpTime;
+//    public double normalGameTime = 1300;
+    public double endGameTime = 90000;
+    public double hangTime = 108000;
+
+
 
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
@@ -106,18 +115,23 @@ public class FullControlTeleOp extends OpMode {
         myLanderServo = new LanderServo (hardwareMap.servo.get("right_mineral_dumper"), hardwareMap.servo.get("left_mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
-       myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
 
 
         //set initial toggles
         reverseModeToggle = false;
-        initServos = false;
+        initTeleOpToggle = true;
     }
 
     @Override
     public void loop() {
 
-
+        if (initTeleOpToggle == true) {
+            initTeleOp();
+        }
+        else {
+            initTeleOpToggle = false;
+        }
 
         //reverse mode - reverse DRIVE CONTROL motors.
         reverseMode();
@@ -151,13 +165,16 @@ public class FullControlTeleOp extends OpMode {
         telemetryOutput();
 
         // LED lights for lift (hook)
-        EncoderColorChangesHookLift();
+        //EncoderColorChangesHookLift();
 
         // LED lights for mineral lift
-        EncoderColorChangesMineralLift();
+        //EncoderColorChangesMineralLift();
 
         // LED lights for extender
-        EnocderColorChangesExtenderLift();
+        //EnocderColorChangesExtenderLift();
+
+        //LED lights for the time in the game
+        TimingInTeleOpWithLED();
 
     }
 
@@ -180,6 +197,11 @@ public class FullControlTeleOp extends OpMode {
 
         telemetry.update();
 
+    }
+
+    // reset things
+    public void initTeleOp () {
+        TeleOpTime.reset();
     }
 
     //controls motor to lift and lower robot
@@ -263,21 +285,23 @@ public class FullControlTeleOp extends OpMode {
     }
 
 
+    //LED light changes for positions of mechanisms
+
         public void EncoderColorChangesMineralLift () {
-            if (myMineralLift.mineralLift.getCurrentPosition() < 100) {
+            if (myMineralLift.mineralLift.getCurrentPosition() < 100) {         //Mineral lift lowered = color red
                 myLEDStrip.LEDred();
 
             }
-            else if (myMineralLift.mineralLift.getCurrentPosition() < 900) {
-                myLEDStrip.LEDblue();
-            }
-            else {
+            else if (myMineralLift.mineralLift.getCurrentPosition() < 900) {    //Mineral lift in the middle = green
                 myLEDStrip.LEDgreen();
+            }
+            else {                                                              // MIneral lift at the top = blue
+                myLEDStrip.LEDblue();
             }
         }
 
         public void EncoderColorChangesHookLift () {
-            if (myLiftMotor.liftMotor.getCurrentPosition() < 100) {
+            if (myLiftMotor.liftMotor.getCurrentPosition() < 100) {             // Hook lift lowered = red
                 myLEDStrip.LEDred();
             }
             else if (myLiftMotor.liftMotor.getCurrentPosition() < 900) {
@@ -299,6 +323,23 @@ public class FullControlTeleOp extends OpMode {
                 myLEDStrip.LEDgreen();
             }
         }
+
+
+        // LED lights for counting down
+
+    public void TimingInTeleOpWithLED () {
+        if (TeleOpTime.time() < endGameTime) {
+            myLEDStrip.LEDPurple();
+        }
+        else if (TeleOpTime.time() < hangTime) {
+            myLEDStrip.LEDred();
+        }
+        else {
+            myLEDStrip.LEDgreen();
+        }
+    }
+
+
 
     public void drive () {
         leftStickVal = -gamepad1.left_stick_y;

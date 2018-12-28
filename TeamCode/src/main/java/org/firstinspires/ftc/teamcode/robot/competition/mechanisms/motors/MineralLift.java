@@ -5,6 +5,7 @@ import android.graphics.Color;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
@@ -22,6 +23,12 @@ public class MineralLift {
     public LinearOpMode linearOp = null;
 
     public final double TICKS_PER_ROTATION = 538;
+
+    public ElapsedTime liftRunTime;
+    double maxArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
+    double getMaxArmExtendTimeEncoder = 3;
+    double maxLiftRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
+    int mineralLiftTargetPosition = -4700;
 
 
 
@@ -64,6 +71,33 @@ public class MineralLift {
 
     public void LowerMineralLift (double power) {
         mineralLift.setPower(power);
+    }
+
+
+    public void retractLiftMotorFully() {               //DistanceSensor distanceSensor
+        //set motor to full power WHILE the distance sensor is less than lowHeight
+        //be sure to stop motor at end!
+        liftRunTime.reset();
+        while (liftRunTime.time() <= maxLiftRetractTime) {
+            mineralLift.setPower(1);
+        }
+        mineralLift.setPower(0);
+    }
+
+    public void extendLiftMotorFullyEncoders () {
+        liftRunTime.reset();
+        while (mineralLift.getCurrentPosition() > mineralLiftTargetPosition) {
+            linearOp.telemetry.addData("ENCODER", mineralLift.getCurrentPosition());
+            linearOp.telemetry.update();
+            mineralLift.setPower(-.75);
+            if (liftRunTime.time() >= getMaxArmExtendTimeEncoder) {
+                linearOp.telemetry.addLine("BREAK");
+                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+        mineralLift.setPower(0);
     }
 
 }

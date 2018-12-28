@@ -7,9 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class LEDLights {
 
     // instance variables
-    int LEDRedPos = 1000;
-    int LEDBluePos = 1000;
-    int LEDGreenPos = 1000;
+    double LEDRedPos = .6694;
+    double LEDBluePos = .74150;
+    double LEDGreenPos = .71409;
+    double LEDPurplePos = .6609;
+    double LEDWhiteBlinkingPos = .46249;
+    double LEDYellowPos = .54949;
 
 
     public Servo LEDStrip; // strip of LED
@@ -30,4 +33,14 @@ public class LEDLights {
     public void LEDgreen () {
         LEDStrip.setPosition(LEDGreenPos);
     }
+    public void LEDPurple () {
+        LEDStrip.setPosition(LEDPurplePos);
+    }
+    public void LEDWhiteBlinking () {
+        LEDStrip.setPosition(LEDWhiteBlinkingPos);
+    }
+    public void LEDYellow () {
+        LEDStrip.setPosition(LEDYellowPos);
+    }
+
 }
