@@ -6,6 +6,7 @@ import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -39,8 +40,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Depot - Competition Intake")
-//@Disabled
+@Autonomous(name = "Depot - Competition Intake - Double Sampling")
+@Disabled
 public class DepotIntakeDoubleSampling extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
@@ -111,7 +112,8 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
 
 
 
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 

@@ -9,21 +9,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class LanderServo {
 
     // instance variables
-    public Servo landerServoL;
     public Servo landerServoR;
     public Servo transferGateServo;
 
     public LinearOpMode linearOp = null;
 
-    public double LSScore = 1;
-    public double LSCollect = 0;
+    public double LSScore = .56;
+    public double LSCollect = 1.0;
     public double releaseMinerals = 1;
     public double keepMinerals = 0;
 
     // constructor
 
-    public LanderServo ( Servo LSR, Servo LSL, Servo TGS) {
-        landerServoL = LSR;
+    public LanderServo (Servo LSL, Servo TGS) {
         landerServoR = LSL;
         transferGateServo = TGS;
     }
@@ -35,13 +33,11 @@ public class LanderServo {
     }
 
     public void landerServoScore () {          // drops minerals into the lander
-        landerServoL.setPosition(LSScore);
         landerServoR.setPosition(LSScore);
     }
 
     public void landerServoCollect () {
-        landerServoL.setPosition(LSCollect);      // keeps minerals in the little object
-        landerServoR.setPosition(LSCollect);
+        landerServoR.setPosition(LSCollect);      // keeps minerals in the little object
     }
 
     public void releaseMinerals () {

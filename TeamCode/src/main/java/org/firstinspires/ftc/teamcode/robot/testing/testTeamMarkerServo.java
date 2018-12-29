@@ -9,23 +9,27 @@ import com.qualcomm.robotcore.util.Range;
 
 //import org.opencv.core.Range;
 
-@TeleOp(name = "TEST - TEAM MARKER SERVO")
-@Disabled
+@TeleOp(name = "TEST - SERVO DUMPER")
+//@Disabled
 public class testTeamMarkerServo extends OpMode {
-    Servo teamMarkerArm;
+    Servo servotest;
 
-    final double SERVO_LOW = 0;
-    final double SERVO_MID = 0.5;
+    final double SERVO_LOW = .56;
+//    final double SERVO_MID = 0.5;
     final double SERVO_HIGH = 1.0;
 
-    double teamMarkerPosition;
+    public double LSScore = .56;
+    public double LSCollect = 1.0;
+
+
+    double servoPosition;
     public ElapsedTime armRunTime;
 
     @Override
     public void init() {
-        teamMarkerPosition = SERVO_MID;
-        teamMarkerArm = hardwareMap.servo.get ("team_marker_arm");
-        teamMarkerArm.setPosition(teamMarkerPosition);
+        servotest = hardwareMap.servo.get ("mineral_dumper");
+        servotest.setPosition(servoPosition);
+        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();
         armRunTime.reset();
     }
@@ -33,21 +37,21 @@ public class testTeamMarkerServo extends OpMode {
     @Override
     public void loop() {
         if (gamepad2.y) {
-            teamMarkerPosition = teamMarkerPosition + .001;
+            servoPosition = servoPosition + .001;
         }
         if (gamepad2.a) {
-            teamMarkerPosition = teamMarkerPosition - .001;
+            servoPosition = servoPosition - .001;
         }
-        if (gamepad2.x || gamepad2.b) {
-            teamMarkerPosition = SERVO_MID;
+        if (gamepad2.dpad_up) {
+            servoPosition = SERVO_HIGH;
         }
         if (gamepad2.dpad_down) {
-            armRunTime.reset();
+            servoPosition = SERVO_LOW;
         }
         armRunTime.time();
-        teamMarkerPosition = Range.clip(teamMarkerPosition,SERVO_LOW,SERVO_HIGH);
-        teamMarkerArm.setPosition(teamMarkerPosition);
-        telemetry.addData("servo position! ", teamMarkerArm.getPosition());
+        servoPosition = Range.clip(servoPosition,SERVO_LOW,SERVO_HIGH);
+        servotest.setPosition(servoPosition);
+        telemetry.addData("servo position! ", servotest.getPosition());
         telemetry.addData("time! ", armRunTime.time());
     }
 }

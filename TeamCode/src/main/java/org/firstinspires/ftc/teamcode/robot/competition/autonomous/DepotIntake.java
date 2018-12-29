@@ -118,7 +118,7 @@ public class DepotIntake extends LinearOpMode  {
 
 
 
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 

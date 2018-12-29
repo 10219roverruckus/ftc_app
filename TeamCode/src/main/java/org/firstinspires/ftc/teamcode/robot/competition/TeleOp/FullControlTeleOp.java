@@ -112,7 +112,7 @@ public class FullControlTeleOp extends OpMode {
         myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
-        myLanderServo = new LanderServo (hardwareMap.servo.get("right_mineral_dumper"), hardwareMap.servo.get("left_mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
