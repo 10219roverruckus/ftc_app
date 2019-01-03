@@ -16,8 +16,8 @@ public class LanderServo {
 
     public double LSScore = .56;
     public double LSCollect = 1.0;
-    public double releaseMinerals = 1;
-    public double keepMinerals = 0;
+    public double CloseGate = .05;
+    public double OpenGate = .41;
 
     // constructor
 
@@ -41,11 +41,11 @@ public class LanderServo {
     }
 
     public void releaseMinerals () {
-        transferGateServo.setPosition(releaseMinerals);
+        transferGateServo.setPosition(OpenGate);
     }
 
     public void keepMineralsIn () {
-        transferGateServo.setPosition(keepMinerals);
+        transferGateServo.setPosition(CloseGate);
     }
 }
 

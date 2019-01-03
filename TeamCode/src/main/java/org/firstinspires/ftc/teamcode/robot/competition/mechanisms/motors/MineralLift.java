@@ -65,12 +65,12 @@ public class MineralLift {
         mineralLift.setMode(currentRunMode);
     }
 
-    public void RaiseMineralLift (double power) {
-        mineralLift.setPower(power);
+    public void RaiseMineralLift () {
+        mineralLift.setPower(-1);
     }
 
-    public void LowerMineralLift (double power) {
-        mineralLift.setPower(power);
+    public void LowerMineralLift () {
+        mineralLift.setPower(1);
     }
 
 

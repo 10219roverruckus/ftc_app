@@ -28,8 +28,8 @@ public class testTeamMarkerServo extends OpMode {
     @Override
     public void init() {
         servotest = hardwareMap.servo.get ("transfer_gate_servo");
-        servotest.setPosition(servoPosition);
-        servotest.setPosition(SERVO_HIGH);
+//        servotest.setPosition(servoPosition);
+//        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();
         armRunTime.reset();
     }
@@ -49,7 +49,7 @@ public class testTeamMarkerServo extends OpMode {
             servoPosition = SERVO_LOW;
         }
         armRunTime.time();
-        servoPosition = Range.clip(servoPosition,SERVO_LOW,SERVO_HIGH);
+        servoPosition = Range.clip(servoPosition, 0, 1);
         servotest.setPosition(servoPosition);
         telemetry.addData("servo position! ", servotest.getPosition());
         telemetry.addData("time! ", armRunTime.time());

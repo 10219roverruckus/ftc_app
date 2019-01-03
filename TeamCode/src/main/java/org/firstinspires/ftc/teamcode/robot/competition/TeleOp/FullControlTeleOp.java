@@ -115,8 +115,9 @@ public class FullControlTeleOp extends OpMode {
         myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+//        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
 
+        TeleOpTime = new ElapsedTime();
 
         //set initial toggles
         reverseModeToggle = false;
@@ -206,7 +207,7 @@ public class FullControlTeleOp extends OpMode {
 
     //controls motor to lift and lower robot
     public void hangingLiftMotor () {
-        if (gamepad2.dpad_down && myRevColorDistance.checkSensorHookLift()) {
+        if (gamepad2.dpad_down) {                   // && myRevColorDistance.checkSensorHookLift()
             myLiftMotor.retractLift();
         }
         else if (gamepad2.dpad_up) {
@@ -222,7 +223,7 @@ public class FullControlTeleOp extends OpMode {
         if (gamepad2.left_stick_y > .1) {
             myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
         }
-        else if (gamepad2.left_stick_y < -.1 && myRevColorDistance.checkSensorExtender() == true) {
+        else if (gamepad2.left_stick_y < -.1 ) {            //&& myRevColorDistance.checkSensorExtender() == true
             myIntakeExtenderArm.retractIntactArm(gamepad2.left_stick_y);
         }
         else {
@@ -231,7 +232,7 @@ public class FullControlTeleOp extends OpMode {
     }
 
     public void spinnerIntake () {
-        if (gamepad2.right_trigger > powerThreshold) {
+        if (gamepad2.right_trigger > powerThreshold || gamepad2.a == true) {
             myIntakeServo.IntakeServoForward();
         }
         else if (gamepad2.left_trigger > powerThreshold) {
@@ -262,10 +263,10 @@ public class FullControlTeleOp extends OpMode {
     }
 
     public void rotater () {
-        if (gamepad2.left_bumper == true) {
+        if (gamepad2.right_stick_y < -.1) {
             myIntakeRotator.RaiseIntakeRotater();
         }
-        else if (gamepad2.right_bumper == true) {
+        else if (gamepad2.right_stick_y > .1) {
             myIntakeRotator.LowerIntakeRotater();
         }
         else {
@@ -275,10 +276,10 @@ public class FullControlTeleOp extends OpMode {
 
     public void mineralLift () {
 
-        if (gamepad2.left_stick_y > powerThreshold) {
-            myMineralLift.RaiseMineralLift(gamepad2.left_stick_y);
-        } else if (gamepad2.left_stick_y < -powerThreshold && myRevColorDistance.checkSensorMineralLift() == true) {
-            myMineralLift.LowerMineralLift(gamepad2.left_stick_y);
+        if (gamepad2.right_bumper == true) {
+            myMineralLift.RaiseMineralLift();
+        } else if (gamepad2.left_bumper == true) {               // && myRevColorDistance.checkSensorMineralLift() == true
+            myMineralLift.LowerMineralLift();
         } else {
             myMineralLift.stopMotors();
         }
