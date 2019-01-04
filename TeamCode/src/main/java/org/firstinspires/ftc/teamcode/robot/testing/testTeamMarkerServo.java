@@ -37,10 +37,10 @@ public class testTeamMarkerServo extends OpMode {
     @Override
     public void loop() {
         if (gamepad2.y) {
-            servoPosition = servoPosition + .001;
+            servoPosition = servoPosition + .00025;
         }
         if (gamepad2.a) {
-            servoPosition = servoPosition - .001;
+            servoPosition = servoPosition - .00025;
         }
         if (gamepad2.dpad_up) {
             servoPosition = SERVO_HIGH;

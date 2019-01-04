@@ -28,7 +28,7 @@ public class MineralLift {
     double maxArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double getMaxArmExtendTimeEncoder = 3;
     double maxLiftRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int mineralLiftTargetPosition = -4700;
+    int mineralLiftTargetPosition = 3900;
 
 
 
@@ -37,6 +37,7 @@ public class MineralLift {
         mineralLift = MinM;
 
         mineralLift.setDirection(DcMotor.Direction.REVERSE);
+        mineralLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setMineralLiftRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMineralLiftRunModes(currentRunMode);
     }
