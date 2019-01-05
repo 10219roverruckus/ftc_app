@@ -19,6 +19,7 @@ public class GyroCompetition {
     public Orientation angles;
     public Acceleration gravity;
     public BNO055IMU imu;
+    final public double SPEED = .27;
 
     public LinearOpMode linearOp = null;
 
@@ -61,7 +62,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateRight(.3);
+                myMechDrive.setMotorPowerRotateRight(SPEED);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
@@ -70,7 +71,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myMechDrive.setMotorPowerRotateLeft(.3);
+                myMechDrive.setMotorPowerRotateLeft(SPEED);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             }
         }
@@ -99,7 +100,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myDriveMotors.drive(.25,-.25);
+                myDriveMotors.drive(SPEED,-SPEED);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                 linearOp.idle();
             }
@@ -111,7 +112,7 @@ public class GyroCompetition {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
-                myDriveMotors.drive(-.25,.25);
+                myDriveMotors.drive(-SPEED,SPEED);
                 angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                 linearOp.idle();
             }

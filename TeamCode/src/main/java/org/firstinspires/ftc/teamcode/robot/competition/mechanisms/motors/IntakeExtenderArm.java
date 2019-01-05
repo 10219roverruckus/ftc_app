@@ -27,8 +27,9 @@ public class IntakeExtenderArm {
     // instance variables for auto
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int intakeArmExtendTargetPosition = -6700;
-    int intakeArmRetractTargetPosition = -10;
+    int intakeArmExtendTargetPosition = -3100;        // fully extended
+    int autoIntakeArmExtendTargetPosition = -2000;      //extend for minerals
+    int intakeArmRetractTargetPosition = -0;
 
     public ElapsedTime ExtenderArmRunTime;
 
@@ -42,7 +43,7 @@ public class IntakeExtenderArm {
 
         intakeExtenderArm.setDirection(DcMotor.Direction.FORWARD);
         intakeExtenderArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        ExtenderArmRunTime = new ElapsedTime();
     }
 
 
@@ -74,9 +75,9 @@ public class IntakeExtenderArm {
 
     public void extendIntakeArmAuto () {
         ExtenderArmRunTime.reset();
-        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPosition) {
-//            linearOp.telemetry.addData("extender encode EXTEND ", intakeExtenderArm.getCurrentPosition());
-//            linearOp.telemetry.update();
+        while (intakeExtenderArm.getCurrentPosition() > autoIntakeArmExtendTargetPosition) {
+            linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
             if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
 //                linearOp.telemetry.addLine("BREAK");
@@ -91,8 +92,9 @@ public class IntakeExtenderArm {
     public void retractIntakeArmAuto () {
         ExtenderArmRunTime.reset();
         while (intakeExtenderArm.getCurrentPosition() <  intakeArmRetractTargetPosition) {
-//            linearOp.telemetry.addData("extender encoder RETRACT ", intakeExtenderArm.getCurrentPosition());
-//            linearOp.telemetry.update();
+            linearOp.telemetry.addData("extender encoder RETRACT: ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
+
             intakeExtenderArm.setPower(autononomousPower);
             if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
 //                linearOp.telemetry.addLine("BREAK");

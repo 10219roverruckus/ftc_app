@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robot.testing;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "TEST MOTOR ENCODER - P2 R STICK - B RESET")
 public class EncoderMotorCalibration extends OpMode {
@@ -13,10 +14,11 @@ public class EncoderMotorCalibration extends OpMode {
 
     @Override
     public void init() {
-        myEncoderMotor = hardwareMap.dcMotor.get("mineral_lift_motor");  //MAP TO YOUR RC CONFIG
+        myEncoderMotor = hardwareMap.dcMotor.get("intake_rotater_motor");  //MAP TO YOUR RC CONFIG
 //        myEncoderMotor.setDirection(DcMotorSimple.Direction.REVERSE);  // REVERSE AS NEEDED
         // Always STOP_AND_RESET_ENCODER BEFORE setting encoder mode (RUN_WITHOUT_ENCODER || RUN_USING_ENCODER || RUN_TO_POSITION).
         // Bad things await those swap the order...
+        myEncoderMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         myEncoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         myEncoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         myEncoderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -31,11 +33,12 @@ public class EncoderMotorCalibration extends OpMode {
         else {
             myEncoderMotor.setPower(0);
         }
-        telemetry.addData("LIFT MOTOR POSITION: ", myEncoderMotor.getCurrentPosition());
+        telemetry.addData("MOTOR POSITION: ", myEncoderMotor.getCurrentPosition());
         telemetry.addData("rightJoystick_gp2 VAR: ", rightJoystick_gp2);
         telemetry.addData("gamepad2.right_stick_y RAW: ", gamepad2.right_stick_y);
         if (gamepad2.b) {
             myEncoderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            myEncoderMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             telemetry.addLine("RESETTING ENCODERS");
         }
     }

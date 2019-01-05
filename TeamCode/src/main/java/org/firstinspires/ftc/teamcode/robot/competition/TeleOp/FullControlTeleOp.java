@@ -181,10 +181,10 @@ public class FullControlTeleOp extends OpMode {
 
 
     public void telemetryOutput (){
-//        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
-//        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
-//        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
-//        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
+        telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
+        telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
+        telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
+        telemetry.addData("pwr", "RR mtr: " + rearRightSpeed);
         telemetry.addData("Left joystick Y (gp2): ", gamepad2.left_stick_y);
         telemetry.addData("Right joystick Y (gp2): ", gamepad2.right_stick_y);
         telemetry.update();

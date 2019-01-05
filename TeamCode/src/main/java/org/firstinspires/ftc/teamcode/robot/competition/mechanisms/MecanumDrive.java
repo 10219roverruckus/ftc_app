@@ -11,6 +11,7 @@ public class MecanumDrive {
     public DcMotor frontRightMotor;
     public DcMotor rearRightMotor;
     public DcMotor rearLeftMotor;
+    public final double FACTOR = 0.9;
     public final DcMotor.RunMode currentMotorRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     public static final double TICKS_PER_ROTATION = 538; // TICKS (COUNTS) PER ROTATION NEEDED!!!!!!!! :)
     // http://www.andymark.com/NeveRest-20-12V-Planetary-Gearmotor-p/am-3637.htm
@@ -138,7 +139,7 @@ public class MecanumDrive {
         }
 
     public void driveForwardPID ( double speed, double rotations) {
-        double minSPD = .3;
+        double minSPD = speed * FACTOR;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
@@ -182,7 +183,7 @@ public class MecanumDrive {
 
     public void driveBackwardPID (double speed, double rotations) {
         //only need one non-maxSPD.
-        double minSPD = -.3;
+        double minSPD = speed * FACTOR;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
@@ -267,7 +268,7 @@ public class MecanumDrive {
     }
 
     public void strafeRightPID (double speed, double rotations) {
-        double minSPD = .3;
+        double minSPD = speed * FACTOR;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
@@ -308,7 +309,7 @@ public class MecanumDrive {
     }
 
     public void strafeLeftPID (double speed, double rotations) {
-        double minSPD = .3;
+        double minSPD = speed * FACTOR;
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 

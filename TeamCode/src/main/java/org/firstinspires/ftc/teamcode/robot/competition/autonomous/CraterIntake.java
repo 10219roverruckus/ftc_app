@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
@@ -51,7 +52,7 @@ public class CraterIntake extends LinearOpMode  {
 
     GyroCompetition myGyro;
     MecanumMineralMiner myMineralMiner;
-    RevColorDistance myRevColorDistance;
+//    RevColorDistance myRevColorDistance;
 
     MecanumMineralMinerCrater myMineralMinerCrater;
     MecanumMineralMinerDepot myMineralMinerDepot;
@@ -61,6 +62,8 @@ public class CraterIntake extends LinearOpMode  {
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
+    LanderServo myLanderServo;
+
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -108,8 +111,8 @@ public class CraterIntake extends LinearOpMode  {
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeExtenderArm.setLinearOp(this);
 
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
-        myRevColorDistance.setLinearOp(this);
+//        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+//        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -122,6 +125,10 @@ public class CraterIntake extends LinearOpMode  {
         myMineralMinerAll = new MecanumMineralMinerAll();
         myMineralMinerAll.setLinearOp(this);
 
+        myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo.setLinearOp(this);
+        myLanderServo.landerServoCollect();
+        myLanderServo.keepMineralsIn();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -215,22 +222,22 @@ public class CraterIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myRevColorDistance);      // Backups to tape under Lander and moves towards wall
+        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive);      // Backups to tape under Lander and moves towards wall
 
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
+        myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
 
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerCrater.DriveParkInCrater(myMechDrive);
+        myMineralMinerCrater.DriveParkInCrater(myMechDrive);
 
 
             }

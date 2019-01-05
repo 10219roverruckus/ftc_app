@@ -46,14 +46,13 @@ public class MecanumMineralMinerAll {
 
          //find location of the mineral using camera
 
-        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
-            goldPosition = GoldPosition.MIDDLE;                           //commented out while camera does not work
-        } else if (cameraGoldLocation > 300) {                            //program works perfectly DO NOT CHANGE THE CODE
-            goldPosition = GoldPosition.RIGHT;
-        } else {
-            goldPosition = GoldPosition.LEFT;
-        }
-
+//        if (cameraGoldLocation < 300 && cameraGoldLocation > 1) {
+//            goldPosition = GoldPosition.MIDDLE;                           //commented out while camera does not work
+//        } else if (cameraGoldLocation > 300) {                            //program works perfectly DO NOT CHANGE THE CODE
+//            goldPosition = GoldPosition.RIGHT;
+//        } else {
+//            goldPosition = GoldPosition.LEFT;
+//        }
+        goldPosition = GoldPosition.MIDDLE;
     }
-
 }

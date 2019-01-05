@@ -23,8 +23,8 @@ public class IntakeRotator {
 
     double maxRotatorExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int RotatorTargetPositionLower = -2000;
-    int RotatorTargetPositionRaise = -10;
+    int RotatorTargetPositionLower = 750;
+    int RotatorTargetPositionRaise = -250;
 
     public double autonomousPower = .75;
     public ElapsedTime armRunTime;
@@ -38,6 +38,7 @@ public class IntakeRotator {
         setIntakeRotatorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         setIntakeRotatorRunModes(currentRunMode);
+        armRunTime = new ElapsedTime();
     }
 
     public void setLinearOp (LinearOpMode Op) {
@@ -80,10 +81,12 @@ public class IntakeRotator {
 
     public void mineralRotateLowerEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() > RotatorTargetPositionLower) {
+        while (intakeRotator.getCurrentPosition() < RotatorTargetPositionLower) {
+            linearOp.telemetry.addData("extender encoder LOWER ", intakeRotator.getCurrentPosition());
+            linearOp.telemetry.update();
 //            linearOp.telemetry.addData("ENCODER", intakeRotator.getCurrentPosition());
 //            linearOp.telemetry.update();
-            intakeRotator.setPower(-autonomousPower);
+            intakeRotator.setPower(autonomousPower);
             if (armRunTime.time() >= maxRotatorExtendTime) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();
@@ -98,11 +101,11 @@ public class IntakeRotator {
 
     public void mineralRotateRaiseEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise) {
-//            linearOp.telemetry.addData("extender encoder RETRACT ", intakeExtenderArm.getCurrentPosition());
-//            linearOp.telemetry.update();
-            intakeRotator.setPower(autonomousPower);
-            if (armRunTime.time() >= maxRotatorExtendTime) {
+        while (intakeRotator.getCurrentPosition() >  RotatorTargetPositionRaise) {
+            linearOp.telemetry.addData("extender encoder RAISE ", intakeRotator.getCurrentPosition());
+            linearOp.telemetry.update();
+            intakeRotator.setPower(-autonomousPower);
+            if (armRunTime.time() >= maxArmRetractTime) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();
                 break;
@@ -110,8 +113,9 @@ public class IntakeRotator {
             linearOp.idle();
         }
         intakeRotator.setPower(0);
+        setIntakeRotatorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setIntakeRotatorRunModes(currentRunMode);
     }
-
-    }
+}
 
 
