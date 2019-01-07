@@ -27,8 +27,9 @@ public class IntakeExtenderArm {
     // instance variables for auto
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int intakeArmExtendTargetPosition = -3100;        // fully extended
-    int autoIntakeArmExtendTargetPosition = -2000;      //extend for minerals
+    int intakeArmExtendTargetPosition = -2400;        // fully extended
+    int autoIntakeArmExtendTargetPosition = -1700;      //extend for minerals
+    int intakeArmExtendTargetPositionOverCrater = -900;
     int intakeArmRetractTargetPosition = -0;
 
     public ElapsedTime ExtenderArmRunTime;
@@ -105,4 +106,39 @@ public class IntakeExtenderArm {
         }
         stopIntakeArm();
     }
+
+    public void extendIntakeArmAllTheWay () {
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPosition) {
+            linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(-autononomousPower);
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+        stopIntakeArm();
+    }
+
+
+    public void extendOverCrater () {
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPositionOverCrater) {
+            linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(-autononomousPower);
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+        stopIntakeArm();
+    }
+
+
 }

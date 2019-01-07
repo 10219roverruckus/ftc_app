@@ -26,7 +26,7 @@ public class IntakeServo {
     int RotatorTargetPositionForawrd = -2000;
     int RotatorTargetPositionReverse = 2000;
 
-    public int sleepTime = 5;
+    public int sleepTime = 1000;
 
 
     public ElapsedTime IntakeServoRunTime;
@@ -72,7 +72,7 @@ public class IntakeServo {
     }
 
     public void IntakeServoForwardTime () {
-        intakeServoL.setPosition(1);
+        intakeServoL.setPosition(0);
         intakeServoR.setPosition(1);
         linearOp.sleep(sleepTime);
         linearOp.idle();

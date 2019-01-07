@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
@@ -53,10 +54,11 @@ public class DepotIntake extends LinearOpMode  {
     MecanumMineralMiner myMineralMiner;
     RevColorDistance myRevColorDistance;
     DcMotor intakePositionMotor;
-    DcMotor intakeMotor;
+//    DcMotor myIntakeRotator;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
+    LanderServo myLanderServo;
 
 
     LiftMotor myLiftMotor;
@@ -100,25 +102,20 @@ public class DepotIntake extends LinearOpMode  {
         myMineralMiner = new MecanumMineralMiner();
         myMineralMiner.setLinearOp(this);
 
-
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
-
-//        myTeamMarker = new TeamMarker(hardwareMap.servo.get("team_marker_arm"));
-//        myTeamMarker.setLinearOp(this);
 
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
         myIntakeServo.setLinearOp(this);
 
-        intakePositionMotor = hardwareMap.dcMotor.get("intake_position_motor");
-        intakeMotor = hardwareMap.dcMotor.get("intake_motor");
+        myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
+        myIntakeRotator.setLinearOp(this);
+
+
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
-        intakePositionMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        myIntakeExtenderArm.setLinearOp(this);
 
-
-
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+//        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -131,6 +128,11 @@ public class DepotIntake extends LinearOpMode  {
 
         myMineralMinerAll = new MecanumMineralMinerAll();
         myMineralMinerAll.setLinearOp(this);
+
+        myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo.setLinearOp(this);
+        myLanderServo.landerServoCollect();
+        myLanderServo.keepMineralsIn();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -206,8 +208,6 @@ public class DepotIntake extends LinearOpMode  {
         vuforia.showDebug();
         vuforia.start();
 
-        myTeamMarker.teamMarkerArmRaised();
-
         waitForStart();
 
 
@@ -226,11 +226,11 @@ public class DepotIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
+        myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
         sleep(sleepTime);
         idle();
 
-        //myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive);
+        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo);
 
 
     }
