@@ -28,7 +28,7 @@ public class MineralLift {
     double maxArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double getMaxArmExtendTimeEncoder = 2.7;
     double maxLiftRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int mineralLiftTargetPosition = 3765;
+    int mineralLiftTargetPosition = 3100;
 
 
 
