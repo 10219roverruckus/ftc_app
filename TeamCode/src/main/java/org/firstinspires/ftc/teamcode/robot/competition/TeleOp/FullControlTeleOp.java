@@ -264,10 +264,10 @@ public class FullControlTeleOp extends OpMode {
 
     public void rotater () {
         if (gamepad2.right_stick_y < -.1) {
-            myIntakeRotator.RaiseIntakeRotater();
+            myIntakeRotator.LowerIntakeRotater();
         }
         else if (gamepad2.right_stick_y > .1) {
-            myIntakeRotator.LowerIntakeRotater();
+            myIntakeRotator.RaiseIntakeRotater();
         }
         else {
             myIntakeRotator.stopIntakeRotatorMotors();

@@ -23,8 +23,8 @@ public class IntakeRotator {
 
     double maxRotatorExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int RotatorTargetPositionLower = 750;
-    int RotatorTargetPositionRaise = -250;
+    int RotatorTargetPositionLower = -1500;
+    int RotatorTargetPositionRaise = 0;
 
     public double autonomousPower = .75;
     public ElapsedTime armRunTime;
@@ -81,12 +81,12 @@ public class IntakeRotator {
 
     public void mineralRotateLowerEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() < RotatorTargetPositionLower) {
+        while (intakeRotator.getCurrentPosition() > RotatorTargetPositionLower) {
             linearOp.telemetry.addData("extender encoder LOWER ", intakeRotator.getCurrentPosition());
             linearOp.telemetry.update();
 //            linearOp.telemetry.addData("ENCODER", intakeRotator.getCurrentPosition());
 //            linearOp.telemetry.update();
-            intakeRotator.setPower(autonomousPower);
+            intakeRotator.setPower(-autonomousPower);
             if (armRunTime.time() >= maxRotatorExtendTime) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();
@@ -101,10 +101,10 @@ public class IntakeRotator {
 
     public void mineralRotateRaiseEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() >  RotatorTargetPositionRaise) {
+        while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise) {
             linearOp.telemetry.addData("extender encoder RAISE ", intakeRotator.getCurrentPosition());
             linearOp.telemetry.update();
-            intakeRotator.setPower(-autonomousPower);
+            intakeRotator.setPower(autonomousPower);
             if (armRunTime.time() >= maxArmRetractTime) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();

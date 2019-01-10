@@ -44,7 +44,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - Competition Intake")
+@Autonomous(name = "Crater - Competition Intake1")
 //@Disabled
 public class CraterIntake extends LinearOpMode  {
 
@@ -222,7 +222,7 @@ public class CraterIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive);      // Backups to tape under Lander and moves towards wall
+        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
 
         sleep(sleepTime);
         idle();

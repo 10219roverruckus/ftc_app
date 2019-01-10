@@ -50,13 +50,13 @@ public class MecanumMineralMinerDepot {
         goldPosition = GoldPosition.MIDDLE;
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
-        //myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
+        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .3);                    // get away from the lander
+        myMechDrive.strafeLeft(SPD_DRIVE_HIGH, .3);                    // get away from the lander
         linearOp.sleep(sleepTime);
         myMechDrive.driveForward(.3, .5);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeLeft(SPD_DRIVE_HIGH, .35);
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .35);
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
@@ -70,7 +70,7 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-         //       myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArmAllTheWay();
@@ -82,7 +82,7 @@ public class MecanumMineralMinerDepot {
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
-         //       myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 break;
 
@@ -94,7 +94,7 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                //myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.extendIntakeArmAllTheWay();
                 linearOp.sleep(sleepTime);
@@ -106,7 +106,7 @@ public class MecanumMineralMinerDepot {
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
-                //myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 break;
 
@@ -119,7 +119,7 @@ public class MecanumMineralMinerDepot {
                 myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                //myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.extendIntakeArmAllTheWay();
                 linearOp.sleep(sleepTime);
@@ -130,7 +130,7 @@ public class MecanumMineralMinerDepot {
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
-                //myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 break;
         }

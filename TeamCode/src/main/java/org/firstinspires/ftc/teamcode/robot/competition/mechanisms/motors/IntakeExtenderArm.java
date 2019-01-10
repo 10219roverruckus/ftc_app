@@ -28,10 +28,11 @@ public class IntakeExtenderArm {
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     int intakeArmExtendTargetPosition = -2400;        // fully extended
-    int autoIntakeArmExtendTargetPosition = -1700;      //extend for minerals
-    int intakeArmExtendTargetPositionOverCrater = -900;
-    int intakeArmRetractTargetPosition = -0;
+    int autoIntakeArmExtendTargetPosition = -1650;      //extend for minerals
+    int intakeArmExtendTargetPositionOverCrater = -890;
 
+    int intakeArmExtendMiddleMineral = -910;
+    int intakeArmRetractTargetPosition = 0;
     public ElapsedTime ExtenderArmRunTime;
 
 
@@ -65,6 +66,10 @@ public class IntakeExtenderArm {
 
     public void retractIntactArm (double motorPower) {
         intakeExtenderArm.setPower(-Math.abs(motorPower));
+    }
+
+    public void retractPowerAuto (double motorPower) {
+        intakeExtenderArm.setPower(motorPower);
     }
 
     public void stopIntakeArm () {
@@ -127,6 +132,22 @@ public class IntakeExtenderArm {
     public void extendOverCrater () {
         ExtenderArmRunTime.reset();
         while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPositionOverCrater) {
+            linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(-autononomousPower);
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+        stopIntakeArm();
+    }
+
+    public void extendTowardMiddleMineral () {
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendMiddleMineral) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
