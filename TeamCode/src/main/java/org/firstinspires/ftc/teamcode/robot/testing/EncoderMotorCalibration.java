@@ -14,7 +14,7 @@ public class EncoderMotorCalibration extends OpMode {
 
     @Override
     public void init() {
-        myEncoderMotor = hardwareMap.dcMotor.get("mineral_lift_motor");  //MAP TO YOUR RC CONFIG
+        myEncoderMotor = hardwareMap.dcMotor.get("intake_rotater_motor");  //MAP TO YOUR RC CONFIG
 //        myEncoderMotor.setDirection(DcMotorSimple.Direction.REVERSE);  // REVERSE AS NEEDED
         // Always STOP_AND_RESET_ENCODER BEFORE setting encoder mode (RUN_WITHOUT_ENCODER || RUN_USING_ENCODER || RUN_TO_POSITION).
         // Bad things await those swap the order...
