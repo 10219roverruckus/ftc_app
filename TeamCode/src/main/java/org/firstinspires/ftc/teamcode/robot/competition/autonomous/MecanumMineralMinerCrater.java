@@ -26,7 +26,7 @@ public class MecanumMineralMinerCrater {
 
     // created constant variables that are used for speed (different setting)
 
-    final double SPD_DRIVE_LOW = .20;                  //Lowest speed
+    final double SPD_DRIVE_LOW = .40;                  //Lowest speed
     final double SPD_DRIVE_MED =  0.5;   //was .4;                   Default is  SPD_MED
     final double SPD_DRIVE_HIGH = .80;
     final double SPD_DRIVE_MAX = 1.0;
@@ -68,14 +68,14 @@ public class MecanumMineralMinerCrater {
         linearOp.telemetry.update();
         linearOp.sleep(500);
 
-        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-        linearOp.sleep(sleepTime);
+       // myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
+        //linearOp.sleep(sleepTime);
 
-        myMechDrive.strafeLeft(SPD_DRIVE_MED, .3);                    // get away from the lander
+        myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);                    // get away from the lander
         linearOp.sleep(sleepTime);
         myMechDrive.driveForward(SPD_DRIVE_MED, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeRight(SPD_DRIVE_MED,.31);
+        myMechDrive.strafeRight(SPD_DRIVE_MED,.51);
         linearOp.sleep(sleepTime);
         linearOp.telemetry.addData("CASE", goldPosition);
         linearOp.telemetry.update();
@@ -112,13 +112,14 @@ public class MecanumMineralMinerCrater {
 
 
 
+
                 myIntakeExtenderArm.extendIntakeArmAuto();
                 linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
-                linearOp.sleep(500);
+                linearOp.sleep(1000);
                 myIntakeExtenderArm.stopIntakeArm();
 
                 myIntakeRotator.mineralRotateRaiseEncoder();
@@ -151,6 +152,7 @@ public class MecanumMineralMinerCrater {
 
                 myIntakeExtenderArm.extendTowardMiddleMineral();
                 linearOp.sleep(sleepTime);
+
 
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
@@ -190,6 +192,7 @@ public class MecanumMineralMinerCrater {
                 myIntakeExtenderArm.extendIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
+
                 myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
@@ -218,7 +221,7 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
 
-        myMechDrive.strafeRight(SPD_DRIVE_MED,.5);  // to get away from lander - too far = hit mineral, not enough = hit lander going to wall
+        myMechDrive.strafeRight(SPD_DRIVE_MED,.6);  // to get away from lander - too far = hit mineral, not enough = hit lander going to wall
 
         switch (goldPosition) {
             case LEFT:
@@ -258,7 +261,7 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
 
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);                      // Align to wall
-        linearOp.sleep(1300);                               // Time for straffing
+        linearOp.sleep(1600);                               // Time for straffing
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
         myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED); //make sure a little off wall so robot does not hit wall seam
@@ -288,7 +291,7 @@ public class MecanumMineralMinerCrater {
         myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
-        myIntakeServo.IntakeServoForward();
+        myIntakeServo.IntakeServoReverse();
         linearOp.sleep(500);
 
         myIntakeExtenderArm.retractIntakeArmAuto();
@@ -309,9 +312,16 @@ public class MecanumMineralMinerCrater {
     public void DriveParkInCrater (MecanumDrive myMechDrive) {
         // drive backward and park in crater
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.7);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .95);
         linearOp.sleep(sleepTime);
-        myMechDrive.driveBackward(SPD_DRIVE_MED, .4);
+
+        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);
+        linearOp.sleep(300);
+        myMechDrive.stopMotors();
+
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.2);
+        linearOp.sleep(sleepTime);
+        myMechDrive.driveBackward(SPD_DRIVE_LOW, .4);
     }
 
 
