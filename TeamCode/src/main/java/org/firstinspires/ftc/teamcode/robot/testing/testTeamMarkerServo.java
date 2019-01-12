@@ -27,7 +27,7 @@ public class testTeamMarkerServo extends OpMode {
 
     @Override
     public void init() {
-        servotest = hardwareMap.servo.get ("transfer_gate_servo");
+        servotest = hardwareMap.servo.get ("mineral_dumper");
 //        servotest.setPosition(servoPosition);
 //        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();

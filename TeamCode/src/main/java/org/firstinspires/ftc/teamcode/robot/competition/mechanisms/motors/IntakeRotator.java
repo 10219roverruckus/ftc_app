@@ -23,7 +23,7 @@ public class IntakeRotator {
 
     double maxRotatorExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int RotatorTargetPositionLower = -1500;
+    int RotatorTargetPositionLower = -1400;
     int RotatorTargetPositionRaise = 0;
 
     public double autonomousPower = .75;

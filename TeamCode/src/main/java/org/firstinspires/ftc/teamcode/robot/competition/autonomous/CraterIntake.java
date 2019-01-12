@@ -44,7 +44,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - Competition Intake1")
+@Autonomous(name = "Crater - Competition Intake")
 //@Disabled
 public class CraterIntake extends LinearOpMode  {
 
@@ -212,7 +212,7 @@ public class CraterIntake extends LinearOpMode  {
         detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
         sleep(100);
 
-        myMineralMinerAll.findingMineralCamera(detector.getXPosition());                      // detect gold position
+        myMineralMinerCrater.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
         sleep(sleepTime);
         idle();
@@ -238,9 +238,7 @@ public class CraterIntake extends LinearOpMode  {
         idle();
 
         myMineralMinerCrater.DriveParkInCrater(myMechDrive);
-
-
-            }
-
-
+        sleep(sleepTime);
+        idle();
+    }
 }

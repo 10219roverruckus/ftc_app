@@ -6,10 +6,8 @@ import com.disnodeteam.dogecv.Dogeforia;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -21,17 +19,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerAll;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerCrater;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerDepot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,29 +37,26 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Depot - Competition Intake1")
-//@Disabled
-public class DepotIntake extends LinearOpMode  {
+@Autonomous(name = "Crater - Competition Intake - MINERAL ONLY")
+@Disabled
+public class CraterIntakeMINERALonly extends LinearOpMode  {
 
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
     MecanumMineralMiner myMineralMiner;
-    RevColorDistance myRevColorDistance;
-    DcMotor intakePositionMotor;
-//    DcMotor myIntakeRotator;
+//    RevColorDistance myRevColorDistance;
+
+    MecanumMineralMinerCrater myMineralMinerCrater;
+    MecanumMineralMinerDepot myMineralMinerDepot;
+    MecanumMineralMinerAll myMineralMinerAll;
+
+    LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
     LanderServo myLanderServo;
 
-
-    LiftMotor myLiftMotor;
-    TeamMarker myTeamMarker;
-
-    MecanumMineralMinerAll myMineralMinerAll;
-    MecanumMineralMinerCrater myMineralMinerCrater;
-    MecanumMineralMinerDepot myMineralMinerDepot;
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -105,20 +95,19 @@ public class DepotIntake extends LinearOpMode  {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
-        myIntakeServo.setLinearOp(this);
-
         myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
         myIntakeRotator.setLinearOp(this);
 
+        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
+        myIntakeServo.setLinearOp(this);
 
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeExtenderArm.setLinearOp(this);
 
 //        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+//        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
 
         myMineralMinerCrater = new MecanumMineralMinerCrater();
         myMineralMinerCrater.setLinearOp(this);
@@ -208,31 +197,43 @@ public class DepotIntake extends LinearOpMode  {
         vuforia.showDebug();
         vuforia.start();
 
-        waitForStart();
 
+        waitForStart();
 
         idle();
 
         detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
         sleep(100);
 
-        myMineralMinerDepot.findingMineralCamera(detector.getXPosition());                      // detect gold position
+        myMineralMinerCrater.findingMineralCamera(detector.getXPosition());                      // detect gold position
 
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+        myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor,  myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
-        sleep(sleepTime);
-        idle();
-
-        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo);
+        myMineralMinerCrater.RotateDriveWall (myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
 
         sleep(sleepTime);
         idle();
-    }
+
+        myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+
+        sleep(sleepTime);
+        idle();
+
+//        myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo );
+
+        sleep(sleepTime);
+        idle();
+
+//        myMineralMinerCrater.DriveParkInCrater(myMechDrive);
+
+
+            }
+
+
 }

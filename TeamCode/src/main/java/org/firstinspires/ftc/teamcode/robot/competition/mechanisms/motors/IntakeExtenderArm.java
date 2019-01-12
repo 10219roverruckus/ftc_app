@@ -28,10 +28,10 @@ public class IntakeExtenderArm {
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     int intakeArmExtendTargetPosition = -2400;        // fully extended
-    int autoIntakeArmExtendTargetPosition = -1650;      //extend for minerals
+    int autoIntakeArmExtendTargetPosition = -1300;      //extend for minerals in CRATER on L & R was 1650...
     int intakeArmExtendTargetPositionOverCrater = -890;
 
-    int intakeArmExtendMiddleMineral = -910;
+    int intakeArmExtendMiddleMineral = -1000; //extend length for crater mineral in middle.
     int intakeArmRetractTargetPosition = 0;
     public ElapsedTime ExtenderArmRunTime;
 
