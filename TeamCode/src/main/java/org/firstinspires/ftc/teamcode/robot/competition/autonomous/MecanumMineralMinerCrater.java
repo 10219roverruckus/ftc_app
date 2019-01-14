@@ -96,7 +96,7 @@ public class MecanumMineralMinerCrater {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 //                linearOp.telemetry.addLine("MINERAL THING ");
-                linearOp.telemetry.update();
+//                linearOp.telemetry.update();
 
                 myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
