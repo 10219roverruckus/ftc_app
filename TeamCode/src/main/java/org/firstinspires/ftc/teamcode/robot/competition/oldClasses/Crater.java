@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.Webcam;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
 
 
 @Autonomous(name = "Crater - competition")

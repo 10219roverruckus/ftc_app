@@ -25,11 +25,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerAllOld;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerCraterOld;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMinerDepotOld;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -27,11 +27,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.TeamMarker;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.TeamMarker;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerAll;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerCrater;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.MecanumMineralMinerDepot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -230,7 +227,7 @@ public class DepotIntake extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo);
+        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo, myIntakeRotator);
 
         sleep(sleepTime);
         idle();

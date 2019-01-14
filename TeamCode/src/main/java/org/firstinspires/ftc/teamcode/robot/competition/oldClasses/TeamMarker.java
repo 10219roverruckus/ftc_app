@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
+package org.firstinspires.ftc.teamcode.robot.competition.oldClasses;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
