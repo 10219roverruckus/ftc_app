@@ -26,7 +26,7 @@ public class IntakeServo {
     int RotatorTargetPositionForawrd = -2000;
     int RotatorTargetPositionReverse = 2000;
 
-    public int sleepTime = 1000;
+    public int sleepTime = 2000;
 
 
     public ElapsedTime IntakeServoRunTime;

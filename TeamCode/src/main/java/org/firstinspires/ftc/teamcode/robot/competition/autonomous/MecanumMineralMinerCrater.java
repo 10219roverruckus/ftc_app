@@ -59,7 +59,7 @@ public class MecanumMineralMinerCrater {
         } else {
             goldPosition = GoldPosition.LEFT;
         }
-//        goldPosition = GoldPosition.RIGHT;
+        goldPosition = GoldPosition.LEFT;
     }
 
     public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
@@ -67,7 +67,7 @@ public class MecanumMineralMinerCrater {
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
         linearOp.sleep(500);
-
+        linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
        // myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         //linearOp.sleep(sleepTime);
 
@@ -260,8 +260,8 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
 
-        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);                      // Align to wall
-        linearOp.sleep(1600);                               // Time for straffing
+        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);                      // Align to wall
+        linearOp.sleep(1100);                               // Time for straffing
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
         myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED); //make sure a little off wall so robot does not hit wall seam
@@ -273,7 +273,7 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
 
-        myMechDrive.driveForward(SPD_DRIVE_HIGH, 1.4);           //going toward depot using color sensor
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, 1.1);           //going toward depot using color sensor
         linearOp.sleep(sleepTime);
     }
 
@@ -292,14 +292,15 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();
-        linearOp.sleep(500);
+        linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.retractIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.retractPowerAuto(1);
-        linearOp.sleep(500);
+        linearOp.sleep(1000);
         myIntakeExtenderArm.stopIntakeArm();
+        myIntakeServo.stopIntakeServo();
 
         myIntakeRotator.mineralRotateRaiseEncoder();
         linearOp.sleep(sleepTime);
@@ -312,7 +313,7 @@ public class MecanumMineralMinerCrater {
     public void DriveParkInCrater (MecanumDrive myMechDrive) {
         // drive backward and park in crater
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .95);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .55);
         linearOp.sleep(sleepTime);
 
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);

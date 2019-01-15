@@ -27,6 +27,7 @@ public class IntakeExtenderArm {
     // instance variables for auto
     double maxIntakeArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxIntakeArmExtendTimeCreateReach = 1;
     int intakeArmExtendTargetPosition = -2400;        // fully extended
     int autoIntakeArmExtendTargetPosition = -1300;      //extend for minerals in CRATER on L & R was 1650...
     int intakeArmExtendTargetPositionOverCrater = -890;
@@ -42,7 +43,8 @@ public class IntakeExtenderArm {
     // constructors
     public IntakeExtenderArm (DcMotor inArm) {
         intakeExtenderArm = inArm;
-
+        intakeExtenderArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intakeExtenderArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeExtenderArm.setDirection(DcMotor.Direction.FORWARD);
         intakeExtenderArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ExtenderArmRunTime = new ElapsedTime();
@@ -97,6 +99,8 @@ public class IntakeExtenderArm {
 
     public void retractIntakeArmAuto () {
         ExtenderArmRunTime.reset();
+        intakeExtenderArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intakeExtenderArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (intakeExtenderArm.getCurrentPosition() <  intakeArmRetractTargetPosition) {
             linearOp.telemetry.addData("extender encoder RETRACT: ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
@@ -131,6 +135,8 @@ public class IntakeExtenderArm {
 
     public void extendOverCrater () {
         ExtenderArmRunTime.reset();
+        intakeExtenderArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intakeExtenderArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPositionOverCrater) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
@@ -151,7 +157,7 @@ public class IntakeExtenderArm {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
-            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+            if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTimeCreateReach) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();
                 break;

@@ -41,7 +41,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Depot - Competition Intake1")
+@Autonomous(name = "Depot - Competition Intake")
 //@Disabled
 public class DepotIntake extends LinearOpMode  {
 
