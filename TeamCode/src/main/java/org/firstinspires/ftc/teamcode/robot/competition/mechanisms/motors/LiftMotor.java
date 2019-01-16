@@ -80,7 +80,7 @@ public class LiftMotor {
     //function that fully extends arm using distance sensor
     public void extendLiftMotorFully () { //distance sensor
         armRunTime.reset();
-        while (armRunTime.time() <= maxArmExtendTime) {
+        while (armRunTime.time() <= maxArmExtendTime && linearOp.opModeIsActive()) {
            liftMotor.setPower(-1);
         }
         liftMotor.setPower(0);
@@ -91,7 +91,7 @@ public class LiftMotor {
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
         armRunTime.reset();
-        while (armRunTime.time() <= maxArmRetractTime) {
+        while (armRunTime.time() <= maxArmRetractTime && linearOp.opModeIsActive()) {
             liftMotor.setPower(1);
         }
         liftMotor.setPower(0);
@@ -99,7 +99,7 @@ public class LiftMotor {
 
     public void extendLiftMotorFullyEncoders () {
         armRunTime.reset();
-        while (liftMotor.getCurrentPosition() > liftTargetPosition) {
+        while (liftMotor.getCurrentPosition() > liftTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("ENCODER", liftMotor.getCurrentPosition());
             linearOp.telemetry.update();
             liftMotor.setPower(-.75);

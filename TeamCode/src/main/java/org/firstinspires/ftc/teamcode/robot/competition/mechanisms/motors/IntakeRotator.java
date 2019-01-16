@@ -81,7 +81,7 @@ public class IntakeRotator {
 
     public void mineralRotateLowerEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() > RotatorTargetPositionLower) {
+        while (intakeRotator.getCurrentPosition() > RotatorTargetPositionLower && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder LOWER ", intakeRotator.getCurrentPosition());
             linearOp.telemetry.update();
 //            linearOp.telemetry.addData("ENCODER", intakeRotator.getCurrentPosition());
@@ -101,7 +101,7 @@ public class IntakeRotator {
 
     public void mineralRotateRaiseEncoder () {
         armRunTime.reset();
-        while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise) {
+        while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder RAISE ", intakeRotator.getCurrentPosition());
             linearOp.telemetry.update();
             intakeRotator.setPower(autonomousPower);

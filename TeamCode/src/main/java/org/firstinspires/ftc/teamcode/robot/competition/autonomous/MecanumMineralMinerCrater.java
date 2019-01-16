@@ -59,17 +59,17 @@ public class MecanumMineralMinerCrater {
         } else {
             goldPosition = GoldPosition.LEFT;
         }
-        goldPosition = GoldPosition.LEFT;
+//        goldPosition = GoldPosition.LEFT;
     }
 
     public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
 //        goldPosition = GoldPosition.LEFT;
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
-        linearOp.sleep(500);
-        linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
-       // myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-        //linearOp.sleep(sleepTime);
+//        linearOp.sleep(500);
+        // linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
+        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
+        linearOp.sleep(sleepTime);
 
         myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);                    // get away from the lander
         linearOp.sleep(sleepTime);
@@ -265,7 +265,7 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
         myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_MED); //make sure a little off wall so robot does not hit wall seam
-        linearOp.sleep(100);
+        linearOp.sleep(150);
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
 

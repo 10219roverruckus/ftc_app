@@ -143,7 +143,7 @@ public class MecanumDrive {
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
-       while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+       while (targetDistnace > frontLeftMotor.getCurrentPosition() && linearOp.opModeIsActive()) {
             if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
                 frontLeftMotor.setPower(minSPD);
                 frontRightMotor.setPower(minSPD);
@@ -187,7 +187,7 @@ public class MecanumDrive {
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
-        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+        while (targetDistnace > frontLeftMotor.getCurrentPosition() && linearOp.opModeIsActive()) {
             //beginning of PID - looks fine.
             if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
                 frontLeftMotor.setPower(minSPD);
@@ -272,7 +272,7 @@ public class MecanumDrive {
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
-        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+        while (targetDistnace > frontLeftMotor.getCurrentPosition() && linearOp.opModeIsActive()) {
             if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
                 frontLeftMotor.setPower(minSPD);
                 frontRightMotor.setPower(-minSPD);
@@ -313,7 +313,7 @@ public class MecanumDrive {
         double maxSPD = speed;
         double targetDistnace = rotations * TICKS_PER_ROTATION;
 
-        while (targetDistnace > frontLeftMotor.getCurrentPosition()) {
+        while (targetDistnace > frontLeftMotor.getCurrentPosition() && linearOp.opModeIsActive()) {
             if (frontLeftMotor.getCurrentPosition() <= targetDistnace * .2) {
                 frontLeftMotor.setPower(-minSPD);
                 frontRightMotor.setPower(minSPD);

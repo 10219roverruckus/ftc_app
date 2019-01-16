@@ -79,7 +79,7 @@ public class MineralLift {
         //set motor to full power WHILE the distance sensor is less than lowHeight
         //be sure to stop motor at end!
         liftRunTime.reset();
-        while (liftRunTime.time() <= maxLiftRetractTime) {
+        while (liftRunTime.time() <= maxLiftRetractTime && linearOp.opModeIsActive()) {
             mineralLift.setPower(1);
         }
         mineralLift.setPower(0);
@@ -87,7 +87,7 @@ public class MineralLift {
 
     public void extendLiftMotorFullyEncoders () {
         liftRunTime.reset();
-        while (mineralLift.getCurrentPosition() > mineralLiftTargetPosition) {
+        while (mineralLift.getCurrentPosition() > mineralLiftTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("ENCODER", mineralLift.getCurrentPosition());
             linearOp.telemetry.update();
             mineralLift.setPower(-.75);

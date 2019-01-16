@@ -83,7 +83,7 @@ public class IntakeExtenderArm {
 
     public void extendIntakeArmAuto () {
         ExtenderArmRunTime.reset();
-        while (intakeExtenderArm.getCurrentPosition() > autoIntakeArmExtendTargetPosition) {
+        while (intakeExtenderArm.getCurrentPosition() > autoIntakeArmExtendTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
@@ -101,7 +101,7 @@ public class IntakeExtenderArm {
         ExtenderArmRunTime.reset();
         intakeExtenderArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeExtenderArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (intakeExtenderArm.getCurrentPosition() <  intakeArmRetractTargetPosition) {
+        while (intakeExtenderArm.getCurrentPosition() <  intakeArmRetractTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder RETRACT: ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
 
@@ -118,7 +118,7 @@ public class IntakeExtenderArm {
 
     public void extendIntakeArmAllTheWay () {
         ExtenderArmRunTime.reset();
-        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPosition) {
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
@@ -137,7 +137,7 @@ public class IntakeExtenderArm {
         ExtenderArmRunTime.reset();
         intakeExtenderArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intakeExtenderArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPositionOverCrater) {
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendTargetPositionOverCrater && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
@@ -153,7 +153,7 @@ public class IntakeExtenderArm {
 
     public void extendTowardMiddleMineral () {
         ExtenderArmRunTime.reset();
-        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendMiddleMineral) {
+        while (intakeExtenderArm.getCurrentPosition() > intakeArmExtendMiddleMineral && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
