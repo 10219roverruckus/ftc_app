@@ -292,7 +292,7 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();
-        linearOp.sleep(sleepTime);
+        linearOp.sleep(1000);
 
         myIntakeExtenderArm.retractIntakeArmAuto();
         linearOp.sleep(sleepTime);

@@ -223,7 +223,7 @@ public class MecanumMineralMinerDepot {
 //                linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverse();                         // spit out the team marker
-                linearOp.sleep(sleepTime);
+                linearOp.sleep(1000);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);             // rotate back to avoid minerals
 //                linearOp.sleep(sleepTime);                                       //// angle will be wrong
@@ -280,7 +280,7 @@ public class MecanumMineralMinerDepot {
 
 
                 myIntakeServo.IntakeServoReverse();                     // spit out the team marker
-                linearOp.sleep(sleepTime);
+                linearOp.sleep(1000);
 
 
                 myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
@@ -328,7 +328,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverse();                         // spit out mineral
-                linearOp.sleep(sleepTime);
+                linearOp.sleep(1000);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.5);            // rotate back to avoid knocking off minerals
 //                linearOp.sleep(sleepTime);

@@ -120,7 +120,7 @@ public class FullControlTeleOp extends OpMode {
         TeleOpTime = new ElapsedTime();
 
         //set initial toggles
-        reverseModeToggle = false;
+        reverseModeToggle = true;
         initTeleOpToggle = true;
     }
 
