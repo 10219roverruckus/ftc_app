@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.util.Range;
 
 //import org.opencv.core.Range;
 
-@TeleOp(name = "TEST - SERVO DUMPER")
+@TeleOp(name = "Calibrate Servo- P2 y+a", group = "CALIBRATION")
 //@Disabled
-public class testTeamMarkerServo extends OpMode {
+public class ServoCalibration extends OpMode {
     Servo servotest;
 
     final double SERVO_LOW = .56;

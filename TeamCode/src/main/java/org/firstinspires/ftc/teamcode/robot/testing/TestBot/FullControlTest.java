@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
 
 //@Disabled
 @TeleOp(name = "Full Control Test - TestBot")
-
+@Disabled
 public class FullControlTest extends OpMode {
 
     // left stick y axis controls forward/backward rotation of left motors

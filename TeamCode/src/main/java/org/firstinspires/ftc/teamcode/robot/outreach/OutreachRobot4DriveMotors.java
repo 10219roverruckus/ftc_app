@@ -18,7 +18,7 @@ import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
 @TeleOp(name = "Outreach Robot - 4 Drive Motors")
-//@Disabled
+@Disabled
 public class OutreachRobot4DriveMotors extends OpMode {
 
     OutreachMotors myOutreachMotors;
