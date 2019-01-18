@@ -18,9 +18,9 @@ public class LiftMotor {
     double topHeight = 8.4;
     double lowHeight = 3.2;
     double maxArmExtendTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    double getMaxArmExtendTimeEncoder = 3;
+    double getMaxArmExtendTimeEncoder = 3.4;
     double maxArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
-    int liftTargetPosition = -5200;
+    int liftTargetPosition = -5110;
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
@@ -104,10 +104,12 @@ public class LiftMotor {
             linearOp.telemetry.update();
             liftMotor.setPower(-.75);
             if (armRunTime.time() >= getMaxArmExtendTimeEncoder) {
+                linearOp.telemetry.addData("ENCODER", liftMotor.getCurrentPosition());
                 linearOp.telemetry.addLine("BREAK");
                 linearOp.telemetry.update();
                 break;
             }
+            linearOp.sleep(300);
             linearOp.idle();
         }
         liftMotor.setPower(0);

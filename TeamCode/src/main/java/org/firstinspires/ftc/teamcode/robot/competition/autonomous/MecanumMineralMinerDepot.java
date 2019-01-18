@@ -27,6 +27,7 @@ public class MecanumMineralMinerDepot {
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
     final long sleepTime = 100;
+    final int servoRotateTeamMarker = 2000;
 
     // variables and constants used by color sensor
 
@@ -223,7 +224,7 @@ public class MecanumMineralMinerDepot {
 //                linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverse();                         // spit out the team marker
-                linearOp.sleep(1000);
+                linearOp.sleep(servoRotateTeamMarker);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);             // rotate back to avoid minerals
 //                linearOp.sleep(sleepTime);                                       //// angle will be wrong
@@ -280,7 +281,7 @@ public class MecanumMineralMinerDepot {
 
 
                 myIntakeServo.IntakeServoReverse();                     // spit out the team marker
-                linearOp.sleep(1000);
+                linearOp.sleep(servoRotateTeamMarker);
 
 
                 myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
@@ -328,7 +329,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverse();                         // spit out mineral
-                linearOp.sleep(1000);
+                linearOp.sleep(servoRotateTeamMarker);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.5);            // rotate back to avoid knocking off minerals
 //                linearOp.sleep(sleepTime);
@@ -408,7 +409,7 @@ public class MecanumMineralMinerDepot {
         linearOp.sleep(150);
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
-        myGyro.gyroOrientMecanum(135, myMechDrive);                 // gyroing at the crater
+        myGyro.gyroOrientMecanum(137, myMechDrive);                 // gyroing at the crater
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
 //        myMechDrive.driveForward(SPD_DRIVE_HIGH, 1);

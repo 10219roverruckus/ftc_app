@@ -32,6 +32,8 @@ public class MecanumMineralMinerCrater {
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
     final long sleepTime = 100;
+    final int servoRotateTeamMarker = 2000;
+
 
     // variables and constants used by color sensor
 
@@ -273,7 +275,7 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
 
-        myMechDrive.driveForward(SPD_DRIVE_HIGH, 1.1);           //going toward depot using color sensor
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, 1.0);           //going toward depot using color sensor
         linearOp.sleep(sleepTime);
     }
 
@@ -292,7 +294,7 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();
-        linearOp.sleep(1000);
+        linearOp.sleep(servoRotateTeamMarker);
 
         myIntakeExtenderArm.retractIntakeArmAuto();
         linearOp.sleep(sleepTime);
@@ -320,7 +322,7 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(300);
         myMechDrive.stopMotors();
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.2);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.3);
         linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_LOW, .4);
     }
