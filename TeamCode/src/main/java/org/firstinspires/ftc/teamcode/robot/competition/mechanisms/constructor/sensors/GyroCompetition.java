@@ -58,7 +58,7 @@ public class GyroCompetition {
         linearOp.telemetry.update();
         linearOp.sleep(50); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
-            while (angles.firstAngle >=  angle + TOLERANCE) {
+            while (angles.firstAngle >=  angle + TOLERANCE && linearOp.opModeIsActive()) {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
@@ -67,7 +67,7 @@ public class GyroCompetition {
             }
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
-            while (angles.firstAngle <= angle - TOLERANCE) {
+            while (angles.firstAngle <= angle - TOLERANCE && linearOp.opModeIsActive()) {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
@@ -96,7 +96,7 @@ public class GyroCompetition {
         linearOp.idle();
         //linearOp.sleep(1000); //intentionally long sleep for feedback
         if (angles.firstAngle >= angle + TOLERANCE) {
-            while (angles.firstAngle >=  angle + TOLERANCE) {
+            while (angles.firstAngle >=  angle + TOLERANCE  && linearOp.opModeIsActive()) {
 //                linearOp.telemetry.addLine("GREATER THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();
@@ -108,7 +108,7 @@ public class GyroCompetition {
             //linearOp.sleep(1000);
         }
         else if (angles.firstAngle <= angle - TOLERANCE) {
-            while (angles.firstAngle <= angle - TOLERANCE) {
+            while (angles.firstAngle <= angle - TOLERANCE && linearOp.opModeIsActive()) {
 //                linearOp.telemetry.addLine("LESS THAN WHILE");
 //                linearOp.telemetry.addData("Current Position: ", angles.firstAngle);
 //                linearOp.telemetry.update();

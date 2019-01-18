@@ -26,7 +26,7 @@ public class MecanumMineralMinerCrater {
 
     // created constant variables that are used for speed (different setting)
 
-    final double SPD_DRIVE_LOW = .40;                  //Lowest speed
+    final double SPD_DRIVE_LOW = .38;                  //Lowest speed
     final double SPD_DRIVE_MED =  0.5;   //was .4;                   Default is  SPD_MED
     final double SPD_DRIVE_HIGH = .80;
     final double SPD_DRIVE_MAX = 1.0;
@@ -100,7 +100,7 @@ public class MecanumMineralMinerCrater {
 //                linearOp.telemetry.addLine("MINERAL THING ");
 //                linearOp.telemetry.update();
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+            //                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
 //
 //                myMechDrive.driveForward(SPD_DRIVE_MED,1);
@@ -124,7 +124,7 @@ public class MecanumMineralMinerCrater {
                 linearOp.sleep(1000);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+            //                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 myMechDrive.rotateLeft(SPD_DRIVE_MED, 0.7);              // fixing Gyro issue of over rotating
 
@@ -138,7 +138,7 @@ public class MecanumMineralMinerCrater {
                 myGyro.gyroOrientMecanum(0, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();
+            //                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
 
 //                myMechDrive.driveForward(SPD_DRIVE_MED,1);
@@ -149,7 +149,7 @@ public class MecanumMineralMinerCrater {
 //                linearOp.sleep(500);
 //                myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+            //                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendTowardMiddleMineral();
@@ -163,7 +163,7 @@ public class MecanumMineralMinerCrater {
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+            //                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.3);              // fixing Gyro issue of over rotating
                 linearOp.sleep(sleepTime);
@@ -179,7 +179,7 @@ public class MecanumMineralMinerCrater {
                 myGyro.gyroOrientMecanum(-32, myMechDrive);          // Gyro angles appears correct. was -14
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();
+            //                myIntakeRotator.mineralRotateLowerEncoder();
                 linearOp.sleep(sleepTime);
 
 //                myMechDrive.driveForward(SPD_DRIVE_MED,1.2);
@@ -202,7 +202,7 @@ public class MecanumMineralMinerCrater {
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+            //                myIntakeRotator.mineralRotateRaiseEncoder();
                 linearOp.sleep(sleepTime);
                 myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.9);              // fixing Gyro issue of over rotating
                 break;
@@ -288,7 +288,7 @@ public class MecanumMineralMinerCrater {
         // rotator will spin to release TM
         // extender will retract and rotator will raise
 
-        myIntakeRotator.mineralRotateLowerEncoder();
+     //        myIntakeRotator.mineralRotateLowerEncoder();
         linearOp.sleep(sleepTime);
         myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
@@ -304,7 +304,7 @@ public class MecanumMineralMinerCrater {
         myIntakeExtenderArm.stopIntakeArm();
         myIntakeServo.stopIntakeServo();
 
-        myIntakeRotator.mineralRotateRaiseEncoder();
+     //        myIntakeRotator.mineralRotateRaiseEncoder();
         linearOp.sleep(sleepTime);
 
     }
@@ -321,7 +321,9 @@ public class MecanumMineralMinerCrater {
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);
         linearOp.sleep(300);
         myMechDrive.stopMotors();
+//        linearOp.sleep(24000);
 
+//        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 12);
         myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.3);
         linearOp.sleep(sleepTime);
         myMechDrive.driveBackward(SPD_DRIVE_LOW, .4);

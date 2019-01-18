@@ -210,27 +210,31 @@ public class DepotIntake extends LinearOpMode  {
 
 
         idle();
+        while (opModeIsActive()) {
+            detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
+            sleep(100);
 
-        detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
-        sleep(100);
+            myMineralMinerDepot.findingMineralCamera(detector.getXPosition());                      // detect gold position
+            vuforia.stop();
+            sleep(sleepTime);
+            idle();
 
-        myMineralMinerDepot.findingMineralCamera(detector.getXPosition());                      // detect gold position
+            myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
-        sleep(sleepTime);
-        idle();
+            sleep(sleepTime);
+            idle();
 
-        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+            myMineralMinerDepot.RotateDriveTowardCrater(myGyro, myMechDrive); // drive toward depot and drop off team marker
+            sleep(sleepTime);
+            idle();
 
-        sleep(sleepTime);
-        idle();
+            myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo, myIntakeRotator);
 
-        myMineralMinerDepot.RotateDriveTowardCrater (myGyro, myMechDrive); // drive toward depot and drop off team marker
-        sleep(sleepTime);
-        idle();
-
-        myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo, myIntakeRotator);
-
-        sleep(sleepTime);
+            sleep(sleepTime);
+            idle();
+            requestOpModeStop();
+        }
+        vuforia.stop();
         idle();
     }
 }

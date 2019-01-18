@@ -202,6 +202,7 @@ public class CraterIntake extends LinearOpMode {
         waitForStart();
 
         idle();
+
         while (opModeIsActive()) {
             detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
             sleep(100);
@@ -211,22 +212,22 @@ public class CraterIntake extends LinearOpMode {
             sleep(sleepTime);
             idle();
 
-//            myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+            myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
             sleep(sleepTime);
             idle();
 
-//            myMineralMinerCrater.RotateDriveWall(myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
+            myMineralMinerCrater.RotateDriveWall(myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
 
             sleep(sleepTime);
             idle();
 
-//            myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+            myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
             sleep(sleepTime);
             idle();
-
-//            myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
+//WORKS TO NOT BREAK STUFF
+            myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
 
             sleep(sleepTime);
             idle();
@@ -237,6 +238,7 @@ public class CraterIntake extends LinearOpMode {
 
             requestOpModeStop();
         }
+        vuforia.stop();
         idle();
     }
 }
