@@ -22,7 +22,7 @@ public class MecanumMineralMinerDepot {
     // created constant variables that are used for speed (different setting)
 
     final double SPD_DRIVE_LOW = .20;                  //Lowest speed
-    final double SPD_DRIVE_MED = .4;                   //Default is  SPD_MED
+    final double SPD_DRIVE_MED = .5;                   //Default is  SPD_MED
     final double SPD_DRIVE_HIGH = .75;
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
@@ -214,6 +214,9 @@ public class MecanumMineralMinerDepot {
 
 //                myMechDrive.rotateRight(SPD_DRIVE_MED, 1.5);             // rotate to align with depot
 //                linearOp.sleep(sleepTime);
+                myGyro.gyroOrientMecanum(0, myMechDrive);
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(0, myMechDrive);                  // corretion of angle with gyro
                 myMechDrive.stopMotors();                                       // angle will be wrong
@@ -401,7 +404,7 @@ public class MecanumMineralMinerDepot {
 //        myMechDrive.strafeRight(SPD_DRIVE_HIGH,.3);
 //        linearOp.sleep(sleepTime);
 
-        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);                      // Align to wall
+        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);                      // Align to wall
         linearOp.sleep(1100);                               // Time for straffing
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
@@ -425,10 +428,15 @@ public class MecanumMineralMinerDepot {
 //
 //        }
 
+
+
         myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
+
         myIntakeRotater.mineralRotateLowerEncoder();
+        linearOp.sleep(sleepTime);
+
 //        myIntakeServo.IntakeServoForwardTime();
 //        linearOp.sleep(sleepTime);
 

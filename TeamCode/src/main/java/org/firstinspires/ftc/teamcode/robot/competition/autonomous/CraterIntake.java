@@ -232,7 +232,7 @@ public class CraterIntake extends LinearOpMode {
             sleep(sleepTime);
             idle();
 
-            myMineralMinerCrater.DriveParkInCrater(myMechDrive);
+            myMineralMinerCrater.DriveParkInCrater(myMechDrive, myIntakeExtenderArm, myIntakeRotator);
             sleep(sleepTime);
             idle();
 
