@@ -260,8 +260,8 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
 
-        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_MED);                      // Align to wall
-        linearOp.sleep(1000);                               // Time for straffing
+        myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);                      // Align to wall
+        linearOp.sleep(800);                               // Time for straffing
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
         myMechDrive.setMotorPowerStrafeLeft(SPD_DRIVE_HIGH); //make sure a little off wall so robot does not hit wall seam  was med
@@ -269,7 +269,7 @@ public class MecanumMineralMinerCrater {
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
 
-        myGyro.gyroOrientMecanum(137, myMechDrive);              // Orient for straight drive to depot
+        myGyro.gyroOrientMecanum(138, myMechDrive);              // Orient for straight drive to depot was 137
         myMechDrive.stopMotors();                                      // Stop motors
         linearOp.sleep(sleepTime);
         myMechDrive.driveForward(SPD_DRIVE_HIGH,.6);
@@ -314,7 +314,7 @@ public class MecanumMineralMinerCrater {
     public void DriveParkInCrater (MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtender, IntakeRotator myIntakeRotater) {
         // drive backward and park in crater
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .8);
+        myMechDrive.driveBackward(1, .9);
         linearOp.sleep(sleepTime);
 
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);       // was med
@@ -338,11 +338,8 @@ public class MecanumMineralMinerCrater {
 //
 //        myIntakeRotater.mineralRotateLowerEncoder();
 
-
         myMechDrive.driveBackward(.28, .3);
         linearOp.sleep(sleepTime);
-        //myMechDrive.driveBackward(SPD_DRIVE_LOW, .2);
-        //linearOp.sleep(sleepTime);
     }
 
 

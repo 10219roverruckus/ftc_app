@@ -32,7 +32,7 @@ public class IntakeExtenderArm {
     int autoIntakeArmExtendTargetPosition = -1500;      //extend for minerals in CRATER on L & R was 1650...
     int intakeArmExtendTargetPositionOverCrater = -890;
 
-    int intakeArmExtendMiddleMineral = -1000; //extend length for crater mineral in middle.
+    int intakeArmExtendMiddleMineral = -1100; //extend length for crater mineral in middle.
     int intakeArmRetractTargetPosition = 0;
     public ElapsedTime ExtenderArmRunTime;
 
