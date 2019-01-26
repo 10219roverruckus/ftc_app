@@ -51,15 +51,15 @@ public class MMMDDS {
         linearOp.telemetry.update();
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeRightPID(SPD_DRIVE_HIGH, .3);                    // get away from the lander
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .3);                    // get away from the lander
         linearOp.sleep(sleepTime);
-        myMechDrive.driveForwardPID(.3, .5);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+        myMechDrive.driveForward(.3, .5);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
         linearOp.sleep(sleepTime);
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
 
-                myMechDrive.strafeLeftPID(SPD_DRIVE_HIGH, 1.5);
+                myMechDrive.strafeLeft(SPD_DRIVE_HIGH, 1.5);
                 linearOp.sleep(sleepTime);
                 myMechDrive.rotateRight(SPD_DRIVE_MED, .5);         // fixing Gyro issue
                 linearOp.sleep(sleepTime);
@@ -85,7 +85,7 @@ public class MMMDDS {
                 break;
 
             case MIDDLE:
-                myMechDrive.strafeLeftPID(SPD_DRIVE_HIGH, .3);
+                myMechDrive.strafeLeft(SPD_DRIVE_HIGH, .3);
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(4, myMechDrive);            //turning too much towards the right. Need to adjust?
@@ -110,7 +110,7 @@ public class MMMDDS {
 
             case RIGHT:
 
-                myMechDrive.strafeRightPID(SPD_DRIVE_HIGH, .5);
+                myMechDrive.strafeRight(SPD_DRIVE_HIGH, .5);
                 linearOp.sleep(sleepTime);
                 myMechDrive.rotateLeft(SPD_DRIVE_MED, .3);        // fixing Gyro issue
                 linearOp.sleep(sleepTime);
@@ -143,20 +143,20 @@ public class MMMDDS {
 
         switch (goldPosition) {
             case LEFT:
-                myMechDrive.driveForwardPID(SPD_DRIVE_MED,1.9);                  // drive toward the wall near the crater
+                myMechDrive.driveForward(SPD_DRIVE_MED,1.9);                  // drive toward the wall near the crater
 
             case MIDDLE:
-                myMechDrive.driveForwardPID(SPD_DRIVE_MED,2.1);                 // drive toward the wall near the crater
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.1);                 // drive toward the wall near the crater
 
             case RIGHT:
-                myMechDrive.driveForwardPID(SPD_DRIVE_MED,2.5);                 // drive toward the wall near the crater
+                myMechDrive.driveForward(SPD_DRIVE_MED,2.5);                 // drive toward the wall near the crater
 
         }
     }
 
     public void knockingOffSecondMineral (GyroCompetition myGyro, MecanumDrive myMechDrive) {
         myMechDrive.rotateRight(SPD_DRIVE_MED,.6);
-        myMechDrive.driveForwardPID(SPD_DRIVE_HIGH,2);
+        myMechDrive.driveForward(SPD_DRIVE_HIGH,2);
         myMechDrive.rotateLeft(SPD_DRIVE_MED,.5);
         myGyro.gyroOrientMecanum(0, myMechDrive);
 
@@ -164,15 +164,15 @@ public class MMMDDS {
             case LEFT:
                 myMechDrive.rotateLeft(SPD_DRIVE_MED,.4);
                 myGyro.gyroOrientMecanum(0, myMechDrive);
-                myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, .8);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .8);
             case MIDDLE:
                 myMechDrive.rotateLeft(SPD_DRIVE_MED,.4);
                 myGyro.gyroOrientMecanum(0, myMechDrive);
-                myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, .8);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .8);
             case RIGHT:
                 myMechDrive.rotateRight(SPD_DRIVE_MED,.4);
                 myGyro.gyroOrientMecanum(0, myMechDrive);
-                myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, .8);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .8);
 
         }
 

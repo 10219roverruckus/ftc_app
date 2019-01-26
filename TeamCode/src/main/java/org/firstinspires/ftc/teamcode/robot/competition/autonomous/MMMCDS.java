@@ -55,11 +55,11 @@ public class MMMCDS {
         linearOp.telemetry.update();
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeRightPID(SPD_DRIVE_HIGH, .3);                    // get away from the lander
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .3);                    // get away from the lander
         linearOp.sleep(sleepTime);
-        myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeLeftPID(SPD_DRIVE_HIGH,.4);
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH,.4);
 
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
@@ -137,7 +137,7 @@ public class MMMCDS {
         myGyro.gyroOrientMecanum(74, myMechDrive);                //orients self with red tape so parallel to tape.
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
-        myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, 3.7);
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, 3.7);
         linearOp.sleep(sleepTime);
     }
 
@@ -194,7 +194,7 @@ public class MMMCDS {
     public void knockingOffSecondMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator) {
         myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
         myGyro.gyroOrientMecanum(0, myMechDrive);
-        myMechDrive.driveForwardPID(SPD_DRIVE_MED, .4);
+        myMechDrive.driveForward(SPD_DRIVE_MED, .4);
         myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
         myGyro.gyroOrientMecanum(0, myMechDrive);
 
@@ -228,14 +228,14 @@ public class MMMCDS {
         myMechDrive.rotateRight(SPD_DRIVE_MED,.5);                          // rotate away from minerals toward wall
         myGyro.gyroOrientMecanum(0, myMechDrive);
 
-        myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, .7);                        // drive toward wall
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);                        // drive toward wall
 
         myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);                              // rotate to align robot with wall
         myGyro.gyroOrientMecanum(0, myMechDrive);
 
-        myMechDrive.strafeRightPID(SPD_DRIVE_HIGH, 1);                          // strafe into wall
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, 1);                          // strafe into wall
 
-        myMechDrive.driveForwardPID(SPD_DRIVE_HIGH, 2.5);                       // drive and parking in crater
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, 2.5);                       // drive and parking in crater
     }
 
 
