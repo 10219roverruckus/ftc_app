@@ -85,6 +85,8 @@ public class FullControlTeleOp extends OpMode {
 
     boolean mineralLiftAllowed;
 
+    boolean LeftBumber = false;
+
     boolean hookLiftAllowed;
 
     boolean extenderAllowed;
@@ -153,7 +155,7 @@ public class FullControlTeleOp extends OpMode {
         // rotate the intake up and down
         rotater();
 
-        // mineral lift raises and lowers the x rail for dropping the minerals in teh lander
+        // mineral lift raises and lowers the x rail for dropping the minerals in the lander
         mineralLift();
 
         //over ride for dumping the minerals into the tray
@@ -177,6 +179,8 @@ public class FullControlTeleOp extends OpMode {
         //LED lights for the time in the game
 
         TimingInTeleOpWithLED();
+
+
 
     }
 
@@ -279,11 +283,26 @@ public class FullControlTeleOp extends OpMode {
 
         if (gamepad2.right_bumper == true) {
             myMineralLift.RaiseMineralLift();
+        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper == true || gamepad2.left_bumper == LeftBumber)) {                  // was return true for check color Mineral Lift
+            LeftBumber = true;
+            myMineralLift.LowerMineralLift();
+        } else {
+            myMineralLift.stopMotors();
+        }
+
+
+        /*
+                        // this was what we had, but I tried to redo it (just wanted to save it)
+        if (gamepad2.right_bumper == true) {
+            myMineralLift.RaiseMineralLift();
         } else if (gamepad2.left_bumper == true) {               // && myRevColorDistance.checkSensorMineralLift() == true
             myMineralLift.LowerMineralLift();
         } else {
             myMineralLift.stopMotors();
         }
+
+
+         */
     }
 
 
