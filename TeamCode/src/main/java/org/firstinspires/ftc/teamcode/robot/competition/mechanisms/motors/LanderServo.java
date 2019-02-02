@@ -14,9 +14,9 @@ public class LanderServo {
 
     public LinearOpMode linearOp = null;
 
-    public double LSScore = .56;
-    public double LSCollect = 1.0;
-    public double CloseGate = .17; //was .184
+    public double LSScore = .540;
+    public double LSCollect = .977;
+    public double CloseGate = .146; //was .184
     public double OpenGate = .55;  //was .41 = .36 difference
 
     // constructor

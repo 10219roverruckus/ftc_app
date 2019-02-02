@@ -18,8 +18,8 @@ public class ServoCalibration extends OpMode {
 //    final double SERVO_MID = 0.5;
     final double SERVO_HIGH = 1.0;
 
-    public double LSScore = .56;
-    public double LSCollect = 1.0;
+    public double LSScore = .56;        //.56
+    public double LSCollect = 1.0;      //1.0
 
 
     double servoPosition;
@@ -27,7 +27,7 @@ public class ServoCalibration extends OpMode {
 
     @Override
     public void init() {
-        servotest = hardwareMap.servo.get ("mineral_dumper");
+        servotest = hardwareMap.servo.get ("transfer_gate_servo");
 //        servotest.setPosition(servoPosition);
 //        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();

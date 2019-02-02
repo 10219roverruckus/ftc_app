@@ -117,7 +117,7 @@ public class FullControlTeleOp extends OpMode {
         myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
-//        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
 
         TeleOpTime = new ElapsedTime();
 
@@ -281,17 +281,24 @@ public class FullControlTeleOp extends OpMode {
 
     public void mineralLift () {
 
+
         if (gamepad2.right_bumper == true) {
             myMineralLift.RaiseMineralLift();
-        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper == true || gamepad2.left_bumper == LeftBumber)) {                  // was return true for check color Mineral Lift
+            LeftBumber = false;
+        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper == true || LeftBumber)) {                  // was return true for check color Mineral Lift
             LeftBumber = true;
             myMineralLift.LowerMineralLift();
+            telemetry.addLine("LOWER LIFT!!");
+
         } else {
+            telemetry.addLine("STOP LIFT");
+            LeftBumber = false;
             myMineralLift.stopMotors();
         }
 
 
-        /*
+
+/*
                         // this was what we had, but I tried to redo it (just wanted to save it)
         if (gamepad2.right_bumper == true) {
             myMineralLift.RaiseMineralLift();
@@ -301,8 +308,10 @@ public class FullControlTeleOp extends OpMode {
             myMineralLift.stopMotors();
         }
 
+        */
 
-         */
+
+
     }
 
 

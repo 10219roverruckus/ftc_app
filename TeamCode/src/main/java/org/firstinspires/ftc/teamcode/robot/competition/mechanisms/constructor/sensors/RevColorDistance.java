@@ -36,7 +36,8 @@ public class RevColorDistance {
 
 //    public final int MINERAL_LIFT_THRESHOLD = 100;            // Changed by Emma: Old one
 
-    public final int MINERAL_LIFT_THRESHOLD = 150;
+    public final int MINERAL_LIFT_THRESHOLD_NOTHING = 150;
+    public final int MINERAL_LIFT_THRESHOLD_RED = 300;
     public final int HOOK_LIFT_THRESHOLD = 100;
     public final int EXTENDER_THRESHOLD = 100;
 
@@ -50,29 +51,23 @@ public class RevColorDistance {
 
 
     // constructers
-    public RevColorDistance(ColorSensor rCS, DistanceSensor rDS, ColorSensor rCSMineral, DistanceSensor rDSMineral, ColorSensor rCSHook, DistanceSensor rDSHook, ColorSensor rCSextender, DistanceSensor rDSExtender) {
+    public RevColorDistance(ColorSensor rCS, DistanceSensor rDS) {
         revColorSensor = rCS;
         revDistanceSensor = rDS;
 
-        revColorSensorMineralLift = rCSMineral;
-        revDistanceSensorMineralLift = rDSMineral;
-
-        revColorSensorHookLift = rCSHook;
-        revDistanceSensorHookLift = rDSHook;
-
-        revColorSensorExtender = rCSextender;
-        revDistanceSensorExtender = rDSExtender;
     }
 
     public boolean checkSensorMineralLift() {
 
-        Color.RGBToHSV((int) (revColorSensorMineralLift.red() * SCALE_FACTOR),     // Move backwards until color detected
-                (int) (revColorSensorMineralLift.green() * SCALE_FACTOR),
-                (int) (revColorSensorMineralLift.blue() * SCALE_FACTOR),
+        Color.RGBToHSV((int) (revColorSensor.red() * SCALE_FACTOR),     // Move backwards until color detected
+                (int) (revColorSensor.green() * SCALE_FACTOR),
+                (int) (revColorSensor.blue() * SCALE_FACTOR),
                 hsvValues);
 
-        if (hsvValues[0] > MINERAL_LIFT_THRESHOLD) {
+
+        if (hsvValues[0] > MINERAL_LIFT_THRESHOLD_NOTHING && hsvValues[0] <  MINERAL_LIFT_THRESHOLD_RED) {
             return true;
+
         }
         else {
             return false;
