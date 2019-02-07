@@ -66,8 +66,8 @@ public class MecanumMineralMinerCrater {
 
     public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
 
-        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-        linearOp.sleep(sleepTime);
+//        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
+//        linearOp.sleep(sleepTime);
 
         myMechDrive.strafeLeft(SPD_DRIVE_MED, .5);                    // get away from the lander
         linearOp.sleep(sleepTime);

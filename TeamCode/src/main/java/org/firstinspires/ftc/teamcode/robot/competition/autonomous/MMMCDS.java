@@ -53,8 +53,8 @@ public class MMMCDS {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
-        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-        linearOp.sleep(sleepTime);
+//        myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
+//        linearOp.sleep(sleepTime);
         myMechDrive.strafeRight(SPD_DRIVE_HIGH, .3);                    // get away from the lander
         linearOp.sleep(sleepTime);
         myMechDrive.driveForward(SPD_DRIVE_HIGH, .3);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
