@@ -18,7 +18,7 @@ import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
 @TeleOp(name = "Outreach Robot - 4 Drive Motors")
-@Disabled
+//@Disabled
 public class OutreachRobot4DriveMotors extends OpMode {
 
     OutreachMotors myOutreachMotors;
@@ -33,12 +33,19 @@ public class OutreachRobot4DriveMotors extends OpMode {
 
     double triggerLeft;
     double triggerRight;
-    DcMotor catapult;
+    public Servo mineralDump;
+    public Servo lowDumper;
+
 
     double minLedPosition = 0.2525;
     double maxLedPosition = 0.7475;
     double ledPosition = minLedPosition;
     double ledIncrementValue = 0.0002;
+    public final double mineralDumpCollect = 1.0;
+    public final double mineralDumpDeposit = .49;
+    public final double lowDump = .94;
+    public final double midDump = .331;
+    public final double highDump = .684;
 
     Servo ledStrip;
 
@@ -49,9 +56,13 @@ public class OutreachRobot4DriveMotors extends OpMode {
     @Override
     public void init() {
         myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
+        mineralDump = hardwareMap.servo.get ("mineral_dumper");
+        mineralDump.setPosition(mineralDumpCollect);
+        lowDumper = hardwareMap.servo.get("low_dumper");
+        lowDumper.setPosition(midDump);
         ledStrip = hardwareMap.servo.get("led_strip");
         ledStrip.setPosition(ledPosition);
-        driveMode = driveMode.START;
+        driveMode = driveMode.TANK;
         driveDirection = driveDirection.FORWARD;
 
     }
@@ -61,9 +72,11 @@ public class OutreachRobot4DriveMotors extends OpMode {
         //assigns left and right joysticks
         gamePadAssignments();
         //checks for TANK / ARCADE / FORWARD / REVERSE drive modes.
-        driveModeChecks();
+//        driveModeChecks();
         //drive the robot!!!!
         driveRobot();
+        //controls mineral dump - collect & deposit modes
+        controlDump();
         //control LEDs manually - use left & right bumpers
         controlLEDs();
         telemetryOutput();
@@ -96,6 +109,8 @@ public class OutreachRobot4DriveMotors extends OpMode {
         if (gamepad1.dpad_left) {
             driveMode = DriveMode.TANK;
         }
+        driveMode = DriveMode.TANK;
+
     }
 
     public void gamePadAssignments () {
@@ -134,17 +149,36 @@ public class OutreachRobot4DriveMotors extends OpMode {
         ledStrip.setPosition(ledPosition);
     }
 
+    public void controlDump () {
+        if (gamepad2.right_bumper) {
+            mineralDump.setPosition(mineralDumpDeposit);
+        }
+        else {
+            mineralDump.setPosition(mineralDumpCollect);
+        }
+        if (gamepad2.a) {
+            lowDumper.setPosition(lowDump);
+        }
+
+        else if (gamepad2.y) {
+            lowDumper.setPosition(highDump);
+        }
+        else {
+            lowDumper.setPosition(midDump);
+        }
+    }
+
     public void telemetryOutput () {
         telemetry.addData("LED Pos VAR: ", ledPosition);
         telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
-        telemetry.addData("DRIVE MODE ", driveMode);
-        telemetry.addData("DRIVE DIRECTION: ", driveDirection);
         telemetry.addData("Left Y: ", gamepad1.left_stick_y);
         telemetry.addData("Right Y: ", gamepad1.right_stick_y);
-        telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
-        telemetry.addLine("D_PAD LEFT FOR TANK DRIVE");
-        telemetry.addLine("D_UP FOR FORWARD MODE");
-        telemetry.addLine("D_DOWN FOR REVERSE MODE");
+        telemetry.addData("DRIVE MODE ", driveMode);
+        telemetry.addData("DRIVE DIRECTION: ", driveDirection);
+//        telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
+//        telemetry.addLine("D_PAD LEFT FOR TANK DRIVE");
+//        telemetry.addLine("D_UP FOR FORWARD MODE");
+//        telemetry.addLine("D_DOWN FOR REVERSE MODE");
     }
 }
 

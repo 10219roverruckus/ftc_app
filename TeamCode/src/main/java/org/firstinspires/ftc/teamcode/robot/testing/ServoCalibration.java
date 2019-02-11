@@ -14,8 +14,8 @@ import com.qualcomm.robotcore.util.Range;
 public class ServoCalibration extends OpMode {
     Servo servotest;
 
-    final double SERVO_LOW = .56;
-//    final double SERVO_MID = 0.5;
+    final double SERVO_LOW = 0.0;
+    final double SERVO_MID = 0.5;
     final double SERVO_HIGH = 1.0;
 
     public double LSScore = .56;        //.56
@@ -27,11 +27,12 @@ public class ServoCalibration extends OpMode {
 
     @Override
     public void init() {
-        servotest = hardwareMap.servo.get ("transfer_gate_servo");
+        servotest = hardwareMap.servo.get ("mineral_dumper");
 //        servotest.setPosition(servoPosition);
 //        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();
         armRunTime.reset();
+        servotest.setPosition(SERVO_MID);
     }
 
     @Override
