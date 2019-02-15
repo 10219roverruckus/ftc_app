@@ -61,7 +61,7 @@ public class FullControlTeleOp extends OpMode {
     boolean initTeleOpToggle;
 
 
-    double powerThreshold = 0.1;
+    double powerThreshold = 0;
 
     public ElapsedTime TeleOpTime;
 //    public double normalGameTime = 1300;
