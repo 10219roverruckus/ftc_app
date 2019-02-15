@@ -149,14 +149,27 @@ public class OutreachMotors {
         //clip left & right motor values to stay within [-1, +1]
         leftMotorValue = Range.clip(leftMotorValue, -1, 1);
         rightMotorValue = Range.clip(rightMotorValue, -1, 1);
-        if (driveDirection == DriveDirection.FORWARD) {
-            leftMotor.setPower(leftMotorValue);
-            rightMotor.setPower(rightMotorValue);
+        switch (driveDirection) {
+            case FORWARD:
+                frontLeftMotor.setPower(-leftMotorValue);
+                rearLeftMotor.setPower(-leftMotorValue);
+                frontRightMotor.setPower(-rightMotorValue);
+                rearRightMotor.setPower(-rightMotorValue);
+                break;
+            case REVERSE:
+//                leftMotor.setPower(-leftMotorValue);
+//                rightMotor.setPower(-rightMotorValue);
+                break;
         }
-        if (driveDirection == DriveDirection.REVERSE) {
-            leftMotor.setPower(-leftMotorValue);
-            rightMotor.setPower(-rightMotorValue);
-        }
+
+//        if (driveDirection == DriveDirection.FORWARD) {
+//            leftMotor.setPower(leftMotorValue);
+//            rightMotor.setPower(rightMotorValue);
+//        }
+//        if (driveDirection == DriveDirection.REVERSE) {
+//            leftMotor.setPower(-leftMotorValue);
+//            rightMotor.setPower(-rightMotorValue);
+//        }
     }
 
     public void stopMotors () {

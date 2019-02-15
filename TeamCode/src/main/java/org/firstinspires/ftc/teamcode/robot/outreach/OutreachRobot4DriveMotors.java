@@ -43,14 +43,17 @@ public class OutreachRobot4DriveMotors extends OpMode {
     double ledIncrementValue = 0.0002;
     public final double mineralDumpCollect = 1.0;
     public final double mineralDumpDeposit = .49;
-    public final double lowDump = .94;
+    public final double lowDump = .09;
     public final double midDump = .331;
     public final double highDump = .684;
+    public int numDrivers = 2;
 
     Servo ledStrip;
 
     public DriveMode driveMode = null;
     public DriveDirection driveDirection = null;
+
+    boolean leftBumberAllow = true;
 
 
     @Override
@@ -71,8 +74,8 @@ public class OutreachRobot4DriveMotors extends OpMode {
     public void loop() {
         //assigns left and right joysticks
         gamePadAssignments();
-        //checks for TANK / ARCADE / FORWARD / REVERSE drive modes.
-//        driveModeChecks();
+//        checks for TANK / ARCADE / FORWARD / REVERSE drive modes.
+        driveModeChecks();
         //drive the robot!!!!
         driveRobot();
         //controls mineral dump - collect & deposit modes
@@ -97,20 +100,34 @@ public class OutreachRobot4DriveMotors extends OpMode {
     }
 
     public void driveModeChecks () {
-        if (gamepad1.dpad_up){
-            driveDirection = DriveDirection.FORWARD;
-        }
-        if (gamepad1.dpad_down) {
-            driveDirection = DriveDirection.REVERSE;
-        }
+//        if (gamepad1.dpad_up){
+//            driveDirection = DriveDirection.FORWARD;
+//        }
+//        if (gamepad1.dpad_down) {
+//            driveDirection = DriveDirection.REVERSE;
+//        }
         if (gamepad1.dpad_right) {
-//            driveMode = DriveMode.ARCADE;
+            driveMode = DriveMode.ARCADE;
         }
         if (gamepad1.dpad_left) {
             driveMode = DriveMode.TANK;
         }
-        driveMode = DriveMode.TANK;
 
+        if (gamepad1.left_bumper) {
+            if (leftBumberAllow) {
+                if (numDrivers == 1) {
+                    numDrivers = 2;
+                    leftBumberAllow = false;
+                }
+                else if (numDrivers == 2) {
+                    numDrivers = 1;
+                    leftBumberAllow = false;
+                }
+            }
+        }
+        else {
+            leftBumberAllow = true;
+        }
     }
 
     public void gamePadAssignments () {
@@ -150,21 +167,43 @@ public class OutreachRobot4DriveMotors extends OpMode {
     }
 
     public void controlDump () {
-        if (gamepad2.right_bumper) {
-            mineralDump.setPosition(mineralDumpDeposit);
-        }
-        else {
-            mineralDump.setPosition(mineralDumpCollect);
-        }
-        if (gamepad2.a) {
-            lowDumper.setPosition(lowDump);
-        }
+        switch (numDrivers) {
+            case 1:
+                if (gamepad1.right_bumper) {
+                    mineralDump.setPosition(mineralDumpDeposit);
+                }
+                else {
+                    mineralDump.setPosition(mineralDumpCollect);
+                }
+                if (gamepad1.a) {
+                    lowDumper.setPosition(lowDump);
+                }
 
-        else if (gamepad2.y) {
-            lowDumper.setPosition(highDump);
-        }
-        else {
-            lowDumper.setPosition(midDump);
+                else if (gamepad1.y) {
+                    lowDumper.setPosition(highDump);
+                }
+                else {
+                    lowDumper.setPosition(midDump);
+                }
+                break;
+            case 2:
+                if (gamepad2.right_bumper) {
+                    mineralDump.setPosition(mineralDumpDeposit);
+                }
+                else {
+                    mineralDump.setPosition(mineralDumpCollect);
+                }
+                if (gamepad2.a) {
+                    lowDumper.setPosition(lowDump);
+                }
+
+                else if (gamepad2.y) {
+                    lowDumper.setPosition(highDump);
+                }
+                else {
+                    lowDumper.setPosition(midDump);
+                }
+                break;
         }
     }
 
@@ -173,8 +212,11 @@ public class OutreachRobot4DriveMotors extends OpMode {
         telemetry.addData("LED getPosition RAW: ", ledStrip.getPosition());
         telemetry.addData("Left Y: ", gamepad1.left_stick_y);
         telemetry.addData("Right Y: ", gamepad1.right_stick_y);
+        telemetry.addLine("L = Tank; R = Arcade");
         telemetry.addData("DRIVE MODE ", driveMode);
         telemetry.addData("DRIVE DIRECTION: ", driveDirection);
+        telemetry.addData("Player Mode: ", numDrivers);
+//        telemetry.addData("Left Bumper Allow: ", leftBumberAllow);
 //        telemetry.addLine("D_PAD RIGHT FOR ARCADE MODE");
 //        telemetry.addLine("D_PAD LEFT FOR TANK DRIVE");
 //        telemetry.addLine("D_UP FOR FORWARD MODE");
