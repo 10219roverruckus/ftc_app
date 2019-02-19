@@ -25,7 +25,7 @@ public class IntakeExtenderArm {
     public double currentPosition;
 
     // instance variables for auto
-    double maxIntakeArmExtendTime = 2.2; //max time for arm to run, in SECONDS. (for lowering robot)
+    double maxIntakeArmExtendTime = 1.5; //max time for arm to run, in SECONDS. (for lowering robot)
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double maxIntakeArmExtendTimeCreateReach = 1.1;
     int intakeArmExtendTargetPosition = -2400;        // fully extended

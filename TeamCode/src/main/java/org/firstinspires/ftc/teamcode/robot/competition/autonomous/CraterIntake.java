@@ -228,13 +228,16 @@ public class CraterIntake extends LinearOpMode {
             idle();
 //WORKS TO NOT BREAK STUFF
             myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
-
             sleep(sleepTime);
             idle();
 
-            myMineralMinerCrater.DriveParkInCrater(myMechDrive, myIntakeExtenderArm, myIntakeRotator);
+            myMineralMinerCrater.CraterExtendArm(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);
             sleep(sleepTime);
             idle();
+
+//            myMineralMinerCrater.DriveParkInCrater(myMechDrive, myIntakeExtenderArm, myIntakeRotator);
+//            sleep(sleepTime);
+//            idle();
 
             requestOpModeStop();
         }

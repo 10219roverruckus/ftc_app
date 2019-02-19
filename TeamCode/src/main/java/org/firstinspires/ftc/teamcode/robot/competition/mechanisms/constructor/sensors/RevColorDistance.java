@@ -36,8 +36,8 @@ public class RevColorDistance {
 
 //    public final int MINERAL_LIFT_THRESHOLD = 100;            // Changed by Emma: Old one
 
-    public final int MINERAL_LIFT_THRESHOLD_NOTHING = 150;
-    public final int MINERAL_LIFT_THRESHOLD_RED = 300;
+    public final int MINERAL_LIFT_THRESHOLD_NOTHING = 180;
+    public final int MINERAL_LIFT_THRESHOLD_RED = 270;
     public final int HOOK_LIFT_THRESHOLD = 100;
     public final int EXTENDER_THRESHOLD = 100;
 
