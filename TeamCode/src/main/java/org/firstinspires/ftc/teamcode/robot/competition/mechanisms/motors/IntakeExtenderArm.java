@@ -26,6 +26,7 @@ public class IntakeExtenderArm {
 
     // instance variables for auto
     double maxIntakeArmExtendTime = 1.5; //max time for arm to run, in SECONDS. (for lowering robot)
+    double halfIntakeArmExtendTime = 0.5;
     double MaxIntakeArmRetractTime = 2; //max time for arm to run, in SECONDS. (for lowering robot)
     double maxIntakeArmExtendTimeCreateReach = 1.1;
     int intakeArmExtendTargetPosition = -2400;        // fully extended
@@ -88,6 +89,22 @@ public class IntakeExtenderArm {
             linearOp.telemetry.update();
             intakeExtenderArm.setPower(-autononomousPower);
             if (ExtenderArmRunTime.time() >= maxIntakeArmExtendTime) {
+//                linearOp.telemetry.addLine("BREAK");
+//                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+        stopIntakeArm();
+    }
+
+    public void extendHalfIntakeArmAuto () {
+        ExtenderArmRunTime.reset();
+        while (intakeExtenderArm.getCurrentPosition() > autoIntakeArmExtendTargetPosition && linearOp.opModeIsActive()) {
+            linearOp.telemetry.addData("extender encoder EXTEND ", intakeExtenderArm.getCurrentPosition());
+            linearOp.telemetry.update();
+            intakeExtenderArm.setPower(-autononomousPower);
+            if (ExtenderArmRunTime.time() >= halfIntakeArmExtendTime) {
 //                linearOp.telemetry.addLine("BREAK");
 //                linearOp.telemetry.update();
                 break;

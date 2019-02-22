@@ -97,8 +97,6 @@ public class IntakeRotator {
         intakeRotator.setPower(0);
     }
 
-
-
     public void mineralRotateRaiseEncoder () {
         armRunTime.reset();
         while (intakeRotator.getCurrentPosition() <  RotatorTargetPositionRaise && linearOp.opModeIsActive()) {

@@ -126,6 +126,20 @@ public class MecanumDrive {
         rearRightMotor.setPower(power);
     }
 
+    public void strafeRightCurvedToCrater (double FLPwr, double FRPwr, double RLPwr, double RRPwr, double rotations) {
+        double ticks = Math.abs(rotations) * TICKS_PER_ROTATION;
+        setMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMotorRunModes(currentMotorRunMode);
+
+        while (frontLeftMotor.getCurrentPosition() < ticks && linearOp.opModeIsActive()) {
+            frontLeftMotor.setPower(FLPwr);
+            frontRightMotor.setPower(-FRPwr);
+            rearLeftMotor.setPower(RLPwr);
+            rearRightMotor.setPower(-RRPwr);
+        }
+        stopMotors();
+    }
+
     //Driving Forward
     public void driveForward( double speed, double rotations) {
 

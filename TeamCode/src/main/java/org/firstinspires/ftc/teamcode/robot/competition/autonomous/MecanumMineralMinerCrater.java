@@ -249,7 +249,6 @@ public class MecanumMineralMinerCrater {
 
         myIntakeRotator.mineralRotateRaiseEncoder();
         linearOp.sleep(sleepTime);
-
     }
 
 
@@ -270,11 +269,21 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
     }
 
-    public void CraterExtendArm(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
-        myGyro.gyroReset();
-        myMechDrive.strafeLeft(SPD_DRIVE_HIGH,.6);
-        linearOp.sleep(sleepTime);
-        myMechDrive.rotateLeft(SPD_DRIVE_HIGH, 3.1);
-        myIntakeExtenderArm.extendIntakeArmAuto();
-    }
+//    public void CraterExtendArm(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+//        myGyro.gyroReset();
+//        myMechDrive.strafeLeft(SPD_DRIVE_HIGH,0.6);
+//        linearOp.sleep(sleepTime);
+//        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 0.4);
+//        linearOp.sleep(sleepTime);
+//        myMechDrive.rotateLeft(SPD_DRIVE_HIGH, 3.1);
+//        linearOp.sleep(sleepTime);
+//        myMechDrive.driveForward(SPD_DRIVE_HIGH, 0.5);
+//        linearOp.sleep(sleepTime);
+//        myMechDrive.strafeRightCurvedToCrater(0.5, 0.45, 0.7, 0.75, 2.2);
+//        myIntakeExtenderArm.extendHalfIntakeArmAuto();
+//        myIntakeServo.IntakeServoForward();
+//        myIntakeRotator.mineralRotateLowerEncoder();
+//        myIntakeExtenderArm.extendHalfIntakeArmAuto();
+//        linearOp.sleep(1000);
+//    }
 }
