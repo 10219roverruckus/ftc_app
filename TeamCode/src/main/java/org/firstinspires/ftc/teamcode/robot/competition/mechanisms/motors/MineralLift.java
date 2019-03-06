@@ -31,9 +31,8 @@ public class MineralLift {
     int mineralLiftTargetPosition = 3100;
 
 
-
     // constructors
-    public MineralLift (DcMotor MinM) {
+    public MineralLift(DcMotor MinM) {
         mineralLift = MinM;
 
         mineralLift.setDirection(DcMotor.Direction.REVERSE);
@@ -42,20 +41,19 @@ public class MineralLift {
         setMineralLiftRunModes(currentRunMode);
     }
 
-    public void setLinearOp (LinearOpMode Op) {
+    public void setLinearOp(LinearOpMode Op) {
         linearOp = Op;
     }
 
 
     // methods
-    public void stopMotors () {
+    public void stopMotors() {
         mineralLift.setPower(0);
     }
 
-    public void setMineralLiftRunModes (DcMotor.RunMode mode) {
+    public void setMineralLiftRunModes(DcMotor.RunMode mode) {
         mineralLift.setMode(mode);
     }
-
 
 
     public void extendingMinerallLift(double speed, double rotations) {
@@ -66,11 +64,11 @@ public class MineralLift {
         mineralLift.setMode(currentRunMode);
     }
 
-    public void RaiseMineralLift () {
+    public void RaiseMineralLift() {
         mineralLift.setPower(-1);
     }
 
-    public void LowerMineralLift () {
+    public void LowerMineralLift() {
         mineralLift.setPower(1);
     }
 
@@ -85,7 +83,7 @@ public class MineralLift {
         mineralLift.setPower(0);
     }
 
-    public void extendLiftMotorFullyEncoders () {
+    public void extendLiftMotorFullyEncoders() {
         liftRunTime.reset();
         while (mineralLift.getCurrentPosition() > mineralLiftTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("ENCODER", mineralLift.getCurrentPosition());
@@ -101,4 +99,20 @@ public class MineralLift {
         mineralLift.setPower(0);
     }
 
+    public void retractLiftMotorFullyEncoders() {
+        liftRunTime.reset();
+
+        while (mineralLift.getCurrentPosition() > mineralLiftTargetPosition && linearOp.opModeIsActive()) {
+            linearOp.telemetry.addData("ENCODER", mineralLift.getCurrentPosition());
+            linearOp.telemetry.update();
+            mineralLift.setPower(.75);
+            if (liftRunTime.time() >= getMaxArmExtendTimeEncoder) {
+                linearOp.telemetry.addLine("BREAK");
+                linearOp.telemetry.update();
+                break;
+            }
+            linearOp.idle();
+        }
+
+    }
 }

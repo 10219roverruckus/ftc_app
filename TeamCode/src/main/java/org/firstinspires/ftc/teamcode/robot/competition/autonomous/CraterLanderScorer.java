@@ -18,11 +18,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
 
 import java.util.ArrayList;
@@ -43,18 +45,17 @@ public class CraterLanderScorer extends LinearOpMode {
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
-    MecanumMineralMiner myMineralMiner;
-//    RevColorDistance myRevColorDistance;
-
-    MecanumMineralMinerCrater myMineralMinerCrater;
-    MecanumMineralMinerDepot myMineralMinerDepot;
-    MecanumMineralMinerAll myMineralMinerAll;
+    MMMCraterLanderScorer myMineralMiner;
+    RevColorDistance myRevColorDistance;
 
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
     IntakeServo myIntakeServo;
     LanderServo myLanderServo;
+
+    MineralLift myMineralLift;
+
 
 
     private GoldAlignDetector detector;
@@ -87,7 +88,7 @@ public class CraterLanderScorer extends LinearOpMode {
         myGyro = new GyroCompetition(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this);
 
-        myMineralMiner = new MecanumMineralMiner();
+        myMineralMiner = new MMMCraterLanderScorer();
         myMineralMiner.setLinearOp(this);
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
@@ -103,24 +104,19 @@ public class CraterLanderScorer extends LinearOpMode {
         myIntakeExtenderArm.setLinearOp(this);
         myIntakeExtenderArm.stopIntakeArm();
 
-//        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
-//        myRevColorDistance.setLinearOp(this);
+        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
+        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
-        myMineralMinerCrater = new MecanumMineralMinerCrater();
-        myMineralMinerCrater.setLinearOp(this);
-
-        myMineralMinerDepot = new MecanumMineralMinerDepot();
-        myMineralMinerDepot.setLinearOp(this);
-
-        myMineralMinerAll = new MecanumMineralMinerAll();
-        myMineralMinerAll.setLinearOp(this);
 
         myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
         myLanderServo.setLinearOp(this);
         myLanderServo.landerServoCollect();
         myLanderServo.keepMineralsIn();
+
+        myMineralLift = new MineralLift(hardwareMap.servo.get("mineral_lift"));
+        myMineralLift.setLinearOp(this);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -204,35 +200,35 @@ public class CraterLanderScorer extends LinearOpMode {
             detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
             sleep(100);
 
-            myMineralMinerCrater.findingMineralCamera(detector.getXPosition());                      // detect gold position
+            myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
             vuforia.stop();
             sleep(sleepTime);
             idle();
 
-            myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+            myMineralMiner.driveTowardDepot(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
             sleep(sleepTime);
             idle();
 
-            myMineralMinerCrater.RotateDriveWall(myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
+            myMineralMiner.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);      // Backups to tape under Lander and moves towards wall
 
             sleep(sleepTime);
             idle();
 
-            myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+            myMineralMiner.setUpForLander(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
             sleep(sleepTime);
             idle();
-//WORKS TO NOT BREAK STUFF
-            myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
+            myMineralMiner.intakeGoldMineral( myGyro,  myMechDrive,  myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);
             sleep(sleepTime);
             idle();
 
-//            myMineralMinerCrater.CraterExtendArm(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);
-//            sleep(sleepTime);
-//            idle();
 
-            myMineralMinerCrater.DriveParkInCrater(myMechDrive, myIntakeExtenderArm, myIntakeRotator);
+            myMineralMiner.ScoreGoldMineral(myMineralLift, myIntakeExtenderArm, myIntakeServo, myLanderServo);
+            sleep(sleepTime);
+            idle();
+
+            myMineralMiner.ScoreMineralsRepeat(myMineralLift, myIntakeRotator, myIntakeExtenderArm, myIntakeServo, myLanderServo);
             sleep(sleepTime);
             idle();
 
