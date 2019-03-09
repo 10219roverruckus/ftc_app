@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class CraterLanderScorer extends LinearOpMode {
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
-    MMMCraterLanderScorer myMineralMiner;
+    MMM1stCraterLanderScorer myMineralMiner;
     RevColorDistance myRevColorDistance;
 
     LiftMotor myLiftMotor;
@@ -88,7 +87,7 @@ public class CraterLanderScorer extends LinearOpMode {
         myGyro = new GyroCompetition(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this);
 
-        myMineralMiner = new MMMCraterLanderScorer();
+        myMineralMiner = new MMM1stCraterLanderScorer();
         myMineralMiner.setLinearOp(this);
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
