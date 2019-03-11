@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
@@ -70,7 +70,7 @@ public class MMM1stCraterLanderScorer {
     }
 
 
-    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
 
@@ -97,7 +97,7 @@ public class MMM1stCraterLanderScorer {
                 myIntakeServo.IntakeServoForward();                         //start spinner
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater
                 linearOp.sleep(sleepTime);
 
 
@@ -111,7 +111,7 @@ public class MMM1stCraterLanderScorer {
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                                        //raise rotater
+                myIntakeRotator.raisedRotater();                                        //raise rotater
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
                 myMechDrive.rotateLeft(SPD_DRIVE_HIGH, 0.7);              // fixing Gyro issue of over rotating
@@ -123,7 +123,7 @@ public class MMM1stCraterLanderScorer {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.IntakeServoForward();
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
 
@@ -138,7 +138,7 @@ public class MMM1stCraterLanderScorer {
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
                 myMechDrive.rotateLeft(SPD_DRIVE_HIGH, 1.3);              // fixing Gyro issue of over rotating
@@ -156,7 +156,7 @@ public class MMM1stCraterLanderScorer {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.IntakeServoForward();
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
@@ -170,7 +170,7 @@ public class MMM1stCraterLanderScorer {
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
                 myMechDrive.rotateLeft(SPD_DRIVE_HIGH, 1.9);              // fixing Gyro issue of over rotating was 1.9
@@ -236,12 +236,12 @@ public class MMM1stCraterLanderScorer {
 
     }
 
-    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
 
-        myIntakeRotator.mineralRotateLowerEncoder();
+        myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
         linearOp.sleep(sleepTime);
@@ -257,7 +257,7 @@ public class MMM1stCraterLanderScorer {
         myIntakeExtenderArm.stopIntakeArm();
         myIntakeServo.stopIntakeServo();
 
-        myIntakeRotator.mineralRotateRaiseEncoder();
+        myIntakeRotator.raisedRotater();
         linearOp.sleep(sleepTime);
     }
 
@@ -272,16 +272,16 @@ public class MMM1stCraterLanderScorer {
         myGyro.gyroOrientMecanum(-90, myMechDrive);
     }
 
-    public void ScoreGoldMineral ( MineralLift myMineralLift, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo, IntakeRotator myIntakeRotater) {
+    public void ScoreGoldMineral ( MineralLift myMineralLift, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo, IntakeRotaterServos myIntakeRotater) {
 
         myIntakeExtenderArm.extendIntakeArm(2000, SPD_DRIVE_HIGH, 2);
         linearOp.sleep(sleepTime);
 
-        myIntakeRotater.mineralRotateLowerEncoder();
+        myIntakeRotater.loweredRotater();
 
         myIntakeServo.IntakeServoForwardTime();
 
-        myIntakeRotater.mineralRotateRaiseEncoder();
+        myIntakeRotater.raisedRotater();
 
         myIntakeExtenderArm.retractIntakeArm(0, SPD_DRIVE_HIGH, 2);
 
@@ -307,14 +307,14 @@ public class MMM1stCraterLanderScorer {
 
     }
 
-    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo) {
+    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo) {
 
         while (AutoTime.time() < 20000) {
 
                 myIntakeExtenderArm.extendIntakeArm(1000,SPD_DRIVE_HIGH, 2);
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoForward();
@@ -345,7 +345,7 @@ public class MMM1stCraterLanderScorer {
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_DRIVE_HIGH, 3.5);
         linearOp.sleep(sleepTime);
 
-        myIntakeRotator.mineralRotateLowerEncoder();
+        myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.extendIntakeArm(2000, SPD_ARM_MED, 2);

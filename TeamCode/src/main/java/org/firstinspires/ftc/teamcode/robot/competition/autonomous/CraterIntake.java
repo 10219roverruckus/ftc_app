@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
@@ -55,7 +55,7 @@ public class CraterIntake extends LinearOpMode {
 
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
-    IntakeRotator myIntakeRotator;
+    IntakeRotaterServos myIntakeRotator;
     IntakeServo myIntakeServo;
     LanderServo myLanderServo;
 
@@ -96,7 +96,7 @@ public class CraterIntake extends LinearOpMode {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
         myIntakeRotator.setLinearOp(this);
 
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
@@ -235,7 +235,7 @@ public class CraterIntake extends LinearOpMode {
 //            sleep(sleepTime);
 //            idle();
 
-            myMineralMinerCrater.DriveParkInCrater(myMechDrive, myIntakeExtenderArm, myIntakeRotator);
+            myMineralMinerCrater.DriveParkInCrater(myMechDrive);
             sleep(sleepTime);
             idle();
 

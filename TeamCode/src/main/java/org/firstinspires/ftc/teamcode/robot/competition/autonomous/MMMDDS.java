@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
@@ -45,7 +46,7 @@ public class MMMDDS {
     // new Methods
 
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
@@ -68,19 +69,19 @@ public class MMMDDS {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAuto();
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverseTime();
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED,2);
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 break;
 
@@ -92,9 +93,9 @@ public class MMMDDS {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
-                myIntakeExtenderArm.extendIntakeArmAuto();
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
                 linearOp.sleep(sleepTime);
 
 
@@ -102,9 +103,9 @@ public class MMMDDS {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeExtenderArm.retractIntakeArmAuto();
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED,2);
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 break;
 
@@ -117,18 +118,18 @@ public class MMMDDS {
                 myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
-                myIntakeExtenderArm.extendIntakeArmAuto();
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED,2);
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoReverseTime();
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED,2);
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 break;
         }

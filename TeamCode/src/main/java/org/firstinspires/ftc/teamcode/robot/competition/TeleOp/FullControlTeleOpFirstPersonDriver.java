@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.LEDLights;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
@@ -67,10 +68,9 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     public double hangTime = 108000;
 
 
-
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
-    IntakeRotator myIntakeRotator;
+    IntakeRotaterServos myIntakeRotator;
     IntakeServo myIntakeServo;
     //lifts x-rails to the lander - MOTOR
     MineralLift myMineralLift;
@@ -108,11 +108,11 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         rearRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
-        myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
-        myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
+        myIntakeExtenderArm = new IntakeExtenderArm(hardwareMap.dcMotor.get("intake_extender_arm"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
         myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
-        myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
@@ -129,8 +129,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         if (initTeleOpToggle == true) {
             initTeleOp();
-        }
-        else {
+        } else {
             initTeleOpToggle = false;
         }
 
@@ -162,6 +161,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         // dumps the minerals into the lander when the lift is at the top
         mineralDump();
 
+        retractAndExtendExtension();
+
+
+
         //output telemetry
         telemetryOutput();
 
@@ -179,11 +182,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         TimingInTeleOpWithLED();
 
 
-
     }
 
 
-    public void telemetryOutput (){
+    public void telemetryOutput() {
         telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
         telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
         telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);
@@ -204,80 +206,68 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     // reset things
-    public void initTeleOp () {
+    public void initTeleOp() {
         TeleOpTime.reset();
     }
 
     //controls motor to lift and lower robot
-    public void hangingLiftMotor () {
+    public void hangingLiftMotor() {
         if (gamepad2.dpad_down) {                   // && myRevColorDistance.checkSensorHookLift()
             myLiftMotor.retractLift();
-        }
-        else if (gamepad2.dpad_up) {
+        } else if (gamepad2.dpad_up) {
             myLiftMotor.extendLift();
-        }
-        else {
+        } else {
             myLiftMotor.stopMotors();
         }
     }
 
     // extender arm for out and in
-    public void extenderArm () {
+    public void extenderArm() {                                // changes to the method: Emma; Please Check
         if (gamepad2.left_stick_y > .1) {
             myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
-        }
-        else if (gamepad2.left_stick_y < -.1 ) {            //&& myRevColorDistance.checkSensorExtender() == true
+        } else if (gamepad2.left_stick_y < -.1) {            //&& myRevColorDistance.checkSensorExtender() == true
             myIntakeExtenderArm.retractIntactArm(gamepad2.left_stick_y);
-        }
-        else {
+        } else {
             myIntakeExtenderArm.stopIntakeArm();
         }
     }
 
-    public void spinnerIntake () {
+    public void spinnerIntake() {
         if (gamepad2.right_trigger > powerThreshold || gamepad2.a == true) {
             myIntakeServo.IntakeServoForward();
-        }
-        else if (gamepad2.left_trigger > powerThreshold) {
+        } else if (gamepad2.left_trigger > powerThreshold) {
             myIntakeServo.IntakeServoReverse();
-        }
-        else {
+        } else {
             myIntakeServo.stopIntakeServo();
         }
     }
 
-    public void IntakeTransfer () {
+    public void IntakeTransfer() {
 //        if (gamepad2.a == true || colorsenor.red > 10) {
         if (gamepad2.a == true) {
             myLanderServo.releaseMinerals();
-        }
-        else {
+        } else {
             myLanderServo.keepMineralsIn();
         }
     }
 
-    public void mineralDump () {
+    public void mineralDump() {
         if (gamepad2.y == true) {
             myLanderServo.landerServoScore();
-        }
-        else {
+        } else {
             myLanderServo.landerServoCollect();
         }
     }
 
-    public void rotater () {
+    public void rotater() {
         if (gamepad2.right_stick_y < -.1) {
-            myIntakeRotator.LowerIntakeRotater();
-        }
-        else if (gamepad2.right_stick_y > .1) {
-            myIntakeRotator.RaiseIntakeRotater();
-        }
-        else {
-            myIntakeRotator.stopIntakeRotatorMotors();
+            myIntakeRotator.loweredRotater();
+        } else if (gamepad2.right_stick_y > .1) {
+            myIntakeRotator.raisedRotater();
         }
     }
 
-    public void mineralLift () {
+    public void mineralLift() {
 
 
         if (gamepad2.right_bumper == true) {
@@ -293,6 +283,27 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
             LeftBumber = false;
             myMineralLift.stopMotors();
         }
+    }
+
+
+    public void retractAndExtendExtension() {
+        if (gamepad2.b == true) {
+
+            myIntakeRotator.raisedRotater();
+
+            if (myRevColorDistance.checkSensorExtender() == false) {
+                myIntakeExtenderArm.retractIntactArm(1);
+            }
+
+
+        }
+    }
+
+
+
+
+
+
 
 
 
@@ -310,7 +321,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
 
 
-    }
+
 
 
     //LED light changes for positions of mechanisms

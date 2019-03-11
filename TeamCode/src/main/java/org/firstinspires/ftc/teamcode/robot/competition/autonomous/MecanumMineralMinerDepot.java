@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
@@ -60,7 +60,7 @@ public class MecanumMineralMinerDepot {
     }
 
 
-    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
 //        linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
@@ -85,7 +85,7 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();                                       // angle will be wrong
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();                     //lower rotater
+                myIntakeRotator.loweredRotater();                     //lower rotater
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(2400, SPD_DRIVE_HIGH, 3);                       // extend extender and knock off the mineral
@@ -116,7 +116,7 @@ public class MecanumMineralMinerDepot {
                 myIntakeExtenderArm.stopIntakeArm();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                    // raise rotater
+                myIntakeRotator.raisedRotater();                    // raise rotater
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -128,7 +128,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeRotator.mineralRotateLowerEncoder();                 //lower rotater
+                myIntakeRotator.loweredRotater();                 //lower rotater
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(2400, SPD_DRIVE_HIGH,3);             // extend extender and knock off the mineral
@@ -149,7 +149,7 @@ public class MecanumMineralMinerDepot {
                 myIntakeServo.stopIntakeServo();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                    // raise rotater
+                myIntakeRotator.raisedRotater();                    // raise rotater
                 linearOp.sleep(sleepTime);
                 break;
 
@@ -163,7 +163,7 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();                    // lower rotater
+                myIntakeRotator.loweredRotater();                    // lower rotater
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(2400, SPD_DRIVE_HIGH,3);                      // extend extender to knock off the mineral
@@ -196,7 +196,7 @@ public class MecanumMineralMinerDepot {
                 myIntakeExtenderArm.stopIntakeArm();
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                    // raise the rotater
+                myIntakeRotator.raisedRotater();                    // raise the rotater
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -216,7 +216,7 @@ public class MecanumMineralMinerDepot {
 
     }
 
-    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, IntakeRotator myIntakeRotater) {
+    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, IntakeRotaterServos myIntakeRotater) {
 
         myIntakeExtenderArm.retractPowerAuto(1);
         linearOp.sleep(500);
@@ -244,7 +244,7 @@ public class MecanumMineralMinerDepot {
         myIntakeExtenderArm.retractIntakeArm(0, SPD_DRIVE_HIGH, 3);
         linearOp.sleep(sleepTime);
 
-        myIntakeRotater.mineralRotateLowerEncoder();
+        myIntakeRotater.loweredRotater();
         linearOp.sleep(sleepTime);
 
 

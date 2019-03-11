@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
@@ -49,7 +49,7 @@ public class MMMCDS {
     // new methods for this class
 
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
@@ -68,16 +68,16 @@ public class MMMCDS {
                 myGyro.gyroOrientMecanum(36, myMechDrive);           // different (34)
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAuto();                  // extend extender arm
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED,2);                  // extend extender arm
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                 // retract arm after hitting off mineral
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);                 // retract arm after hitting off mineral
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                // raise rotater
+                myIntakeRotator.raisedRotater();                // raise rotater
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -88,16 +88,16 @@ public class MMMCDS {
                 myGyro.gyroOrientMecanum(4, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAuto();                  // extend extender arm
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);                  // extend extender arm
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                 // retract arm after hitting off mineral
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);                 // retract arm after hitting off mineral
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                // raise rotater
+                myIntakeRotator.raisedRotater();                // raise rotater
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -108,16 +108,16 @@ public class MMMCDS {
                 myGyro.gyroOrientMecanum(-14, myMechDrive);          // Gyro angles appears correct.
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAuto();                  // extend extender arm
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);                  // extend extender arm
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                 // retract arm after hitting off mineral
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);                 // retract arm after hitting off mineral
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                // raise rotater
+                myIntakeRotator.raisedRotater();                // raise rotater
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -175,23 +175,23 @@ public class MMMCDS {
 
 
 
-    public void LowerReleaseTM (IntakeRotator myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM (IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
 
-        myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+        myIntakeRotator.loweredRotater();                // lower rotater
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();                         // spin to spit out the team marker
         linearOp.sleep(sleepTime);
 
-        myIntakeRotator.mineralRotateRaiseEncoder();                //  raise rotater
+        myIntakeRotator.raisedRotater();                //  raise rotater
         linearOp.sleep(sleepTime);
 
     }
 
-    public void knockingOffSecondMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator) {
+    public void knockingOffSecondMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator) {
         myMechDrive.rotateLeft(SPD_DRIVE_MED, .5);
         myGyro.gyroOrientMecanum(0, myMechDrive);
         myMechDrive.driveForward(SPD_DRIVE_MED, .4);
@@ -201,22 +201,22 @@ public class MMMCDS {
         switch (goldPosition) {
             case LEFT:
                 myGyro.gyroOrientMecanum(0, myMechDrive);                   // rotate toward mineral
-                myIntakeRotator.LowerIntakeRotater();                              // lower and extend arm to hit mineral
-                myIntakeExtenderArm.extendIntakeArmAuto();
-                myIntakeExtenderArm.retractIntakeArmAuto();
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.loweredRotater();                              // lower and extend arm to hit mineral
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);
+                myIntakeRotator.raisedRotater();
             case MIDDLE:
                 myGyro.gyroOrientMecanum(0, myMechDrive);                   // rotate toward mineral
-                myIntakeRotator.LowerIntakeRotater();                              // lower and extend arm to hit mineral
-                myIntakeExtenderArm.extendIntakeArmAuto();
-                myIntakeExtenderArm.retractIntakeArmAuto();
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.loweredRotater();                              // lower and extend arm to hit mineral
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);
+                myIntakeRotator.raisedRotater();
             case RIGHT:
                 myGyro.gyroOrientMecanum(0, myMechDrive);                    // rotate toward mineral
-                myIntakeRotator.LowerIntakeRotater();                               // lower and extend arm to hit mineral
-                myIntakeExtenderArm.extendIntakeArmAuto();
-                myIntakeExtenderArm.retractIntakeArmAuto();
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.loweredRotater();                               // lower and extend arm to hit mineral
+                myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
+                myIntakeExtenderArm.retractIntakeArm(0, SPD_ARM_MED, 2);
+                myIntakeRotator.raisedRotater();
         }
     }
 

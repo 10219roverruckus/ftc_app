@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
@@ -67,7 +67,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
     }
 
 
-    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
 
@@ -112,12 +112,12 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
     }
 
-    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
 
-        myIntakeRotator.mineralRotateLowerEncoder();
+        myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_DRIVE_HIGH, 2);
         linearOp.sleep(sleepTime);
@@ -133,7 +133,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
         myIntakeExtenderArm.stopIntakeArm();
         myIntakeServo.stopIntakeServo();
 
-        myIntakeRotator.mineralRotateRaiseEncoder();
+        myIntakeRotator.raisedRotater();
         linearOp.sleep(sleepTime);
     }
 
@@ -150,7 +150,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
     }
 
 
-    public void sampleScoreGoldMineral (IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator, IntakeServo myIntakeServo, MineralLift myMineralLift, LanderServo myLanderServo, MecanumDrive myMechDrive, Gyro myGyro) {
+    public void sampleScoreGoldMineral (IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo, MineralLift myMineralLift, LanderServo myLanderServo, MecanumDrive myMechDrive, Gyro myGyro) {
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
                 linearOp.telemetry.update();
@@ -166,7 +166,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myIntakeServo.IntakeServoForward();                         //start spinner
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater
                 linearOp.sleep(sleepTime);
 
 
@@ -180,7 +180,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();                                        //raise rotater
+                myIntakeRotator.raisedRotater();                                        //raise rotater
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
 
@@ -192,7 +192,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.IntakeServoForward();
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
 
@@ -207,7 +207,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
                 linearOp.sleep(sleepTime);
@@ -223,7 +223,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.IntakeServoForward();
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
@@ -237,7 +237,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 linearOp.sleep(500);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeRotator.mineralRotateRaiseEncoder();
+                myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
                 myIntakeServo.stopIntakeServo();
                 break;
@@ -271,14 +271,14 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
     }
 
-    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo) {
+    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo) {
 
         while (AutoTime.time() < 20000) {
 
                 myIntakeExtenderArm.extendIntakeArm(1000,SPD_DRIVE_HIGH, 2);
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();
+                myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeServo.IntakeServoForward();
@@ -309,7 +309,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_DRIVE_HIGH, 3.5);
         linearOp.sleep(sleepTime);
 
-        myIntakeRotator.mineralRotateLowerEncoder();
+        myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.extendIntakeArm(2000, SPD_DRIVE_HIGH, 2);

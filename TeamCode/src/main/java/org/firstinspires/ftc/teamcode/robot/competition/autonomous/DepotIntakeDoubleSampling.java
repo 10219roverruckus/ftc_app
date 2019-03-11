@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
@@ -52,7 +52,7 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
     DcMotor intakePositionMotor;
     DcMotor intakeMotor;
     IntakeExtenderArm myIntakeExtenderArm;
-    IntakeRotator myIntakeRotator;
+    IntakeRotaterServos myIntakeRotator;
     IntakeServo myIntakeServo;
 
 
@@ -112,6 +112,8 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
 
 
 
+
+
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
         myRevColorDistance.setLinearOp(this);
 
@@ -126,6 +128,9 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
 
         myMineralMinerAll = new MMMADS();
         myMineralMinerAll.setLinearOp(this);
+
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
+        myIntakeRotator.setLinearOp(this);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -215,7 +220,7 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
         sleep(sleepTime);
         idle();
 
-        myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+        myMineralMinerDepot.driveMineral( myGyro,myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
 
         sleep(sleepTime);
         idle();
