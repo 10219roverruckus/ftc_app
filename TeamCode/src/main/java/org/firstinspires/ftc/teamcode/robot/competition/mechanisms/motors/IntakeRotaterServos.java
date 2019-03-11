@@ -11,8 +11,11 @@ public class IntakeRotaterServos {
 
     public LinearOpMode linearOp = null;
 
-    public double raisedPosition = 0;
-    public double loweredPosition = .94;
+    public double leftRaisedPosition = 0;
+    public double leftLoweredPosition = .94;
+
+    public double rightRaisedPosition = .9;
+    public double rightLoweredPostion = 0;
 
     // constructor
 
@@ -29,13 +32,13 @@ public class IntakeRotaterServos {
 
 
     public void  raisedRotater () {          // drops minerals into the lander
-        intakeRotaterRight.setPosition(raisedPosition);
-        intakeRotaterLeft.setPosition(raisedPosition);
+        intakeRotaterRight.setPosition(rightRaisedPosition);
+        intakeRotaterLeft.setPosition(leftRaisedPosition);
     }
 
     public void loweredRotater () {
-        intakeRotaterLeft.setPosition(loweredPosition);      // keeps minerals in the little object
-        intakeRotaterRight.setPosition(loweredPosition);
+        intakeRotaterLeft.setPosition(leftLoweredPosition);      // keeps minerals in the little object
+        intakeRotaterRight.setPosition(rightLoweredPostion);
     }
 
 }
