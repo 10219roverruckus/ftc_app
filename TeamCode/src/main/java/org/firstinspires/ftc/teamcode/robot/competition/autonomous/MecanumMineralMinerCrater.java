@@ -97,7 +97,7 @@ public class MecanumMineralMinerCrater {
 
                 myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);          //extend extender to knock off mineral
                 linearOp.sleep(sleepTime);
-
+                //UPDATE ME!
                 myIntakeExtenderArm.retractIntakeArm(0,SPD_ARM_MED,2);              // retract extender
                 linearOp.sleep(sleepTime);
 
