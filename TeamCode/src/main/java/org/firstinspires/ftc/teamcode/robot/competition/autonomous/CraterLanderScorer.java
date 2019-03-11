@@ -103,8 +103,6 @@ public class CraterLanderScorer extends LinearOpMode {
         myIntakeExtenderArm.setLinearOp(this);
         myIntakeExtenderArm.stopIntakeArm();
 
-        myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_mineral_lift"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_hook"), hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance_extender"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance_extender"));
-        myRevColorDistance.setLinearOp(this);
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
@@ -114,8 +112,6 @@ public class CraterLanderScorer extends LinearOpMode {
         myLanderServo.landerServoCollect();
         myLanderServo.keepMineralsIn();
 
-        myMineralLift = new MineralLift(hardwareMap.servo.get("mineral_lift"));
-        myMineralLift.setLinearOp(this);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -199,37 +195,6 @@ public class CraterLanderScorer extends LinearOpMode {
             detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
             sleep(100);
 
-            myMineralMiner.findingMineralCamera(detector.getXPosition());                      // detect gold position
-            vuforia.stop();
-            sleep(sleepTime);
-            idle();
-
-            myMineralMiner.driveTowardDepot(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
-
-            sleep(sleepTime);
-            idle();
-
-            myMineralMiner.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);      // Backups to tape under Lander and moves towards wall
-
-            sleep(sleepTime);
-            idle();
-
-            myMineralMiner.setUpForLander(myGyro, myMechDrive, myRevColorDistance);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
-
-            sleep(sleepTime);
-            idle();
-            myMineralMiner.intakeGoldMineral( myGyro,  myMechDrive,  myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);
-            sleep(sleepTime);
-            idle();
-
-
-            myMineralMiner.ScoreGoldMineral(myMineralLift, myIntakeExtenderArm, myIntakeServo, myLanderServo);
-            sleep(sleepTime);
-            idle();
-
-            myMineralMiner.ScoreMineralsRepeat(myMineralLift, myIntakeRotator, myIntakeExtenderArm, myIntakeServo, myLanderServo);
-            sleep(sleepTime);
-            idle();
 
             requestOpModeStop();
         }
