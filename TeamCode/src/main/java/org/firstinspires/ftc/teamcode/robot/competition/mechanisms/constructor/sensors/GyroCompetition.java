@@ -19,7 +19,7 @@ public class GyroCompetition {
     public Orientation angles;
     public Acceleration gravity;
     public BNO055IMU imu;
-    final public double SPEED = .4;
+    final public double SPEED = .3;
 
     public LinearOpMode linearOp = null;
 
