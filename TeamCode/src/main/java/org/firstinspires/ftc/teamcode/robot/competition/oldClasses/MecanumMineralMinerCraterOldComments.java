@@ -113,9 +113,9 @@ public class MecanumMineralMinerCraterOldComments {
 
 
 
-                myIntakeExtenderArm.extendIntakeArmAuto();
+//                myIntakeExtenderArm.extendIntakeArmAuto();
                 linearOp.sleep(sleepTime);
-                myIntakeExtenderArm.retractIntakeArmAuto();
+//                myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -148,11 +148,11 @@ public class MecanumMineralMinerCraterOldComments {
 //                myIntakeExtenderArm.stopIntakeArm();
 
 
-                myIntakeExtenderArm.extendTowardMiddleMineral();
+//                myIntakeExtenderArm.extendTowardMiddleMineral();
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeExtenderArm.retractIntakeArmAuto();
+//                myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -187,11 +187,11 @@ public class MecanumMineralMinerCraterOldComments {
 //                linearOp.sleep(500);
 //                myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeExtenderArm.extendIntakeArmAuto();
+//                myIntakeExtenderArm.extendIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeExtenderArm.retractIntakeArmAuto();
+//                myIntakeExtenderArm.retractIntakeArmAuto();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -287,13 +287,13 @@ public class MecanumMineralMinerCraterOldComments {
 
         myIntakeRotator.mineralRotateLowerEncoder();
         linearOp.sleep(sleepTime);
-        myIntakeExtenderArm.extendIntakeArmAuto();
+//        myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();
         linearOp.sleep(servoRotateTeamMarker);
 
-        myIntakeExtenderArm.retractIntakeArmAuto();
+//        myIntakeExtenderArm.retractIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.retractPowerAuto(1);

@@ -51,7 +51,7 @@ public class CraterIntake extends LinearOpMode {
 
     MecanumMineralMinerCrater myMineralMinerCrater;
     MecanumMineralMinerDepot myMineralMinerDepot;
-    MecanumMineralMinerAll myMineralMinerAll;
+//    MecanumMineralMinerAll myMineralMinerAll;
 
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
@@ -117,8 +117,8 @@ public class CraterIntake extends LinearOpMode {
         myMineralMinerDepot = new MecanumMineralMinerDepot();
         myMineralMinerDepot.setLinearOp(this);
 
-        myMineralMinerAll = new MecanumMineralMinerAll();
-        myMineralMinerAll.setLinearOp(this);
+//        myMineralMinerAll = new MecanumMineralMinerAll();
+//        myMineralMinerAll.setLinearOp(this);
 
         myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
         myLanderServo.setLinearOp(this);
@@ -212,21 +212,30 @@ public class CraterIntake extends LinearOpMode {
             sleep(sleepTime);
             idle();
 
+            // come off hook, drive F, S R, D B, Encoder Turn, Gyro, extender / intake thing, Encoder Turn back  towards wall
             myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
-
+            // Have rotated back towards wall, but without a Gyro Correction
             sleep(sleepTime);
             idle();
 
+
+            //Gyro before driving to wall.
+            //Strafe to get thru creater & minerals
+            //drive to wall
             myMineralMinerCrater.RotateDriveWall(myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
 
             sleep(sleepTime);
             idle();
 
+            //rotate Left w/ a gyro correction
+            //Strafe right into with w/ power to orient
+            //strafe left slightly off wall
             myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
             sleep(sleepTime);
             idle();
-//WORKS TO NOT BREAK STUFF
+    //Does the team marker thinkg - just extends into depot w/o driving forward.
+            //ROBOT DOES NOT MOVE HERE.
             myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
             sleep(sleepTime);
             idle();

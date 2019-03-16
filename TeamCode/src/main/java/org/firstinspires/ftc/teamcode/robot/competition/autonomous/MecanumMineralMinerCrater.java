@@ -91,7 +91,7 @@ public class MecanumMineralMinerCrater {
                 myIntakeServo.IntakeServoForward();                         //start spinner
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.loweredRotater();                // lower rotater
+                myIntakeRotator.loweredRotater();                // lower rotater - uses Servos
                 linearOp.sleep(sleepTime);
 
 
@@ -222,11 +222,11 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(100);
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
-
-        myGyro.gyroOrientMecanum(46, myMechDrive);              // Orient for straight drive to depot was 137
-        myMechDrive.stopMotors();                                      // Stop motors
-        linearOp.sleep(sleepTime);
-        myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
+    //Commenting out Gyro Correction since use wall to orient ourselves.
+//        myGyro.gyroOrientMecanum(46, myMechDrive);              // Orient for straight drive to depot was 137
+//        myMechDrive.stopMotors();                                      // Stop motors
+//        linearOp.sleep(sleepTime);
+//        myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
 
     }
 
@@ -238,7 +238,7 @@ public class MecanumMineralMinerCrater {
 
         myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
-        myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
+        myIntakeExtenderArm.extendIntakeArm(3000, SPD_ARM_MED, 3);
         linearOp.sleep(sleepTime);
 
         myIntakeServo.IntakeServoReverse();
@@ -260,7 +260,7 @@ public class MecanumMineralMinerCrater {
     public void DriveParkInCrater(MecanumDrive myMechDrive) {
         // drive backward and park in crater
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .9);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .2);
         linearOp.sleep(sleepTime);
 
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);       // was med
@@ -274,6 +274,7 @@ public class MecanumMineralMinerCrater {
         linearOp.sleep(sleepTime);
     }
 
+    //BLAKE'S JUNK
 //    public void CraterExtendArm(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
 //        myGyro.gyroReset();
 //        myMechDrive.strafeLeft(SPD_DRIVE_HIGH,0.6);

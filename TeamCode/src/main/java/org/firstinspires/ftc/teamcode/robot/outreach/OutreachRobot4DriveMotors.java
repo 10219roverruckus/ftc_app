@@ -12,16 +12,18 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.internal.hardware.DragonboardLynxDragonboardIsPresentPin;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.CatapultArm;
+import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.FourBarLink;
 
 
 import static java.lang.Thread.sleep;
 //adb connect 1.2.3.4:5555
 
-@TeleOp(name = "Outreach Robot - 4 Drive Motors")
-//@Disabled
+@TeleOp(name = "Outreach Robot + 4 Bar Link")
+@Disabled
 public class OutreachRobot4DriveMotors extends OpMode {
 
     OutreachMotors myOutreachMotors;
+    FourBarLink myFourBarLink;
 
     outreachTouchSensorCatapult myOutreachTouchSensorCatapult;
     //value for left joystick
@@ -59,15 +61,15 @@ public class OutreachRobot4DriveMotors extends OpMode {
     @Override
     public void init() {
         myOutreachMotors = new OutreachMotors(hardwareMap.dcMotor.get("front_left_motor"), hardwareMap.dcMotor.get("front_right_motor"), hardwareMap.dcMotor.get("rear_left_motor"), hardwareMap.dcMotor.get("rear_right_motor"));
-        mineralDump = hardwareMap.servo.get ("mineral_dumper");
-        mineralDump.setPosition(mineralDumpCollect);
-        lowDumper = hardwareMap.servo.get("low_dumper");
-        lowDumper.setPosition(midDump);
-        ledStrip = hardwareMap.servo.get("led_strip");
+        myFourBarLink = new FourBarLink(hardwareMap.dcMotor.get("four_bar_motor"));
+//        mineralDump = hardwareMap.servo.get ("mineral_dumper");
+//        mineralDump.setPosition(mineralDumpCollect);
+//        lowDumper = hardwareMap.servo.get("low_dumper");
+//        lowDumper.setPosition(midDump);
+//        ledStrip = hardwareMap.servo.get("led_strip");
         ledStrip.setPosition(ledPosition);
         driveMode = driveMode.TANK;
         driveDirection = driveDirection.FORWARD;
-
     }
 
     @Override
@@ -79,8 +81,10 @@ public class OutreachRobot4DriveMotors extends OpMode {
         //drive the robot!!!!
         driveRobot();
         //controls mineral dump - collect & deposit modes
-        controlDump();
+//        controlDump();
         //control LEDs manually - use left & right bumpers
+        //control the four bar link mechanism
+        controlFourBarLink();
         controlLEDs();
         telemetryOutput();
     }
@@ -113,6 +117,8 @@ public class OutreachRobot4DriveMotors extends OpMode {
             driveMode = DriveMode.TANK;
         }
 
+        //Toogle code for bumbers to control Servos.
+        /*
         if (gamepad1.left_bumper) {
             if (leftBumberAllow) {
                 if (numDrivers == 1) {
@@ -127,7 +133,7 @@ public class OutreachRobot4DriveMotors extends OpMode {
         }
         else {
             leftBumberAllow = true;
-        }
+        } */
     }
 
     public void gamePadAssignments () {
@@ -164,6 +170,15 @@ public class OutreachRobot4DriveMotors extends OpMode {
 //            ledStrip.setPosition(ledPosition);
 //        }
         ledStrip.setPosition(ledPosition);
+    }
+
+    public void controlFourBarLink () {
+        if (gamepad1.right_trigger != 0) {
+            myFourBarLink.FourBarManualControl(gamepad1.right_trigger);
+        }
+        else {
+            myFourBarLink.stopMotor();
+        }
     }
 
     public void controlDump () {

@@ -206,10 +206,10 @@ public class MecanumMineralMinerDepotOldComments {
                 myMechDrive.stopMotors();                                       // angle will be wrong
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.mineralRotateLowerEncoder();                     //lower rotater
+//                myIntakeRotator.mineralRotateLowerEncoder();                     //lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAllTheWay();                       // extend extender and knock off the mineral
+//                myIntakeExtenderArm.extendIntakeArmAllTheWay();                       // extend extender and knock off the mineral
                 linearOp.sleep(sleepTime);
 
 //                myMechDrive.rotateRight(SPD_DRIVE_MED, 1.5);             // rotate to align with depot
@@ -253,7 +253,7 @@ public class MecanumMineralMinerDepotOldComments {
 //                myMechDrive.stopMotors();
 //                linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
+//                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -279,7 +279,7 @@ public class MecanumMineralMinerDepotOldComments {
                 myIntakeRotator.mineralRotateLowerEncoder();                 //lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAllTheWay();             // extend extender and knock off the mineral
+//                myIntakeExtenderArm.extendIntakeArmAllTheWay();             // extend extender and knock off the mineral
                 linearOp.sleep(sleepTime);
 
 
@@ -287,7 +287,7 @@ public class MecanumMineralMinerDepotOldComments {
                 linearOp.sleep(servoRotateTeamMarker);
 
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
+//                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);            // another retract to pull the extender all the way back
@@ -317,7 +317,7 @@ public class MecanumMineralMinerDepotOldComments {
                 myIntakeRotator.mineralRotateLowerEncoder();                    // lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArmAllTheWay();                      // extend extender to knock off the mineral
+//                myIntakeExtenderArm.extendIntakeArmAllTheWay();                      // extend extender to knock off the mineral
                 linearOp.sleep(sleepTime);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.5);             // rotate toward depot
@@ -346,7 +346,7 @@ public class MecanumMineralMinerDepotOldComments {
 //                myMechDrive.stopMotors();
 //                linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender arm
+//                myIntakeExtenderArm.retractIntakeArmAuto();                     // retract extender arm
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -430,7 +430,7 @@ public class MecanumMineralMinerDepotOldComments {
 
 
 
-        myIntakeExtenderArm.extendIntakeArmAuto();
+//        myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
 
