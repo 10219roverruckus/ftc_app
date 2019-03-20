@@ -129,7 +129,7 @@ public class DepotIntakeDoubleSampling extends LinearOpMode  {
         myMineralMinerAll = new MMMADS();
         myMineralMinerAll.setLinearOp(this);
 
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo"));
         myIntakeRotator.setLinearOp(this);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());

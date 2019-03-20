@@ -99,7 +99,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myIntakeExtenderArm = new IntakeExtenderArm(hardwareMap.dcMotor.get("intake_extender_arm"));
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo"));
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
         myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
