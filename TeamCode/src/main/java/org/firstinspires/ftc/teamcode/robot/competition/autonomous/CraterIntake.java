@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
@@ -56,7 +56,7 @@ public class CraterIntake extends LinearOpMode {
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotaterServos myIntakeRotator;
-    IntakeServo myIntakeServo;
+    IntakeSpinnerMotor myIntakeSpinnerMotor;
     LanderServo myLanderServo;
 
 
@@ -99,8 +99,8 @@ public class CraterIntake extends LinearOpMode {
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
         myIntakeRotator.setLinearOp(this);
 
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
-        myIntakeServo.setLinearOp(this);
+        myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
+        myIntakeSpinnerMotor.setLinearOp(this);
 
         myIntakeExtenderArm = new IntakeExtenderArm(hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeExtenderArm.setLinearOp(this);
@@ -213,7 +213,7 @@ public class CraterIntake extends LinearOpMode {
             idle();
 
             // come off hook, drive F, S R, D B, Encoder Turn, Gyro, extender / intake thing, Encoder Turn back  towards wall
-            myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+            myMineralMinerCrater.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor);                     // push gold off of little square
             // Have rotated back towards wall, but without a Gyro Correction
             sleep(sleepTime);
             idle();
@@ -236,7 +236,7 @@ public class CraterIntake extends LinearOpMode {
             idle();
     //Does the team marker thinkg - just extends into depot w/o driving forward.
             //ROBOT DOES NOT MOVE HERE.
-            myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeServo);
+            myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor);
             sleep(sleepTime);
             idle();
 

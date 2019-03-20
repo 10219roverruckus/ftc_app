@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class CraterIntakeDoubleSample extends LinearOpMode  {
 
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotaterServos myIntakeRotator;
-    IntakeServo myIntakeServo;
+    IntakeSpinnerMotor myIntakeSpinnerMotor;
 
     private GoldAlignDetector detector;
     WebcamName webcamName;
@@ -98,8 +98,8 @@ public class CraterIntakeDoubleSample extends LinearOpMode  {
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
         myIntakeRotator.setLinearOp(this);
 
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
-        myIntakeServo.setLinearOp(this);
+        myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
+        myIntakeSpinnerMotor.setLinearOp(this);
 
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeExtenderArm.setLinearOp(this);
@@ -199,7 +199,7 @@ public class CraterIntakeDoubleSample extends LinearOpMode  {
                 idle();
                 idle();
 
-                myMineralMinerCrater.driveMineral(myGyro,myMechDrive,myLiftMotor,myIntakeRotator,myIntakeExtenderArm,myIntakeServo);                     // push gold off of little square
+                myMineralMinerCrater.driveMineral(myGyro,myMechDrive,myLiftMotor,myIntakeRotator,myIntakeExtenderArm);                     // push gold off of little square
 
                 sleep(sleepTime);
                 idle();
@@ -212,7 +212,7 @@ public class CraterIntakeDoubleSample extends LinearOpMode  {
 
                 myMineralMinerCrater.RotateDriveTowardDepot (myGyro, myMechDrive, myRevColorDistance);
 
-                myMineralMinerCrater.LowerReleaseTM (myIntakeRotator, myIntakeServo);
+                myMineralMinerCrater.LowerReleaseTM (myIntakeRotator, myIntakeSpinnerMotor);
 
                 myMineralMinerCrater.knockingOffSecondMineral (myGyro, myMechDrive, myIntakeExtenderArm, myIntakeRotator);
 

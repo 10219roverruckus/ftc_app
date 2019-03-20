@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
 
@@ -49,7 +49,7 @@ public class MMMCDS {
     // new methods for this class
 
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm)  {
 
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
@@ -175,7 +175,7 @@ public class MMMCDS {
 
 
 
-    public void LowerReleaseTM (IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM (IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
@@ -183,7 +183,7 @@ public class MMMCDS {
         myIntakeRotator.loweredRotater();                // lower rotater
         linearOp.sleep(sleepTime);
 
-        myIntakeServo.IntakeServoReverse();                         // spin to spit out the team marker
+        myIntakeSpinnerMotor.intakeSpinner(-1);                         // spin to spit out the team marker
         linearOp.sleep(sleepTime);
 
         myIntakeRotator.raisedRotater();                //  raise rotater

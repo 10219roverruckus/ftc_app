@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
 
@@ -60,7 +60,7 @@ public class MecanumMineralMinerDepot {
     }
 
 
-    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor) {
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
 //        linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
@@ -99,12 +99,12 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();                                       // angle will be wrong
                 linearOp.sleep(sleepTime);
 
-                myIntakeServo.IntakeServoReverse();                         // spit out the team marker
+                myIntakeSpinnerMotor.intakeSpinner(-1);                         // spit out the team marker
                 linearOp.sleep(servoRotateTeamMarker);
 
                 myGyro.gyroOrientMecanum(-35, myMechDrive);                  // rotate some more to make sure to not bring the mineral back
                 myMechDrive.stopMotors();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
 
@@ -135,7 +135,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeServo.IntakeServoReverse();                     // spit out the team marker
+                myIntakeSpinnerMotor.intakeSpinner(-1);                     // spit out the team marker
                 linearOp.sleep(servoRotateTeamMarker);
 
 
@@ -146,7 +146,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(1000);
 
                 myIntakeExtenderArm.stopIntakeArm();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
                 myIntakeRotator.raisedRotater();                    // raise rotater
@@ -178,13 +178,13 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myIntakeServo.IntakeServoReverse();                         // spit out mineral
+                myIntakeSpinnerMotor.intakeSpinner(-1);                         // spit out mineral
                 linearOp.sleep(servoRotateTeamMarker);
 
 
                 myGyro.gyroOrientMecanum(-150, myMechDrive);
                 myMechDrive.stopMotors();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
 
@@ -216,7 +216,7 @@ public class MecanumMineralMinerDepot {
 
     }
 
-    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, IntakeRotaterServos myIntakeRotater) {
+    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotater) {
 
         myIntakeExtenderArm.retractPowerAuto(1);
         linearOp.sleep(500);

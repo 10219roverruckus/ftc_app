@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.old.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
 
@@ -62,7 +62,7 @@ public class MecanumMineralMinerCraterOldComments {
 //        goldPosition = GoldPosition.LEFT;
     }
 
-    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo)  {
+    public void driveMineral(GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm)  {
 //        goldPosition = GoldPosition.LEFT;
 //        linearOp.telemetry.addData("MINERAL", goldPosition);
 //        linearOp.telemetry.update();
@@ -280,7 +280,7 @@ public class MecanumMineralMinerCraterOldComments {
 
 
 
-    public void LowerReleaseTM ( IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM ( IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
@@ -290,7 +290,7 @@ public class MecanumMineralMinerCraterOldComments {
 //        myIntakeExtenderArm.extendIntakeArmAuto();
         linearOp.sleep(sleepTime);
 
-        myIntakeServo.IntakeServoReverse();
+        myIntakeSpinnerMotor.intakeSpinner(-1);
         linearOp.sleep(servoRotateTeamMarker);
 
 //        myIntakeExtenderArm.retractIntakeArmAuto();
@@ -299,7 +299,7 @@ public class MecanumMineralMinerCraterOldComments {
         myIntakeExtenderArm.retractPowerAuto(1);
         linearOp.sleep(1000);
         myIntakeExtenderArm.stopIntakeArm();
-        myIntakeServo.stopIntakeServo();
+        myIntakeSpinnerMotor.stopMotors();
 
         myIntakeRotator.mineralRotateRaiseEncoder();
         linearOp.sleep(sleepTime);

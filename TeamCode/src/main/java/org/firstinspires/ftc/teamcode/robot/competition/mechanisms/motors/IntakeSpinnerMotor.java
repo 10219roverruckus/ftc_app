@@ -1,20 +1,21 @@
 package org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class IntakeServo {
+public class IntakeSpinnerMotor {
     //instance variables
 
-    public Servo intakeServoL; //  the motor
-    public Servo intakeServoR;
+    public DcMotor intakeSpinnerMotor; //  the motor
 
 
     public final DcMotor.RunMode currentRunMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public double extendPosition = 1;    // help confused
-    public int retractPosition = 0;   // help confused
+
+//    public double extendPosition = 1;    // help confused
+//    public int retractPosition = 0;   // help confused
 
     public LinearOpMode linearOp = null;
 
@@ -35,10 +36,9 @@ public class IntakeServo {
 
 
     // constructors
-    public IntakeServo (Servo inServoL, Servo inServoR) {
+    public IntakeSpinnerMotor ( DcMotor inMotor) {
 
-        intakeServoR = inServoR;
-        intakeServoL = inServoL;
+        intakeSpinnerMotor = inMotor;
 
     }
 
@@ -49,7 +49,17 @@ public class IntakeServo {
 
     // methods
 
-    public void stopIntakeServo () {
+    public void intakeSpinner (double power) {
+        intakeSpinnerMotor.setPower(power);
+    }
+
+    public void stopMotors () {
+        intakeSpinnerMotor.setPower(0);
+    }
+}
+
+/*
+public void stopIntakeServo () {
         intakeServoL.setPosition(.5);
         intakeServoR.setPosition(.5);
     }
@@ -86,5 +96,4 @@ public class IntakeServo {
         linearOp.idle();
         stopIntakeServo();
     }
-
-}
+ */

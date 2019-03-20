@@ -24,7 +24,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.TeamMarker;
@@ -54,7 +55,7 @@ public class DepotIntake extends LinearOpMode  {
 //    DcMotor myIntakeRotator;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotaterServos myIntakeRotator;
-    IntakeServo myIntakeServo;
+    IntakeSpinnerMotor myIntakeSpinnerMotor;
     LanderServo myLanderServo;
 
 
@@ -102,8 +103,8 @@ public class DepotIntake extends LinearOpMode  {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
-        myIntakeServo.setLinearOp(this);
+        myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
+        myIntakeSpinnerMotor.setLinearOp(this);
 
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo_left"), hardwareMap.servo.get("intake_rotater_servo_right"));
         myIntakeRotator.setLinearOp(this);
@@ -219,7 +220,7 @@ public class DepotIntake extends LinearOpMode  {
             sleep(sleepTime);
             idle();
 
-            myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeServo);                     // push gold off of little square
+            myMineralMinerDepot.driveMineral(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor);                     // push gold off of little square
 
             sleep(sleepTime);
             idle();
@@ -228,7 +229,7 @@ public class DepotIntake extends LinearOpMode  {
             sleep(sleepTime);
             idle();
 
-            myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeServo, myIntakeRotator);
+            myMineralMinerDepot.DriveParkInCrater(myGyro, myMechDrive, myIntakeExtenderArm, myIntakeRotator);
 
             sleep(sleepTime);
             idle();

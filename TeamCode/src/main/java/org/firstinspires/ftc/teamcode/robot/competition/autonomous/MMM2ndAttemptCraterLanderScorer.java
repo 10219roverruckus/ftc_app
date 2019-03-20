@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
@@ -67,7 +67,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
     }
 
 
-    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveTowardDepot (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor) {
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
 
@@ -112,7 +112,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
     }
 
-    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo) {
+    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
@@ -122,7 +122,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_DRIVE_HIGH, 2);
         linearOp.sleep(sleepTime);
 
-        myIntakeServo.IntakeServoReverse();
+        myIntakeSpinnerMotor.intakeSpinner(-1);
         linearOp.sleep(servoRotateTeamMarker);
 
         myIntakeExtenderArm.retractIntakeArm(0, SPD_DRIVE_HIGH, 2);
@@ -131,7 +131,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
         myIntakeExtenderArm.retractPowerAuto(1);
         linearOp.sleep(1000);
         myIntakeExtenderArm.stopIntakeArm();
-        myIntakeServo.stopIntakeServo();
+        myIntakeSpinnerMotor.intakeSpinner(-1);
 
         myIntakeRotator.raisedRotater();
         linearOp.sleep(sleepTime);
@@ -150,7 +150,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
     }
 
 
-    public void sampleScoreGoldMineral (IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeServo myIntakeServo, MineralLift myMineralLift, LanderServo myLanderServo, MecanumDrive myMechDrive, Gyro myGyro) {
+    public void sampleScoreGoldMineral (IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor, MineralLift myMineralLift, LanderServo myLanderServo, MecanumDrive myMechDrive, Gyro myGyro) {
         switch (goldPosition) {                                            //Gyro angles robot to push off mineral
             case LEFT:
                 linearOp.telemetry.update();
@@ -163,7 +163,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeServo.IntakeServoForward();                         //start spinner
+                myIntakeSpinnerMotor.intakeSpinner(1);                         //start spinner
                 linearOp.sleep(sleepTime);
 
                 myIntakeRotator.loweredRotater();                // lower rotater
@@ -182,7 +182,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
                 myIntakeRotator.raisedRotater();                                        //raise rotater
                 linearOp.sleep(sleepTime);
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
 
 
                 break;
@@ -191,7 +191,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myGyro.gyroOrientMecanum(-90, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeServo.IntakeServoForward();
+                myIntakeSpinnerMotor.intakeSpinner(1);
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
@@ -209,7 +209,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
                 myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
                 break;
@@ -222,7 +222,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myGyro.gyroOrientMecanum(-120, myMechDrive);          // Gyro angles appears correct. was -14
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeServo.IntakeServoForward();
+                myIntakeSpinnerMotor.intakeSpinner(1);
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
@@ -239,7 +239,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
                 myIntakeRotator.raisedRotater();
                 linearOp.sleep(sleepTime);
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 break;
         }
 
@@ -248,11 +248,11 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
-        myIntakeServo.IntakeServoReverseTime();
+        myIntakeSpinnerMotor.intakeSpinner(-1);
         linearOp.sleep(sleepTime);
         myLanderServo.releaseMinerals();
         linearOp.sleep(sleepTime);
-        myIntakeServo.stopIntakeServo();
+        myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(sleepTime);
         myLanderServo.keepMineralsIn();
         linearOp.sleep(sleepTime);
@@ -271,7 +271,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
     }
 
-    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, LanderServo myLanderServo) {
+    public void ScoreMineralsRepeat ( MineralLift myMineralLift, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor, LanderServo myLanderServo) {
 
         while (AutoTime.time() < 20000) {
 
@@ -281,7 +281,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
-                myIntakeServo.IntakeServoForward();
+            myIntakeSpinnerMotor.intakeSpinner(1);
 
                 myIntakeExtenderArm.extendIntakeArm(2100, SPD_DRIVE_HIGH, 3);
                 linearOp.sleep(sleepTime);
@@ -290,7 +290,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
                 linearOp.sleep(sleepTime);
                 myIntakeExtenderArm.stopIntakeArm();
 
-                myIntakeServo.IntakeServoReverseTime();
+            myIntakeSpinnerMotor.intakeSpinner(-1);
                 linearOp.sleep(sleepTime);
 
                 myLanderServo.releaseMinerals();                                    //transfer into mineral lift

@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.old.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 
 
@@ -175,7 +175,7 @@ public class MecanumMineralMinerDepotOldComments {
 
 
 
-    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo) {
+    public void driveMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotator myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor) {
         linearOp.telemetry.addData("MINERAL", goldPosition);
         linearOp.telemetry.update();
 //        linearOp.sleep(3500);  //SIMULATE LOWING ROBOT - COMMENT OUT WHEN RUNNING LIFT MOTOR!
@@ -226,7 +226,7 @@ public class MecanumMineralMinerDepotOldComments {
 //                myMechDrive.stopMotors();                                       // angle will be wrong
 //                linearOp.sleep(sleepTime);
 
-                myIntakeServo.IntakeServoReverse();                         // spit out the team marker
+                myIntakeSpinnerMotor.intakeSpinner(-1);                         // spit out the team marker
                 linearOp.sleep(servoRotateTeamMarker);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, .4);             // rotate back to avoid minerals
@@ -242,7 +242,7 @@ public class MecanumMineralMinerDepotOldComments {
 
                 myGyro.gyroOrientMecanum(40, myMechDrive);                  // rotate some more to make sure to not bring the mineral back
                 myMechDrive.stopMotors();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
 //                myGyro.gyroOrientMecanum(40, myMechDrive);                  // rotate some more to make sure to not bring the mineral back
@@ -283,7 +283,7 @@ public class MecanumMineralMinerDepotOldComments {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeServo.IntakeServoReverse();                     // spit out the team marker
+                myIntakeSpinnerMotor.intakeSpinner(-1);                     // spit out the team marker
                 linearOp.sleep(servoRotateTeamMarker);
 
 
@@ -294,7 +294,7 @@ public class MecanumMineralMinerDepotOldComments {
                 linearOp.sleep(1000);
 
                 myIntakeExtenderArm.stopIntakeArm();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
                 myIntakeRotator.mineralRotateRaiseEncoder();                    // raise rotater
@@ -331,7 +331,7 @@ public class MecanumMineralMinerDepotOldComments {
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myIntakeServo.IntakeServoReverse();                         // spit out mineral
+                myIntakeSpinnerMotor.intakeSpinner(-1);                         // spit out mineral
                 linearOp.sleep(servoRotateTeamMarker);
 
 //                myMechDrive.rotateLeft(SPD_DRIVE_MED, 1.5);            // rotate back to avoid knocking off minerals
@@ -339,7 +339,7 @@ public class MecanumMineralMinerDepotOldComments {
 
                 myGyro.gyroOrientMecanum(-40, myMechDrive);
                 myMechDrive.stopMotors();
-                myIntakeServo.stopIntakeServo();
+                myIntakeSpinnerMotor.stopMotors();
                 linearOp.sleep(sleepTime);
 
 //                myGyro.gyroOrientMecanum(-40, myMechDrive);
@@ -388,7 +388,7 @@ public class MecanumMineralMinerDepotOldComments {
 //        }
     }
 
-    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeServo myIntakeServo, IntakeRotator myIntakeRotater) {
+    public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotator myIntakeRotater) {
 //        myMechDrive.rotateLeft(SPD_DRIVE_MED,.5);                    // fixing Gyro issue
 //        linearOp.sleep(sleepTime);
         myIntakeExtenderArm.retractPowerAuto(1);

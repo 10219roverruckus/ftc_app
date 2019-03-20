@@ -1,28 +1,18 @@
 package org.firstinspires.ftc.teamcode.robot.competition.TeleOp;
 
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.LEDLights;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeServo;
+import org.firstinspires.ftc.teamcode.robot.old.IntakeRotator;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
@@ -74,7 +64,7 @@ public class FullControlTeleOp extends OpMode {
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotator myIntakeRotator;
-    IntakeServo myIntakeServo;
+    IntakeSpinnerMotor myIntakeSpinnerMotor;
     //lifts x-rails to the lander - MOTOR
     MineralLift myMineralLift;
     // 3 servos...
@@ -113,7 +103,7 @@ public class FullControlTeleOp extends OpMode {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));
         myIntakeRotator = new IntakeRotator(hardwareMap.dcMotor.get("intake_rotater_motor"));
-        myIntakeServo = new IntakeServo(hardwareMap.servo.get("intake_spinner_servo_left"), hardwareMap.servo.get("intake_spinner_servo_right"));
+        myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
         myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
 
@@ -239,13 +229,13 @@ public class FullControlTeleOp extends OpMode {
 
     public void spinnerIntake () {
         if (gamepad2.right_trigger > powerThreshold || gamepad2.a == true) {
-            myIntakeServo.IntakeServoForward();
+            myIntakeSpinnerMotor.intakeSpinner(1);
         }
         else if (gamepad2.left_trigger > powerThreshold) {
-            myIntakeServo.IntakeServoReverse();
+            myIntakeSpinnerMotor.intakeSpinner(-1);
         }
         else {
-            myIntakeServo.stopIntakeServo();
+            myIntakeSpinnerMotor.stopMotors();
         }
     }
 

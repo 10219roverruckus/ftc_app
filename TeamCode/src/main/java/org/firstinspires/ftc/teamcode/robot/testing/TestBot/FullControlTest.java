@@ -4,21 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotator;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
-import org.firstinspires.ftc.teamcode.robot.old.classes.sub.boardArm;
-import org.firstinspires.ftc.teamcode.robot.old.classes.sub.colorSensorArm;
-import org.firstinspires.ftc.teamcode.robot.old.classes.sub.glyphArms;
-import org.firstinspires.ftc.teamcode.robot.old.classes.sub.glyphLift;
-import org.firstinspires.ftc.teamcode.robot.old.classes.sub.relicArm;
 
 /**
  * Created by blake_shafer on 8/23/17.
