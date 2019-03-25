@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Calibrate TWO Servos- P2 y+a", group = "CALIBRATION")
 //@Disabled
-public class ServoTWOCalibration extends OpMode {
+public class ServoTWOCalibrationTOP extends OpMode {
     Servo servotest_TOP;
     Servo servotest_BOTTOM;
 
@@ -38,23 +38,23 @@ public class ServoTWOCalibration extends OpMode {
         armRunTime = new ElapsedTime();
         armRunTime.reset();
         servotest_TOP.setPosition(SERVO_MID);
-        servotest_BOTTOM.setPosition(SERVO_MID);
+//        servotest_BOTTOM.setPosition(SERVO_MID);
     }
 
     @Override
     public void loop() {
         if (gamepad2.b) {
             servotest_TOP.setPosition(SERVO_MID);
-            servotest_BOTTOM.setPosition(SERVO_MID);
+//            servotest_BOTTOM.setPosition(SERVO_MID);
             armRunTime.reset();
         }
         if (gamepad2.y) {
             servoPosition_TOP = servoPosition_TOP + INCREMENTLEVEL;
-            servoPosition_BOTTOM = servoPosition_BOTTOM + INCREMENTLEVEL;
+//            servoPosition_BOTTOM = servoPosition_BOTTOM + INCREMENTLEVEL;
         }
         if (gamepad2.a) {
             servoPosition_TOP = servoPosition_TOP - INCREMENTLEVEL;
-            servoPosition_BOTTOM = servoPosition_BOTTOM - INCREMENTLEVEL;
+//            servoPosition_BOTTOM = servoPosition_BOTTOM - INCREMENTLEVEL;
         }
         if (gamepad2.dpad_up) {
 //            servoPosition = SERVO_HIGH;
@@ -65,8 +65,8 @@ public class ServoTWOCalibration extends OpMode {
         armRunTime.time();
         servoPosition_TOP = Range.clip(servoPosition_TOP, 0, 1);
         servotest_TOP.setPosition(servoPosition_TOP);
-        servoPosition_BOTTOM = Range.clip(servoPosition_BOTTOM, 0, 1);
-        servotest_BOTTOM.setPosition(servoPosition_BOTTOM);
+//        servoPosition_BOTTOM = Range.clip(servoPosition_BOTTOM, 0, 1);
+//        servotest_BOTTOM.setPosition(servoPosition_BOTTOM);
         telemetry.addLine("y = up; a = down; b = RESET");
         telemetry.addData("servo TOP position! ", servotest_TOP.getPosition());
         telemetry.addData("servo BOTTOM position! ", servotest_BOTTOM.getPosition());

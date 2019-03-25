@@ -143,7 +143,11 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         rotater();
 
         // mineral lift raises and lowers the x rail for dropping the minerals in the lander
-        mineralLift();
+        //USES COLOR SENSOR
+        //        mineralLift_color();
+
+        //DOES NOT USE COLOR SENSOR
+        mineralLift_manual();
 
         //over ride for dumping the minerals into the tray
         IntakeTransfer();
@@ -257,7 +261,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
 
-    public void mineralLift() {
+    public void mineralLift_color() {
         if (gamepad2.right_bumper == true) {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
@@ -269,6 +273,20 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         } else {
             telemetry.addLine("STOP LIFT");
             LeftBumber = false;
+            myMineralLift.stopMotors();
+        }
+    }
+
+
+    public void mineralLift_manual() {
+        if (gamepad2.right_bumper == true) {
+            myMineralLift.RaiseMineralLift();
+            LeftBumber = false;
+        } else if (gamepad2.left_bumper == true ) {                  // was return true for check color Mineral Lift
+            LeftBumber = true;
+            myMineralLift.LowerMineralLift();
+
+        } else {
             myMineralLift.stopMotors();
         }
     }
