@@ -218,18 +218,20 @@ public class CraterIntake extends LinearOpMode {
             sleep(sleepTime);
             idle();
 
+            /* Gyro before driving to wall.
+             * Strafe to get through crater & minerals
+             * drive to wall
+            */
 
-            //Gyro before driving to wall.
-            //Strafe to get thru creater & minerals
-            //drive to wall
             myMineralMinerCrater.RotateDriveWall(myGyro, myMechDrive, myIntakeExtenderArm);      // Backups to tape under Lander and moves towards wall
-
             sleep(sleepTime);
             idle();
 
-            //rotate Left w/ a gyro correction
-            //Strafe right into with w/ power to orient
-            //strafe left slightly off wall
+            /* rotate Left w/ a gyro correction
+             * Strafe right into with w/ power to orient
+             * strafe left slightly off wall
+            */
+
             myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
             sleep(sleepTime);

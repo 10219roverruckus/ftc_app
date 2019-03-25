@@ -85,21 +85,21 @@ public class MecanumMineralMinerDepot {
                 myMechDrive.stopMotors();                                       // angle will be wrong
                 linearOp.sleep(sleepTime);
 
-                myIntakeRotator.loweredRotater();                     //lower rotater
+                myIntakeRotator.loweredRotater();                               //lower rotater
                 linearOp.sleep(sleepTime);
 
-                myIntakeExtenderArm.extendIntakeArm(2400, SPD_DRIVE_HIGH, 3);                       // extend extender and knock off the mineral
+                myIntakeExtenderArm.extendIntakeArm(2400, SPD_DRIVE_HIGH, 3);         // extend extender and knock off the mineral
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(-90, myMechDrive);
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-90, myMechDrive);                  // corretion of angle with gyro
+                myGyro.gyroOrientMecanum(-90, myMechDrive);                  // correction of angle with gyro
                 myMechDrive.stopMotors();                                       // angle will be wrong
                 linearOp.sleep(sleepTime);
 
-                myIntakeSpinnerMotor.intakeSpinner(-1);                         // spit out the team marker
+                myIntakeSpinnerMotor.intakeSpinner(-1);                      // spit out the team marker
                 linearOp.sleep(servoRotateTeamMarker);
 
                 myGyro.gyroOrientMecanum(-35, myMechDrive);                  // rotate some more to make sure to not bring the mineral back
@@ -108,7 +108,7 @@ public class MecanumMineralMinerDepot {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeExtenderArm.retractIntakeArm(0,SPD_DRIVE_HIGH,3);                     // retract extender
+                myIntakeExtenderArm.retractIntakeArm(0,SPD_DRIVE_HIGH,3);            // retract extender
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractPowerAuto(1);
@@ -211,9 +211,11 @@ public class MecanumMineralMinerDepot {
         myGyro.gyroOrientMecanum(-5, myMechDrive);                   // gyro towards the crater after dropping tm was -84.9
         linearOp.sleep(sleepTime);
 
+        myMechDrive.strafeRight(SPD_DRIVE_MED, .55);
+        linearOp.sleep(sleepTime);
 
         myMechDrive.driveForward(SPD_DRIVE_HIGH, 2.5);               // drive toward wall in crater
-
+        linearOp.sleep(sleepTime);
     }
 
     public void DriveParkInCrater (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotater) {

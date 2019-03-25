@@ -11,9 +11,12 @@ public class IntakeRotaterServos {
 
     public LinearOpMode linearOp = null;
 
-    public double loweredPosition = 0;
+    // ############### NO CHANGES ABOVE THIS LINE ##################
 
+    public double loweredPosition = 0;
     public double raisedPosition = .9;
+
+    // ############## NO CHANGES BELOW THIS LINE ###################
 
 
     // constructor

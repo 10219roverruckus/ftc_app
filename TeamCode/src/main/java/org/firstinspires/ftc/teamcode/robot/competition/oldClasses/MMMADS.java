@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
+package org.firstinspires.ftc.teamcode.robot.competition.oldClasses;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 
 
 public class MMMADS {

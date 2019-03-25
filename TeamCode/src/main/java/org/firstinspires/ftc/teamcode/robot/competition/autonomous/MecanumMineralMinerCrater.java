@@ -68,7 +68,7 @@ public class MecanumMineralMinerCrater {
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
         linearOp.sleep(sleepTime);
 
-        myMechDrive.driveForward (SPD_DRIVE_MED, .5);                    // get away from the lander
+        myMechDrive.driveForward (SPD_DRIVE_MED, .5);                  // get away from the lander
         linearOp.sleep(sleepTime);
         myMechDrive.strafeRight(SPD_DRIVE_HIGH, .6);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
         linearOp.sleep(sleepTime);
@@ -88,7 +88,7 @@ public class MecanumMineralMinerCrater {
                 linearOp.sleep(sleepTime);
 
 
-                myIntakeSpinnerMotor.intakeSpinner(1);                         //start spinner
+                myIntakeSpinnerMotor.intakeSpinner(.7);                         //start spinner
                 linearOp.sleep(sleepTime);
 
                 myIntakeRotator.loweredRotater();                // lower rotater - uses Servos
@@ -116,7 +116,7 @@ public class MecanumMineralMinerCrater {
                 myGyro.gyroOrientMecanum(-90, myMechDrive);            //turning too much towards the right. Need to adjust?
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeSpinnerMotor.intakeSpinner(1);
+                myIntakeSpinnerMotor.intakeSpinner(.7);
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
@@ -149,7 +149,7 @@ public class MecanumMineralMinerCrater {
                 myGyro.gyroOrientMecanum(-120, myMechDrive);          // Gyro angles appears correct. was -14
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
-                myIntakeSpinnerMotor.intakeSpinner(1);
+                myIntakeSpinnerMotor.intakeSpinner(.7);
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
@@ -260,17 +260,17 @@ public class MecanumMineralMinerCrater {
     public void DriveParkInCrater(MecanumDrive myMechDrive) {
         // drive backward and park in crater
 
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .2);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .2);      // Drive backwards pass the seam
         linearOp.sleep(sleepTime);
 
         myMechDrive.setMotorPowerStrafeRight(SPD_DRIVE_HIGH);       // was med
         linearOp.sleep(200);
         myMechDrive.stopMotors();
 
-        myMechDrive.driveBackward(.35, .5);         // was 1.1
+        myMechDrive.driveBackward(.35, .5);         // was 1.1          // get closer to the crater
         linearOp.sleep(sleepTime);
 
-        myMechDrive.driveBackward(.28, .4);
+        myMechDrive.driveBackward(.28, .4);             // go slowly onto the crater without rolling off
         linearOp.sleep(sleepTime);
     }
 

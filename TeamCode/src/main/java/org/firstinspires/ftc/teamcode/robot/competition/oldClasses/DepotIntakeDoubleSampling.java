@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robot.competition.autonomous;
+package org.firstinspires.ftc.teamcode.robot.competition.oldClasses;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
@@ -27,6 +27,9 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MMMADS;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MMMCDS;
+import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MMMDDS;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
 
 import java.util.ArrayList;
