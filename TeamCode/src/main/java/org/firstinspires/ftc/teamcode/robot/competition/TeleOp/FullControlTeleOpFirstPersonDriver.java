@@ -258,8 +258,6 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     public void mineralLift() {
-
-
         if (gamepad2.right_bumper == true) {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
