@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.FourBarLink;
 
 @TeleOp(name = "4 Bar Link Motor Only")
-
+@Disabled
 
 public class FourBarMotorOnly extends OpMode {
     FourBarLink myFourBarLink;

@@ -47,7 +47,7 @@ public class LiftMotor {
         liftMotor = liftM;
 
         liftMotor.setDirection(DcMotor.Direction.REVERSE);
-        liftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         setLiftMotorRunModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setLiftMotorRunModes(currentRunMode);
 

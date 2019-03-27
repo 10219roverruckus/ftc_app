@@ -97,7 +97,7 @@ public class CraterIntakeDoubleSample extends LinearOpMode  {
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeRotator.setLinearOp(this);
 
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));

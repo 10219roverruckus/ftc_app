@@ -17,15 +17,15 @@ public class ServoTWOCalibrationTOP extends OpMode {
 
     final double INCREMENTLEVEL = .00025;
 
-    final double SERVO_LOW = 0.0;
-    final double SERVO_MID = 0.5;
+    final double SERVO_LOW = 0.9;
+    final double SERVO_MID = 0.8;
     final double SERVO_HIGH = 1.0;
 
     public double LSScore = .56;        //.56
     public double LSCollect = 1.0;      //1.0
 
 
-    double servoPosition_TOP;
+    double servoPosition_TOP = SERVO_LOW;
     double servoPosition_BOTTOM;
     public ElapsedTime armRunTime;
 
@@ -37,7 +37,7 @@ public class ServoTWOCalibrationTOP extends OpMode {
 //        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();
         armRunTime.reset();
-        servotest_TOP.setPosition(SERVO_MID);
+        servotest_TOP.setPosition(SERVO_LOW);
 //        servotest_BOTTOM.setPosition(SERVO_MID);
     }
 

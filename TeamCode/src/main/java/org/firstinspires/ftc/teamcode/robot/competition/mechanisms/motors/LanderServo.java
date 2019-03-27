@@ -21,9 +21,9 @@ public class LanderServo {
 
     // constructor
 
-    public LanderServo (Servo LSL, Servo TGS) {
+    public LanderServo (Servo LSL) {
         landerServoR = LSL;
-        transferGateServo = TGS;
+//        transferGateServo = TGS;
     }
 
     // methods
@@ -40,13 +40,13 @@ public class LanderServo {
         landerServoR.setPosition(LSCollect);      // keeps minerals in the little object
     }
 
-    public void releaseMinerals () {
-        transferGateServo.setPosition(OpenGate);
-    }
+//    public void releaseMinerals () {
+//        transferGateServo.setPosition(OpenGate);
+//    }
 
-    public void keepMineralsIn () {
-        transferGateServo.setPosition(CloseGate);
-    }
+//    public void keepMineralsIn () {
+//        transferGateServo.setPosition(CloseGate);
+//    }
 }
 
 

@@ -288,7 +288,7 @@ public class MMM1stCraterLanderScorer {
 
 
         linearOp.sleep(sleepTime);
-        myLanderServo.releaseMinerals();                                    //transfer into mineral lift
+//        myLanderServo.releaseMinerals();                                    //transfer into mineral lift
         linearOp.sleep(sleepTime);
 
         myMineralLift.extendLiftMotorFullyEncoders();                       //extend Mineral lift with gold mineral
@@ -326,7 +326,7 @@ public class MMM1stCraterLanderScorer {
             myIntakeSpinnerMotor.intakeSpinner(-1);
                 linearOp.sleep(sleepTime);
 
-                myLanderServo.releaseMinerals();                                    //transfer into mineral lift
+//                myLanderServo.releaseMinerals();                                    //transfer into mineral lift
                 linearOp.sleep(sleepTime);
 
                 myMineralLift.extendLiftMotorFullyEncoders();                       //extend Mineral lift with gold mineral

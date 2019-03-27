@@ -9,24 +9,25 @@ import com.qualcomm.robotcore.util.Range;
 
 //import org.opencv.core.Range;
 
-@TeleOp(name = "Calibrate TWO Servos- P2 y+a", group = "CALIBRATION")
+@TeleOp(name = "Calibrate TWO Servos- P2 y+a - B = LOW, X = HIGH", group = "CALIBRATION")
 //@Disabled
 public class ServoTWOCalibration extends OpMode {
     Servo servotest_TOP;
     Servo servotest_BOTTOM;
 
-    final double INCREMENTLEVEL = .00025;
+//    final double INCREMENTLEVEL = .00025;
+    final double INCREMENTLEVEL = .001;
 
-    final double SERVO_LOW = 0.0;
+    final double SERVO_LOW = 0.9;
     final double SERVO_MID = 0.5;
-    final double SERVO_HIGH = 1.0;
+    final double SERVO_HIGH = 0.23;
 
     public double LSScore = .56;        //.56
     public double LSCollect = 1.0;      //1.0
 
 
-    double servoPosition_TOP;
-    double servoPosition_BOTTOM;
+    double servoPosition_TOP = SERVO_HIGH;
+    double servoPosition_BOTTOM = SERVO_HIGH;
     public ElapsedTime armRunTime;
 
     @Override
@@ -37,17 +38,24 @@ public class ServoTWOCalibration extends OpMode {
 //        servotest.setPosition(SERVO_HIGH);
         armRunTime = new ElapsedTime();
         armRunTime.reset();
-        servotest_TOP.setPosition(SERVO_MID);
-        servotest_BOTTOM.setPosition(SERVO_MID);
+        servotest_TOP.setPosition(servoPosition_TOP);
+        servotest_BOTTOM.setPosition(servoPosition_BOTTOM);
     }
 
     @Override
     public void loop() {
         if (gamepad2.b) {
-            servotest_TOP.setPosition(SERVO_MID);
-            servotest_BOTTOM.setPosition(SERVO_MID);
+            servoPosition_TOP = SERVO_LOW;
+            servoPosition_BOTTOM = SERVO_LOW;
             armRunTime.reset();
         }
+
+        if (gamepad2.x) {
+            servoPosition_TOP = SERVO_HIGH;
+            servoPosition_BOTTOM = SERVO_HIGH;
+            armRunTime.reset();
+        }
+
         if (gamepad2.y) {
             servoPosition_TOP = servoPosition_TOP + INCREMENTLEVEL;
             servoPosition_BOTTOM = servoPosition_BOTTOM + INCREMENTLEVEL;

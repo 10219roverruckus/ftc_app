@@ -6,24 +6,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class IntakeRotaterServos {
 
     // instance variables
-    public Servo intakeRotaterServo;
-//    public Servo intakeRotaterLeft;
+    public Servo intakeRotatorServoTop;
+    public Servo intakeRotatorServoBottom;
 
     public LinearOpMode linearOp = null;
 
     // ############### NO CHANGES ABOVE THIS LINE ##################
 
-    public double loweredPosition = 0;
-    public double raisedPosition = .9;
+    public double loweredPosition = .9;
+    public double raisedPosition = .6;
 
     // ############## NO CHANGES BELOW THIS LINE ###################
 
 
     // constructor
 
-    public IntakeRotaterServos(Servo iRL) {
-        intakeRotaterServo = iRL;
-//        intakeRotaterRight = iRR;
+    public IntakeRotaterServos(Servo iRT, Servo iRB) {
+        intakeRotatorServoTop = iRT;
+        intakeRotatorServoBottom = iRB;
     }
 
     // methods
@@ -34,11 +34,13 @@ public class IntakeRotaterServos {
 
 
     public void  raisedRotater () {          // drops minerals into the lander
-        intakeRotaterServo.setPosition(raisedPosition);
+        intakeRotatorServoTop.setPosition(raisedPosition);
+        intakeRotatorServoBottom.setPosition(raisedPosition);
     }
 
     public void loweredRotater () {
-        intakeRotaterServo.setPosition(loweredPosition);      // keeps minerals in the little object
+        intakeRotatorServoTop.setPosition(loweredPosition);      // keeps minerals in the little object
+        intakeRotatorServoBottom.setPosition(loweredPosition);
     }
 
 }

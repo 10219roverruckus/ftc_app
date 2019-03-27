@@ -250,11 +250,11 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
 
         myIntakeSpinnerMotor.intakeSpinner(-1);
         linearOp.sleep(sleepTime);
-        myLanderServo.releaseMinerals();
+//        myLanderServo.releaseMinerals();
         linearOp.sleep(sleepTime);
         myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(sleepTime);
-        myLanderServo.keepMineralsIn();
+//        myLanderServo.keepMineralsIn();
         linearOp.sleep(sleepTime);
 
         myMineralLift.RaiseMineralLift();
@@ -293,7 +293,7 @@ public class MMM2ndAttemptCraterLanderScorer {              // hits depot and th
             myIntakeSpinnerMotor.intakeSpinner(-1);
                 linearOp.sleep(sleepTime);
 
-                myLanderServo.releaseMinerals();                                    //transfer into mineral lift
+//                myLanderServo.releaseMinerals();                                    //transfer into mineral lift
                 linearOp.sleep(sleepTime);
 
                 myMineralLift.extendLiftMotorFullyEncoders();                       //extend Mineral lift with gold mineral

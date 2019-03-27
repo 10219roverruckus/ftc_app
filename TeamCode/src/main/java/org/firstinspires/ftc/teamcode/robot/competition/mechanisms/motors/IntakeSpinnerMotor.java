@@ -39,6 +39,8 @@ public class IntakeSpinnerMotor {
     public IntakeSpinnerMotor ( DcMotor inMotor) {
 
         intakeSpinnerMotor = inMotor;
+        intakeSpinnerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeSpinnerMotor.setDirection(DcMotor.Direction.REVERSE);
 
     }
 

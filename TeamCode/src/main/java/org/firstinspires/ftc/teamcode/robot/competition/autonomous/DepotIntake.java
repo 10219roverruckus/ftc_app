@@ -104,7 +104,7 @@ public class DepotIntake extends LinearOpMode  {
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myIntakeSpinnerMotor.setLinearOp(this);
 
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeRotator.setLinearOp(this);
 
 
@@ -126,10 +126,10 @@ public class DepotIntake extends LinearOpMode  {
         myMineralMinerAll = new MecanumMineralMinerAll();
         myMineralMinerAll.setLinearOp(this);
 
-        myLanderServo = new LanderServo (hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"));
         myLanderServo.setLinearOp(this);
         myLanderServo.landerServoCollect();
-        myLanderServo.keepMineralsIn();
+//        myLanderServo.keepMineralsIn();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();

@@ -99,10 +99,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myIntakeExtenderArm = new IntakeExtenderArm(hardwareMap.dcMotor.get("intake_extender_arm"));
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("intake_rotater_servo"));
+        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
-        myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"), hardwareMap.servo.get("transfer_gate_servo"));
+        myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"));
 
         myLEDStrip = new LEDLights(hardwareMap.servo.get("led_strip"));
         myRevColorDistance = new RevColorDistance(hardwareMap.get(ColorSensor.class, "rev_sensor_color_distance"), hardwareMap.get(DistanceSensor.class, "rev_sensor_color_distance"));
@@ -149,8 +149,11 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         //DOES NOT USE COLOR SENSOR
         mineralLift_manual();
 
+
+        //NO LONGER NEEDED WITH NO SERVO TRANSFER
+        //REPURPOSE IF NEED TO USE FOR FLIPPING INTAKE AND SPINNING HIPPOS.
         //over ride for dumping the minerals into the tray
-        IntakeTransfer();
+//        IntakeTransfer();
 
         // dumps the minerals into the lander when the lift is at the top
         mineralDump();
@@ -236,6 +239,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
 
+
+    //no longer needed with no transfer servo
+
+   /*
     public void IntakeTransfer() {
 //        if (gamepad2.a == true || colorsenor.red > 10) {
         if (gamepad2.a == true) {
@@ -244,6 +251,9 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
             myLanderServo.keepMineralsIn();
         }
     }
+    */
+
+
 
     public void mineralDump() {
         if (gamepad2.y == true) {
