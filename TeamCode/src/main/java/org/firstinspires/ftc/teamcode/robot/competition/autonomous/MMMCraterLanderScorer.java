@@ -79,6 +79,16 @@ public class MMMCraterLanderScorer {
         myMechDrive.stopMotors();
         linearOp.sleep(sleepTime);
 
+        //Robot Movement..
+        //Reference the MecanumDrive class different classes.
+        myMechDrive.driveForward (SPD_DRIVE_MED, .5);                  // get away from the lander
+        linearOp.sleep(sleepTime);
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .6);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+        linearOp.sleep(sleepTime);
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .51);
+        linearOp.sleep(sleepTime);
+
+
         //EXTENDER
         //use encoders to intake
         myIntakeExtenderArm.extendIntakeArm(1000, SPD_ARM_MED, 2);
