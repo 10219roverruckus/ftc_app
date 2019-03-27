@@ -14,7 +14,7 @@ public class IntakeRotaterServos {
     // ############### NO CHANGES ABOVE THIS LINE ##################
 
     public double loweredPosition = .9;
-    public double raisedPosition = .6;
+    public double raisedPosition = 0.23;
 
     // ############## NO CHANGES BELOW THIS LINE ###################
 

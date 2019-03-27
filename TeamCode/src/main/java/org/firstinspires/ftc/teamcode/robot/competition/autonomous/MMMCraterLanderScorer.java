@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.s
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeExtenderArm;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeRotaterServos;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.IntakeSpinnerMotor;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 
@@ -71,7 +72,7 @@ public class MMMCraterLanderScorer {
 
     }
 
-    public void codeExamples (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor, MineralLift myMineralLift) {
+    public void codeExamples (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor, MineralLift myMineralLift, LanderServo myLanderServo) {
 
         //GYRO TURNS
         //Use the following 3 lines of code for any Gyro Turns:
@@ -134,5 +135,12 @@ public class MMMCraterLanderScorer {
         myIntakeSpinnerMotor.intakeSpinner(-1);
         linearOp.sleep(1000);
         myIntakeSpinnerMotor.stopMotors();
+
+
+        //LANDER SERVO
+        //Score minerals in lander
+        myLanderServo.landerServoScore();
+        //collect mineral in the sorting hat.  Default position unless need to score.
+        myLanderServo.landerServoCollect();
     }
 }

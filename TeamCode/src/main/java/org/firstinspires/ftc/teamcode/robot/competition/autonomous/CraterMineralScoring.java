@@ -228,7 +228,7 @@ public class CraterMineralScoring extends LinearOpMode {
             //INSERT NEW CODE AFTER HERE
             //END NEW CODE BEFORE requestOpModeStop();
 
-            myMMMCraterLanderScorer.codeExamples (myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor, myMineralLift);
+            myMMMCraterLanderScorer.codeExamples (myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor, myMineralLift, myLanderServo);
 
             sleep(sleepTime);
             idle();

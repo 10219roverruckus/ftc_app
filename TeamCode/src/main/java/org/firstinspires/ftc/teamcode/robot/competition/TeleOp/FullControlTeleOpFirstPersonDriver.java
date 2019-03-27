@@ -158,7 +158,8 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         // dumps the minerals into the lander when the lift is at the top
         mineralDump();
 
-        retractAndExtendExtension();
+        //
+//        retractAndExtendExtension();
 
 
 
