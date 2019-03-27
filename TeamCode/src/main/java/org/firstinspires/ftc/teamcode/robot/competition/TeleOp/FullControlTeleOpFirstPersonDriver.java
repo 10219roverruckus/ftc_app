@@ -253,8 +253,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
     */
-
-
+   
 
     public void mineralDump() {
         if (gamepad2.y == true) {
