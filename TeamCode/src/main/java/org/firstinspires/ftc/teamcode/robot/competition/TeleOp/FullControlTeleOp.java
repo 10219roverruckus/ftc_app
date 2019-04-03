@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.competition.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -22,8 +23,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Minera
  * Created by the team on 8/23/17.
  */
 
-//@Disabled
 @TeleOp(name = "Full Control - Worlds Robot")
+@Disabled
 
 public class FullControlTeleOp extends OpMode {
 

@@ -64,11 +64,11 @@ public class IntakeExtenderArm {
     }
 
     public void extendIntakeArm (double motorPower) {
-        intakeExtenderArm.setPower(Math.abs(motorPower));
+        intakeExtenderArm.setPower(-Math.abs(motorPower));
     }
 
     public void retractIntactArm (double motorPower) {
-        intakeExtenderArm.setPower(-Math.abs(motorPower));
+        intakeExtenderArm.setPower(Math.abs(motorPower));
     }
 
     public void retractPowerAuto (double motorPower) {

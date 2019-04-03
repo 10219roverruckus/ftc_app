@@ -231,7 +231,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     public void spinnerIntake() {
-        if (gamepad2.right_trigger > powerThreshold || gamepad2.a == true) {
+        if (gamepad2.right_trigger > powerThreshold || gamepad2.a) {
             myIntakeSpinnerMotor.intakeSpinner(1);
         } else if (gamepad2.left_trigger > powerThreshold) {
             myIntakeSpinnerMotor.intakeSpinner(-1);
@@ -253,7 +253,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
     */
-   
+
 
     public void mineralDump() {
         if (gamepad2.y == true) {
@@ -272,10 +272,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     public void mineralLift_color() {
-        if (gamepad2.right_bumper == true) {
+        if (gamepad2.right_bumper) {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
-        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper == true || LeftBumber)) {                  // was return true for check color Mineral Lift
+        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper || LeftBumber)) {                  // was return true for check color Mineral Lift
             LeftBumber = true;
             myMineralLift.LowerMineralLift();
             telemetry.addLine("LOWER LIFT!!");
@@ -289,10 +289,10 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
 
     public void mineralLift_manual() {
-        if (gamepad2.right_bumper == true) {
+        if (gamepad2.right_bumper) {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
-        } else if (gamepad2.left_bumper == true ) {                  // was return true for check color Mineral Lift
+        } else if (gamepad2.left_bumper) {                  // was return true for check color Mineral Lift
             LeftBumber = true;
             myMineralLift.LowerMineralLift();
 
