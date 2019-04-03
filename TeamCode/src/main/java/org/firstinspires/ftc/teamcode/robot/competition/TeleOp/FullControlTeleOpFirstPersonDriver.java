@@ -119,8 +119,6 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         if (initTeleOpToggle) {
             initTeleOp();
-        } else {
-            initTeleOpToggle = false;
         }
 
         //reverse mode - reverse DRIVE CONTROL motors.
@@ -206,6 +204,9 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     // reset things
     public void initTeleOp() {
         TeleOpTime.reset();
+        myIntakeRotator.raisedRotater(); //initializes intake to top position
+        myLanderServo.landerServoCollect();
+        initTeleOpToggle = false;
     }
 
     //controls motor to lift and lower robot
@@ -256,7 +257,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
 
     public void mineralDump() {
-        if (gamepad2.y == true) {
+        if (gamepad2.y) {
             myLanderServo.landerServoScore();
         } else {
             myLanderServo.landerServoCollect();
