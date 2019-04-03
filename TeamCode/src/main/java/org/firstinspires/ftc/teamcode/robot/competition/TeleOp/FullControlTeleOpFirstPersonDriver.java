@@ -117,7 +117,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     @Override
     public void loop() {
 
-        if (initTeleOpToggle == true) {
+        if (initTeleOpToggle) {
             initTeleOp();
         } else {
             initTeleOpToggle = false;
