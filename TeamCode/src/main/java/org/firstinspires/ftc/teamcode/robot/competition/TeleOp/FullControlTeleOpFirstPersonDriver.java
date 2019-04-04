@@ -205,7 +205,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     public void initTeleOp() {
         TeleOpTime.reset();
         myIntakeRotator.raisedRotater();        //initializes intake to top position
-        myLanderServo.landerServoTravel();      // initialized dump to travel position
+        myLanderServo.landerServoCollect();      // initialized dump to upright collect position
         initTeleOpToggle = false;               // false so initializes only once
     }
 
