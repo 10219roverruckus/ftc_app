@@ -13,8 +13,10 @@ public class IntakeRotaterServos {
 
     // ############### NO CHANGES ABOVE THIS LINE ##################
 
-    public double loweredPosition = .9;
-    public double raisedPosition = 0.23;
+    public double bottomServoLoweredPosition = .93; // made 2 more variables, 2 for each servo, for a total of 4 position variables
+    public double bottomServoRaisedPosition = .26; //fine-tuned all variables
+    public double topServoLoweredPosition = .97; //original positions- lowered: 0.9    raised: 0.23
+    public double topServoRaisedPosition = .27;
 
     // ############## NO CHANGES BELOW THIS LINE ###################
 
@@ -34,13 +36,13 @@ public class IntakeRotaterServos {
 
 
     public void  raisedRotater () {          // drops minerals into the lander
-        intakeRotatorServoTop.setPosition(raisedPosition);
-        intakeRotatorServoBottom.setPosition(raisedPosition);
+        intakeRotatorServoTop.setPosition(topServoRaisedPosition);
+        intakeRotatorServoBottom.setPosition(bottomServoRaisedPosition);
     }
 
     public void loweredRotater () {
-        intakeRotatorServoTop.setPosition(loweredPosition);      // keeps minerals in the little object
-        intakeRotatorServoBottom.setPosition(loweredPosition);
+        intakeRotatorServoTop.setPosition(topServoLoweredPosition);      // keeps minerals in the little object
+        intakeRotatorServoBottom.setPosition(bottomServoLoweredPosition);
     }
 
 }

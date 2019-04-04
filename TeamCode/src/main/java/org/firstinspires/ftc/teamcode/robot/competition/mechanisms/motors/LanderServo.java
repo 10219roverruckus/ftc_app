@@ -14,9 +14,9 @@ public class LanderServo {
 
     public LinearOpMode linearOp = null;
 
-    public double LSScore = .5;         // Scoring Postion
-    public double LSTravel = .72;       // Travel Position
-    public double LSCollect = .94;      // Collecting Upright Position
+    public double LSScore = 0.92;         // Scoring Position for the Dump
+    public double LSTravel = .62;       // Travel Position for the Dump
+    public double LSCollect = .28;      // Collecting Minerals or Upright Position for the dump
 
 
     public double CloseGate = .146; //was .184
@@ -26,7 +26,7 @@ public class LanderServo {
 
     public LanderServo (Servo LSL) {
         landerServoR = LSL;
-//        transferGateServo = TGS;
+        // transferGateServo = TGS;
     }
 
     // methods
@@ -50,7 +50,6 @@ public class LanderServo {
 
         landerServoR.setPosition(LSCollect);
     }
-
 
 
 //    public void releaseMinerals () {

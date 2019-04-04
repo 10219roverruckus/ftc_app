@@ -34,10 +34,10 @@ public class RevColorDistance {
     public final int BLUE_THRESHOLD = 100;              //maybe a higher threshold (12.5)
     float hsvValues[] = {0F, 0F, 0F};
 
-//    public final int MINERAL_LIFT_THRESHOLD = 100;            // Changed by Emma: Old one
+//    public final int MINERAL_LIFT_THRESHOLD = 100;            //
 
-    public final int MINERAL_LIFT_THRESHOLD_NOTHING = 180;
-    public final int MINERAL_LIFT_THRESHOLD_RED = 270;
+    public final int MINERAL_LIFT_THRESHOLD_NOTHING = 0;       // Original was 180, adjusted for red hue
+    public final int MINERAL_LIFT_THRESHOLD_RED = 18;          // Original was 270
     public final int HOOK_LIFT_THRESHOLD = 100;
     public final int EXTENDER_THRESHOLD = 100;
 

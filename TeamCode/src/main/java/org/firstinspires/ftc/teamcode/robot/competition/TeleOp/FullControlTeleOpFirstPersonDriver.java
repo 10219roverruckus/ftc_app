@@ -124,7 +124,6 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         //reverse mode - reverse DRIVE CONTROL motors.
         reverseMode();
 
-
         //drive robot
         drive();
 
@@ -140,26 +139,11 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         // rotate the intake up and down
         rotater();
 
-        // mineral lift raises and lowers the x rail for dropping the minerals in the lander
-        //USES COLOR SENSOR
-        //        mineralLift_color();
+        // New method that incorporates more driver control and color sensor
+        mineralLift();
 
-        //DOES NOT USE COLOR SENSOR
-        mineralLift_manual();
-
-
-        //NO LONGER NEEDED WITH NO SERVO TRANSFER
-        //REPURPOSE IF NEED TO USE FOR FLIPPING INTAKE AND SPINNING HIPPOS.
-        //over ride for dumping the minerals into the tray
-//        IntakeTransfer();
-
-        // dumps the minerals into the lander when the lift is at the top
-        mineralDump();
-
-        //
-//        retractAndExtendExtension();
-
-
+        // old method using color sensor for mineral lift
+        //mineralLift_color();
 
         //output telemetry
         telemetryOutput();
@@ -174,6 +158,16 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         //EnocderColorChangesExtenderLift();
 
         //LED lights for the time in the game
+
+        //NO LONGER NEEDED WITH NO SERVO TRANSFER
+        //REPURPOSE IF NEED TO USE FOR FLIPPING INTAKE AND SPINNING HIPPOS.
+        //over ride for dumping the minerals into the tray
+        //IntakeTransfer();
+
+        // Old method.  Combined with Mineral Lift method.
+        //  mineralDump();
+
+        //retractAndExtendExtension();
 
         TimingInTeleOpWithLED();
 
@@ -201,7 +195,8 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
     }
 
-    // reset things
+    // resets & initializes the servo positions for the Intake Rotator and Lander Scorer
+
     public void initTeleOp() {
         TeleOpTime.reset();
         myIntakeRotator.raisedRotater();        //initializes intake to top position
@@ -232,37 +227,15 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     public void spinnerIntake() {
-        if (gamepad2.right_trigger > powerThreshold || gamepad2.a) {
+        if (gamepad2.right_trigger > powerThreshold) {
             myIntakeSpinnerMotor.intakeSpinner(1);
-        } else if (gamepad2.left_trigger > powerThreshold) {
+        } else if (gamepad2.left_trigger > powerThreshold  || gamepad2.a) {
             myIntakeSpinnerMotor.intakeSpinner(-1);
         } else {
             myIntakeSpinnerMotor.stopMotors();
         }
     }
 
-
-    //no longer needed with no transfer servo
-
-   /*
-    public void IntakeTransfer() {
-//        if (gamepad2.a == true || colorsenor.red > 10) {
-        if (gamepad2.a == true) {
-            myLanderServo.releaseMinerals();
-        } else {
-            myLanderServo.keepMineralsIn();
-        }
-    }
-    */
-
-
-    public void mineralDump() {
-        if (gamepad2.y) {
-            myLanderServo.landerServoScore();
-        } else {
-            myLanderServo.landerServoCollect();
-        }
-    }
 
     public void rotater() {
         if (gamepad2.right_stick_y < -.1) {
@@ -271,6 +244,33 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
             myIntakeRotator.raisedRotater();
         }
     }
+
+    // Added the below method combining Mineral Dump y button, color sensor, and mineral lift extrention/retraction
+
+    public void mineralLift() {
+        if (gamepad2.y) {
+            myLanderServo.landerServoScore();
+            LeftBumber = false;
+
+        } else if (gamepad2.right_bumper) {
+            myLanderServo.landerServoTravel();
+            myMineralLift.RaiseMineralLift();
+            LeftBumber = false;
+
+        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper || LeftBumber)) {                  // was return true for check color Mineral Lift
+            LeftBumber = true;
+            myLanderServo.landerServoCollect();
+            myMineralLift.LowerMineralLift();
+            telemetry.addLine("LOWER LIFT!!");
+
+        } else {
+            telemetry.addLine("STOP LIFT");
+            LeftBumber = false;
+            myMineralLift.stopMotors();
+        }
+    }
+
+    // ************* Below Method not used.  Archived *************************
 
     public void mineralLift_color() {
         if (gamepad2.right_bumper) {
@@ -318,7 +318,27 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
 
 
+    //no longer needed with no transfer servo
 
+   /*
+    public void IntakeTransfer() {
+//        if (gamepad2.a == true || colorsenor.red > 10) {
+        if (gamepad2.a == true) {
+            myLanderServo.releaseMinerals();
+        } else {
+            myLanderServo.keepMineralsIn();
+        }
+    }
+    */
+
+
+    // public void mineralDump() {
+    //     if (gamepad2.y) {
+    //        myLanderServo.landerServoScore();
+    //    } else {
+    //        myLanderServo.landerServoCollect();
+    //    }
+    // }
 
 
 
