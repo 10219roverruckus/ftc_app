@@ -14,8 +14,11 @@ public class LanderServo {
 
     public LinearOpMode linearOp = null;
 
-    public double LSScore = .5;
-    public double LSCollect = .94;
+    public double LSScore = .5;         // Scoring Postion
+    public double LSTravel = .72;       // Travel Position
+    public double LSCollect = .94;      // Collecting Upright Position
+
+
     public double CloseGate = .146; //was .184
     public double OpenGate = .55;  //was .41 = .36 difference
 
@@ -29,16 +32,26 @@ public class LanderServo {
     // methods
 
     public void setLinearOp (LinearOpMode Op) {
+
         linearOp = Op;
     }
 
-    public void landerServoScore () {          // drops minerals into the lander
+    public void landerServoScore () {          // Scoring and Dropping minerals into the lander
+
         landerServoR.setPosition(LSScore);
     }
 
-    public void landerServoCollect () {
-        landerServoR.setPosition(LSCollect);      // keeps minerals in the little object
+    public void landerServoTravel() {           // Starting and Travel Position of the Dump
+
+        landerServoR.setPosition(LSTravel);
     }
+
+    public void landerServoCollect () {         // Collecting & Upright to keep minerals in the little object
+
+        landerServoR.setPosition(LSCollect);
+    }
+
+
 
 //    public void releaseMinerals () {
 //        transferGateServo.setPosition(OpenGate);
