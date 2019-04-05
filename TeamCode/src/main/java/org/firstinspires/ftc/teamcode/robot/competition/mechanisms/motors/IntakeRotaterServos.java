@@ -13,10 +13,10 @@ public class IntakeRotaterServos {
 
     // ############### NO CHANGES ABOVE THIS LINE ##################
 
-    public double bottomServoLoweredPosition = .93; // made 2 more variables, 2 for each servo, for a total of 4 position variables
-    public double bottomServoRaisedPosition = .26; //fine-tuned all variables
-    public double topServoLoweredPosition = .97; //original positions- lowered: 0.9    raised: 0.23
-    public double topServoRaisedPosition = .27;
+    public double bottomServoLoweredPosition = .94; // made 2 more variables, 2 for each servo, for a total of 4 position variables
+    public double bottomServoRaisedPosition = .29; //fine-tuned all variables
+    public double topServoLoweredPosition = .98; //original positions- lowered: 0.9    raised: 0.23
+    public double topServoRaisedPosition = .3;
 
     // ############## NO CHANGES BELOW THIS LINE ###################
 

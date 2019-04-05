@@ -46,6 +46,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     double rearRightSpeed;
 
     boolean reverseModeToggle;
+    double speedMultiplier = 1.0;
 
     boolean initTeleOpToggle;
 
@@ -123,6 +124,9 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         //reverse mode - reverse DRIVE CONTROL motors.
         reverseMode();
+
+        //Speed Toggle for driver 1 control (Full Speed or Reduced Speed)
+        speedToggle();
 
         //drive robot
         drive();
@@ -245,7 +249,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
 
-    // Added the below method combining Mineral Dump y button, color sensor, and mineral lift extrention/retraction
+    // Added the below method combining Mineral Dump y button, color sensor, and mineral lift extention/retraction
 
     public void mineralLift() {
         if (gamepad2.y) {
@@ -288,12 +292,13 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
 
+    // ************* Below Method not used.  Archived *************************
 
     public void mineralLift_manual() {
         if (gamepad2.right_bumper) {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
-        } else if (gamepad2.left_bumper) {                  // was return true for check color Mineral Lift
+        } else if (gamepad2.left_bumper) {
             LeftBumber = true;
             myMineralLift.LowerMineralLift();
 
@@ -339,25 +344,6 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     //        myLanderServo.landerServoCollect();
     //    }
     // }
-
-
-
-
-
-/*
-                        // this was what we had, but I tried to redo it (just wanted to save it)
-        if (gamepad2.right_bumper == true) {
-            myMineralLift.RaiseMineralLift();
-        } else if (gamepad2.left_bumper == true) {               // && myRevColorDistance.checkSensorMineralLift() == true
-            myMineralLift.LowerMineralLift();
-        } else {
-            myMineralLift.stopMotors();
-        }
-
-        */
-
-
-
 
 
 
@@ -449,28 +435,28 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
                 frontLeftSpeed = 0;
                 frontLeftMotor.setPower(frontLeftSpeed);
             } else {
-                frontLeftMotor.setPower(frontLeftSpeed);
+                frontLeftMotor.setPower(frontLeftSpeed * speedMultiplier);
             }
 
             if (frontRightSpeed <= powerThreshold && frontRightSpeed >= -powerThreshold){
                 frontRightSpeed = 0;
                 frontRightMotor.setPower(frontRightSpeed);
             } else {
-                frontRightMotor.setPower(frontRightSpeed);
+                frontRightMotor.setPower(frontRightSpeed * speedMultiplier);
             }
 
             if (rearLeftSpeed <= powerThreshold && rearLeftSpeed >= -powerThreshold) {
                 rearLeftSpeed = 0;
                 rearLeftMotor.setPower(rearLeftSpeed);
             } else {
-                rearLeftMotor.setPower(rearLeftSpeed);
+                rearLeftMotor.setPower(rearLeftSpeed * speedMultiplier);
             }
 
             if (rearRightSpeed <= powerThreshold && rearRightSpeed >= -powerThreshold){
                 rearRightSpeed = 0;
                 rearRightMotor.setPower(rearRightSpeed);
             } else {
-                rearRightMotor.setPower(rearRightSpeed);
+                rearRightMotor.setPower(rearRightSpeed * speedMultiplier);
             }
         }
 
@@ -503,33 +489,34 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
                 frontLeftSpeed = 0;
                 frontLeftMotor.setPower(frontLeftSpeed);
             } else {
-                frontLeftMotor.setPower(frontLeftSpeed);
+                frontLeftMotor.setPower(frontLeftSpeed * speedMultiplier);
             }
 
             if (frontRightSpeed <= powerThreshold && frontRightSpeed >= -powerThreshold){
                 frontRightSpeed = 0;
                 frontRightMotor.setPower(frontRightSpeed);
             } else {
-                frontRightMotor.setPower(frontRightSpeed);
+                frontRightMotor.setPower(frontRightSpeed * speedMultiplier);
             }
 
             if (rearLeftSpeed <= powerThreshold && rearLeftSpeed >= -powerThreshold) {
                 rearLeftSpeed = 0;
                 rearLeftMotor.setPower(rearLeftSpeed);
             } else {
-                rearLeftMotor.setPower(rearLeftSpeed);
+                rearLeftMotor.setPower(rearLeftSpeed * speedMultiplier);
             }
 
             if (rearRightSpeed <= powerThreshold && rearRightSpeed >= -powerThreshold){
                 rearRightSpeed = 0;
                 rearRightMotor.setPower(rearRightSpeed);
             } else {
-                rearRightMotor.setPower(rearRightSpeed);
+                rearRightMotor.setPower(rearRightSpeed * speedMultiplier);
             }
         }
     }
 
-    //Reverse mode?
+    //Reverse mode for driver control
+
     public void reverseMode () {
         if (gamepad1.dpad_up) {    //see if the controller is in reverse mode or not (if joysticks are pressed down or not)
             reverseModeToggle = false; // forward mode
@@ -539,4 +526,16 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
             reverseModeToggle = true;    //reverse mode
         }
     }
+
+    // Speed Toggle for Driver 1.  Allows Driver to shift between full speed and reduced speed using bumpers
+    public void speedToggle () {
+        if (gamepad1.left_bumper) {
+            speedMultiplier = 1.0;
+        }
+
+        else if (gamepad1.right_bumper) {
+            speedMultiplier = 0.60;
+        }
+    }
+
 }
