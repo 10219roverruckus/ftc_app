@@ -18,9 +18,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMo
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 
 
-/**
- * Created by the team on 8/23/17.
- */
 
 //@Disabled
 @TeleOp(name = "Full Control - Worlds Robot - FPS")
@@ -159,22 +156,16 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         //EncoderColorChangesMineralLift();
 
         // LED lights for extender
-        //EnocderColorChangesExtenderLift();
+        //EncoderColorChangesExtenderLift();
 
         //LED lights for the time in the game
 
         //NO LONGER NEEDED WITH NO SERVO TRANSFER
-        //REPURPOSE IF NEED TO USE FOR FLIPPING INTAKE AND SPINNING HIPPOS.
-        //over ride for dumping the minerals into the tray
         //IntakeTransfer();
-
-        // Old method.  Combined with Mineral Lift method.
-        //  mineralDump();
 
         //retractAndExtendExtension();
 
         TimingInTeleOpWithLED();
-
 
     }
 
@@ -220,7 +211,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     }
 
     // extender arm for out and in
-    public void extenderArm() {                                // changes to the method: Emma; Please Check
+    public void extenderArm() {
         if (gamepad2.left_stick_y > .1) {
             myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
         } else if (gamepad2.left_stick_y < -.1) {            //&& myRevColorDistance.checkSensorExtender() == true
@@ -307,6 +298,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
 
+    // ************* Below Method not used.  Archived *************************
 
     public void retractAndExtendExtension() {
         if (gamepad2.b == true) {
@@ -335,16 +327,6 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         }
     }
     */
-
-
-    // public void mineralDump() {
-    //     if (gamepad2.y) {
-    //        myLanderServo.landerServoScore();
-    //    } else {
-    //        myLanderServo.landerServoCollect();
-    //    }
-    // }
-
 
 
     //LED light changes for positions of mechanisms
