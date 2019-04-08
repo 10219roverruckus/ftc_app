@@ -213,9 +213,9 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     // extender arm for out and in
     public void extenderArm() {
         if (gamepad2.left_stick_y > .1) {
-            myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
-        } else if (gamepad2.left_stick_y < -.1) {            //&& myRevColorDistance.checkSensorExtender() == true
             myIntakeExtenderArm.retractIntactArm(gamepad2.left_stick_y);
+        } else if (gamepad2.left_stick_y < -.1) {            //&& myRevColorDistance.checkSensorExtender() == true
+            myIntakeExtenderArm.extendIntakeArm(gamepad2.left_stick_y);
         } else {
             myIntakeExtenderArm.stopIntakeArm();
         }

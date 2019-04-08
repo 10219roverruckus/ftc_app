@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
+import org.firstinspires.ftc.teamcode.robot.old.IntakeRotator;
+
 
 public class MMMCraterLanderScorer {
     public MMMCraterLanderScorer () {
@@ -31,7 +33,7 @@ public class MMMCraterLanderScorer {
     final double SPD_DRIVE_HIGH = .80;
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
-    final long sleepTime = 50;
+    final long sleepTime = 20;
     final int servoRotateTeamMarker = 1000;
 
 
@@ -44,34 +46,148 @@ public class MMMCraterLanderScorer {
 
         //find location of the mineral using camera
 
-        if (cameraGoldLocation < 200 && cameraGoldLocation > 1) {
-            goldPosition = GoldPosition.RIGHT;                           //commented out while camera does not work
-        } else if (cameraGoldLocation > 200) {                            //program works perfectly DO NOT CHANGE THE CODE
-            goldPosition = GoldPosition.MIDDLE;
+        if (cameraGoldLocation < 320 && cameraGoldLocation > 50) {
+            goldPosition = GoldPosition.MIDDLE;                           //commented out while camera does not work
+        } else if (cameraGoldLocation > 320) {                            //program works perfectly DO NOT CHANGE THE CODE
+            goldPosition = GoldPosition.RIGHT;
         } else {
             goldPosition = GoldPosition.LEFT;
         }
 //        goldPosition = GoldPosition.LEFT;
     }
 
-    public void hookDriveOff (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor) {
+    public void hookDriveOff ( MecanumDrive myMechDrive, LiftMotor myLiftMotor) {
 
         myLiftMotor.extendLiftMotorFullyEncoders();                        // using encoders rather than distance sensor
-        linearOp.sleep(sleepTime);
+      //  linearOp.sleep(sleepTime);
         //Change values if done so in MecanumMineralMinerCrater!
-        myMechDrive.driveForward (SPD_DRIVE_MED, .5);                  // get away from the lander
+        myMechDrive.driveForward (SPD_DRIVE_HIGH, .3);                  // get away from the lander
+      //  linearOp.sleep(sleepTime);
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, 1.2);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+     //   linearOp.sleep(sleepTime);
+
+    }
+
+
+    public void driveAwayFromHook (GyroCompetition myGyro, MecanumDrive myMechDrive) {
+
+        myMechDrive.driveForward(SPD_DRIVE_HIGH, 2.2);
+       // linearOp.sleep(sleepTime);
+        myGyro.gyroOrientMecanum(46, myMechDrive);
+        myMechDrive.stopMotors();
+
+        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .8);
+
+
+     //   linearOp.sleep(sleepTime);
+
+    }
+
+//    public void releaseTM (IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor) {
+//        myIntakeRotator.loweredRotater();
+//    //    linearOp.sleep(sleepTime);
+//
+//        myIntakeExtenderArm.extendIntakeArm(1);          //extend extender to knock off mineral
+//     //   linearOp.sleep(2000);
+//        myIntakeExtenderArm.stopIntakeArm();
+//     //   linearOp.sleep(sleepTime);
+//
+//        myIntakeSpinnerMotor.intakeSpinner(-1);
+//     //   linearOp.sleep(servoRotateTeamMarker);
+//
+//
+//        myIntakeExtenderArm.retractIntactArm(1);              // retract extender
+//    //    linearOp.sleep(2000);
+//        myIntakeExtenderArm.stopIntakeArm();
+//    //    linearOp.sleep(sleepTime);
+//
+//        myIntakeSpinnerMotor.stopMotors();
+//     //   linearOp.sleep(sleepTime);
+//
+//        myIntakeRotator.raisedRotater();
+//     //   linearOp.sleep(sleepTime);
+//    }
+
+    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor) {
+        // extend arm and lower rotator
+        // rotator will spin to release TM
+        // extender will retract and rotator will raise
+
+        myIntakeRotator.loweredRotater();
         linearOp.sleep(sleepTime);
-        myMechDrive.strafeRight(SPD_DRIVE_HIGH, .6);                  // DRIVES FORWARD SHORT DISTANCE TO GET OFF LANDER
+
+        myIntakeExtenderArm.extendIntakeArm(1);          //extend extender to knock off mineral
+        linearOp.sleep(2000);
+        myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
-        myMechDrive.driveBackward(SPD_DRIVE_HIGH, .51);
+
+        myIntakeSpinnerMotor.intakeSpinner(-1);
+        linearOp.sleep(servoRotateTeamMarker);
+
+
+        myIntakeExtenderArm.retractIntactArm(1);              // retract extender
+        linearOp.sleep(2000);
+        myIntakeExtenderArm.stopIntakeArm();
+        linearOp.sleep(sleepTime);
+
+        myIntakeSpinnerMotor.stopMotors();
+        linearOp.sleep(sleepTime);
+
+        myIntakeRotator.raisedRotater();
         linearOp.sleep(sleepTime);
     }
 
 
-    public void driveAwayFromHook (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor) {
+    public void goToStartPosition (GyroCompetition myGyro, MecanumDrive myMechDrive) {
+
+        myMechDrive.strafeLeft(SPD_DRIVE_HIGH, .8);
+
+        myGyro.gyroOrientMecanum(-5, myMechDrive);
+        myMechDrive.stopMotors();
+        //linearOp.sleep(sleepTime);
+
+        myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.2);
+        //linearOp.sleep(sleepTime);
+
+        myGyro.gyroOrientMecanum(0, myMechDrive);
+        myMechDrive.stopMotors();
+        //linearOp.sleep(sleepTime);
+    }
+
+
+    public void collectMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor, IntakeRotaterServos myIntakeRotator) {
 
 
     }
+
+
+    public void scoreMineral ( ) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void codeExamples (GyroCompetition myGyro, MecanumDrive myMechDrive, LiftMotor myLiftMotor, IntakeRotaterServos myIntakeRotator, IntakeExtenderArm myIntakeExtenderArm, IntakeSpinnerMotor myIntakeSpinnerMotor, MineralLift myMineralLift, LanderServo myLanderServo) {
 

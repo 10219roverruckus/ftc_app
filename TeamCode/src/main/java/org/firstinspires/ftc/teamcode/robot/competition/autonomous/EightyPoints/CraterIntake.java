@@ -95,6 +95,7 @@ public class CraterIntake extends LinearOpMode {
 
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeRotator.setLinearOp(this);
+        myIntakeRotator.raisedRotater();
 
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myIntakeSpinnerMotor.setLinearOp(this);
@@ -228,12 +229,14 @@ public class CraterIntake extends LinearOpMode {
              * strafe left slightly off wall
             */
 
-            myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
+            myMineralMinerCrater.RotateDriveTowardDepot(myGyro, myMechDrive, myIntakeExtenderArm);  // Aligns to Wall, Drives to Depot, Drops off Mineral, and drives back to Crater
 
             sleep(sleepTime);
             idle();
     //Does the team marker thinkg - just extends into depot w/o driving forward.
             //ROBOT DOES NOT MOVE HERE.
+
+            //commented because extender is not geared up yet
             myMineralMinerCrater.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor);
             sleep(sleepTime);
             idle();

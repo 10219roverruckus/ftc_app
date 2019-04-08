@@ -25,8 +25,8 @@ public class LiftMotor {
 
     // these are the two variables to change if the lift is not working in auto
 
-    double getMaxArmExtendTimeEncoder = 3.4;
-    int liftTargetPosition = -5600;
+    double getMaxArmExtendTimeEncoder = 4;
+    int liftTargetPosition = -5450;
 
 
     // ##########################  NO CHANGES BELOW THIS LINE #######################
@@ -106,7 +106,7 @@ public class LiftMotor {
         while (liftMotor.getCurrentPosition() > liftTargetPosition && linearOp.opModeIsActive()) {
             linearOp.telemetry.addData("ENCODER", liftMotor.getCurrentPosition());
             linearOp.telemetry.update();
-            liftMotor.setPower(-.75);
+            liftMotor.setPower(-1);
             if (armRunTime.time() >= getMaxArmExtendTimeEncoder) {
                 linearOp.telemetry.addData("ENCODER", liftMotor.getCurrentPosition());
                 linearOp.telemetry.addLine("BREAK");

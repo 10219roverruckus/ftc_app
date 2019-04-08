@@ -106,6 +106,7 @@ public class DepotIntake extends LinearOpMode  {
 
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeRotator.setLinearOp(this);
+        myIntakeRotator.raisedRotater();
 
 
         myIntakeExtenderArm  = new IntakeExtenderArm (hardwareMap.dcMotor.get("intake_extender_arm"));

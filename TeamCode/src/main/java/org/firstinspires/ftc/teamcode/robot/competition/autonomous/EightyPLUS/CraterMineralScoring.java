@@ -7,6 +7,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -46,21 +47,16 @@ public class CraterMineralScoring extends LinearOpMode {
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
-    MecanumMineralMiner myMineralMiner;
 //    RevColorDistance myRevColorDistance;
 
-    MecanumMineralMinerCrater myMineralMinerCrater;
-    MecanumMineralMinerDepot myMineralMinerDepot;
-
-    MMMCraterLanderScorer myMMMCraterLanderScorer;
-//    MecanumMineralMinerAll myMineralMinerAll;
-
+    MMMCraterLanderScorer myMineralMinerScorer;
     LiftMotor myLiftMotor;
     IntakeExtenderArm myIntakeExtenderArm;
     IntakeRotaterServos myIntakeRotator;
     IntakeSpinnerMotor myIntakeSpinnerMotor;
     LanderServo myLanderServo;
     MineralLift myMineralLift;
+
 
 
     private GoldAlignDetector detector;
@@ -82,8 +78,7 @@ public class CraterMineralScoring extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-
-        final long sleepTime = 100;
+        final long sleepTime = 20;
         final double SPD_DRIVE_MED = .5;
 
 
@@ -93,14 +88,13 @@ public class CraterMineralScoring extends LinearOpMode {
         myGyro = new GyroCompetition(hardwareMap.get(BNO055IMU.class, "imu"));
         myGyro.setLinearOp(this);
 
-        myMineralMiner = new MecanumMineralMiner();
-        myMineralMiner.setLinearOp(this);
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myLiftMotor.setLinearOp(this);
 
         myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
         myIntakeRotator.setLinearOp(this);
+        myIntakeRotator.raisedRotater();
 
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myIntakeSpinnerMotor.setLinearOp(this);
@@ -117,11 +111,7 @@ public class CraterMineralScoring extends LinearOpMode {
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
-        myMineralMinerCrater = new MecanumMineralMinerCrater();
-        myMineralMinerCrater.setLinearOp(this);
-
-        myMineralMinerDepot = new MecanumMineralMinerDepot();
-        myMineralMinerDepot.setLinearOp(this);
+        myMineralMinerScorer = new MMMCraterLanderScorer();
 
 //        myMineralMinerAll = new MecanumMineralMinerAll();
 //        myMineralMinerAll.setLinearOp(this);
@@ -213,22 +203,27 @@ public class CraterMineralScoring extends LinearOpMode {
             detector.goldXPos = 0;                                                              // sets gold position to zero, so the camera does not guess the position
             sleep(100);
 
-            myMineralMinerCrater.findingMineralCamera(detector.getXPosition());                      // detect gold position
+            myMineralMinerScorer.findingMineralCamera(detector.getXPosition());                      // detect gold position
             vuforia.stop();
             sleep(sleepTime);
             idle();
 
-            myMMMCraterLanderScorer.hookDriveOff(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor);
+            myMineralMinerScorer.hookDriveOff(myMechDrive, myLiftMotor);
             sleep(sleepTime);
+            idle();
 
-            myMMMCraterLanderScorer.driveAwayFromHook(myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor);
+            myMineralMinerScorer.driveAwayFromHook( myGyro, myMechDrive);
             sleep(sleepTime);
+            idle();
 
             //INSERT NEW CODE AFTER HERE
             //END NEW CODE BEFORE requestOpModeStop();
 
-            myMMMCraterLanderScorer.codeExamples (myGyro, myMechDrive, myLiftMotor, myIntakeRotator, myIntakeExtenderArm, myIntakeSpinnerMotor, myMineralLift, myLanderServo);
+//            myMineralMinerScorer.LowerReleaseTM (myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor);
+//            sleep(sleepTime);
+//            idle();
 
+            myMineralMinerScorer.goToStartPosition(myGyro, myMechDrive);
             sleep(sleepTime);
             idle();
 
