@@ -171,6 +171,8 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
 
     public void telemetryOutput() {
+        telemetry.addData("SPEED MULTIPLYER", speedMultiplier);
+        telemetry.addData("REVERSE MODE", reverseModeToggle);
         telemetry.addData("pwr", "FL mtr: " + frontLeftSpeed);
         telemetry.addData("pwr", "FR mtr: " + frontRightSpeed);
         telemetry.addData("pwr", "RL mtr: " + rearLeftSpeed);

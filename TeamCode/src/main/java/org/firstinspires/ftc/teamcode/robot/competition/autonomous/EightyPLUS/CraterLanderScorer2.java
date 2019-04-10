@@ -30,6 +30,7 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Lander
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
 import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
+import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - Competition 80 PLUS")
+@Autonomous(name = "Crater - Competition 80 PLUS ")
 //@Disabled
 public class CraterLanderScorer2 extends LinearOpMode {
 
@@ -241,6 +242,11 @@ public class CraterLanderScorer2 extends LinearOpMode {
             myMineralMinerScorer.scoreMineral(myLanderServo, myMineralLift, myRevColorDistance);
             sleep(sleepTime);
             idle();
+
+            myMineralMinerScorer.additionalMineralScoring(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor, myLanderServo, myMineralLift, myRevColorDistance, myGyro, myMechDrive);
+            sleep(sleepTime);
+            idle();
+
 
             requestOpModeStop();
         }

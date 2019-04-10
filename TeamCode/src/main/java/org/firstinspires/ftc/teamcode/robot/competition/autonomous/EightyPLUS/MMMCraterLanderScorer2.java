@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot.competition.autonomous.EightyPLUS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
@@ -36,6 +37,7 @@ public class MMMCraterLanderScorer2 {
     final double SPD_ARM_MED = .5;
     final long sleepTime = 100;
     final int servoRotateTeamMarker = 1000;
+
 
 
     // variables and constants used by color sensor
@@ -108,14 +110,14 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.extendIntakeArm(1);          //extend extender to knock off mineral
-        linearOp.sleep(2000);
+        linearOp.sleep(1800);
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
         myIntakeSpinnerMotor.intakeSpinner(-1);
 
         myIntakeExtenderArm.retractIntactArm(1);              // retract extender
-        linearOp.sleep(2000);
+        linearOp.sleep(1800);
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
@@ -143,13 +145,13 @@ public class MMMCraterLanderScorer2 {
 
         switch (goldPosition) {
             case LEFT:
-                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.2);
+                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.6);     // was 2.2
                 linearOp.sleep(sleepTime);
 
                 myMechDrive.rotateRight(SPD_DRIVE_HIGH, .5);
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-45, myMechDrive);
+                myGyro.gyroOrientMecanum(-58, myMechDrive);
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -163,10 +165,12 @@ public class MMMCraterLanderScorer2 {
 
                 myIntakeSpinnerMotor.intakeSpinner(1);
 
-
-                myMechDrive.driveForward(SPD_DRIVE_HIGH, 1);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .8);
                 linearOp.sleep(sleepTime);
 
+                myGyro.gyroOrientMecanum(-76, myMechDrive);
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
 
 
                 break;
@@ -194,9 +198,16 @@ public class MMMCraterLanderScorer2 {
                 myIntakeSpinnerMotor.intakeSpinner(1);
 
 
-                myMechDrive.driveForward(SPD_DRIVE_HIGH, 1);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
                 linearOp.sleep(sleepTime);
+
+                myGyro.gyroOrientMecanum(-95, myMechDrive);
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+
              break;
+
+
 
             case RIGHT:
 
@@ -254,10 +265,11 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(1200);
 
         myLanderServo.landerServoScore();
-        linearOp.sleep(500);
+        linearOp.sleep(700);
 
         myLanderServo.landerServoCollect();
         linearOp.sleep(200);
+
 
         while (myRevColorDistance.checkSensorMineralLift() == false) {
             myMineralLift.LowerMineralLift();
@@ -268,16 +280,140 @@ public class MMMCraterLanderScorer2 {
 
     }
 
-    public void additionalMineralScoring (Gyro myGyro, IntakeExtenderArm myIntakeExtenderArm, MecanumDrive myMechDrive) {
+    public void additionalMineralScoring (IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotater, IntakeSpinnerMotor myIntakeSpinnerMotor, LanderServo myLanderServo, MineralLift myMineralLift, RevColorDistance myRevColorDistance, GyroCompetition myGyro, MecanumDrive myMechDrive) {
 
-        myGyro.gyroOrientMecanum(-111, myMechDrive);
-        myMechDrive.stopMotors();
+
+        switch (goldPosition) {
+            case LEFT:
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(300);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeSpinnerMotor.intakeSpinner(1);
+                linearOp.sleep(500);
+
+                myIntakeRotater.loweredRotater();
+                linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(200);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeRotater.raisedRotater();
+                linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(600);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeSpinnerMotor.stopMotors();
+
+                break;
+            case MIDDLE:
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(300);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeSpinnerMotor.intakeSpinner(1);
+                linearOp.sleep(500);
+
+                myIntakeRotater.loweredRotater();
+                linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(300);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeRotater.raisedRotater();
+                linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(700);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+                myIntakeSpinnerMotor.stopMotors();
+
+
+                break;
+            case RIGHT:
+
+                myGyro.gyroOrientMecanum(-105, myMechDrive);
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+                myIntakeSpinnerMotor.intakeSpinner(1);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(200);
+                myIntakeExtenderArm.stopIntakeArm();
+//                linearOp.sleep(sleepTime);
+
+//                linearOp.sleep(500);
+
+                myIntakeRotater.loweredRotater();
+                linearOp.sleep(200);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(400);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(200);
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(200);
+
+                myIntakeRotater.raisedRotater();
+                linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(400);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(sleepTime);
+
+//                myIntakeSpinnerMotor.stopMotors();
+
+                myGyro.gyroOrientMecanum(-114, myMechDrive);
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+                break;
+        }
+
+        myIntakeSpinnerMotor.intakeSpinner(-1);
+        linearOp.sleep(400);
+        myIntakeSpinnerMotor.stopMotors();
+        linearOp.sleep(200);
+        myLanderServo.landerServoTravel();
+        linearOp.sleep(200);
+
+
+        myMineralLift.RaiseMineralLift();
+        linearOp.sleep(1200);
+
+        myLanderServo.landerServoScore();
+        linearOp.sleep(900);
+
+        myLanderServo.landerServoCollect();
+        linearOp.sleep(200);
+
+
+        while (myRevColorDistance.checkSensorMineralLift() == false) {
+            myMineralLift.LowerMineralLift();
+        }
+        myMineralLift.stopMotors();
         linearOp.sleep(sleepTime);
 
-        myIntakeExtenderArm.extendIntakeArm(1);
-        linearOp.sleep(700);
-        myIntakeExtenderArm.stopIntakeArm();
 
+        myIntakeExtenderArm.extendIntakeArm(1);            // extending to grab second cycle
+        linearOp.sleep(300);
+        myIntakeExtenderArm.stopIntakeArm();
+        linearOp.sleep(sleepTime);
+
+        myIntakeRotater.loweredRotater();
     }
 
 
