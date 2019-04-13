@@ -165,10 +165,10 @@ public class MMMCraterLanderScorer2 {
 
                 myIntakeSpinnerMotor.intakeSpinner(1);
 
-                myMechDrive.driveForward(SPD_DRIVE_HIGH, .8);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, .65);       // was .8
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-76, myMechDrive);
+                myGyro.gyroOrientMecanum(-81, myMechDrive);         // was -76
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -247,8 +247,8 @@ public class MMMCraterLanderScorer2 {
         myIntakeRotator.raisedRotater();
         linearOp.sleep(400);
 
-        myIntakeSpinnerMotor.intakeSpinner(-1);
-        linearOp.sleep(500);
+        myIntakeSpinnerMotor.intakeSpinner(-1);                         // mineral is getting caught in intake____ was 600
+        linearOp.sleep(700);
 
         myIntakeExtenderArm.stopIntakeArm();
         myIntakeSpinnerMotor.stopMotors();
@@ -271,7 +271,7 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(200);
 
 
-        while (myRevColorDistance.checkSensorMineralLift() == false) {
+        while (myRevColorDistance.checkSensorMineralLift() == false && linearOp.opModeIsActive()) {
             myMineralLift.LowerMineralLift();
         }
         myMineralLift.stopMotors();
@@ -286,61 +286,71 @@ public class MMMCraterLanderScorer2 {
         switch (goldPosition) {
             case LEFT:
 
-                myIntakeExtenderArm.extendIntakeArm(1);
-                linearOp.sleep(300);
-                myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
-
-                myIntakeSpinnerMotor.intakeSpinner(1);
-                linearOp.sleep(500);
-
-                myIntakeRotater.loweredRotater();
+                myGyro.gyroOrientMecanum(-81, myMechDrive);     //-76
+                myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(1);
                 linearOp.sleep(200);
                 myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
+//                linearOp.sleep(sleepTime);
+
+//                linearOp.sleep(500);
+
+                myIntakeSpinnerMotor.intakeSpinner(1);
+
+                myIntakeRotater.loweredRotater();
+                linearOp.sleep(200);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(400);
+                myIntakeExtenderArm.stopIntakeArm();
+                linearOp.sleep(200);
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(200);
 
                 myIntakeRotater.raisedRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractIntactArm(1);
-                linearOp.sleep(600);
+                linearOp.sleep(400);
                 myIntakeExtenderArm.stopIntakeArm();
                 linearOp.sleep(sleepTime);
 
-                myIntakeSpinnerMotor.stopMotors();
 
                 break;
             case MIDDLE:
 
-                myIntakeExtenderArm.extendIntakeArm(1);
-                linearOp.sleep(300);
-                myIntakeExtenderArm.stopIntakeArm();
+                myGyro.gyroOrientMecanum(-95, myMechDrive);
+                myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
+
+                myIntakeExtenderArm.extendIntakeArm(1);
+                linearOp.sleep(200);
+                myIntakeExtenderArm.stopIntakeArm();
+//                linearOp.sleep(sleepTime);
+
+//                linearOp.sleep(500);
 
                 myIntakeSpinnerMotor.intakeSpinner(1);
-                linearOp.sleep(500);
 
                 myIntakeRotater.loweredRotater();
-                linearOp.sleep(sleepTime);
+                linearOp.sleep(200);
 
                 myIntakeExtenderArm.extendIntakeArm(1);
-                linearOp.sleep(300);
+                linearOp.sleep(400);
                 myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
+                linearOp.sleep(200);
+                myIntakeExtenderArm.retractIntactArm(1);
+                linearOp.sleep(200);
 
                 myIntakeRotater.raisedRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.retractIntactArm(1);
-                linearOp.sleep(700);
+                linearOp.sleep(400);
                 myIntakeExtenderArm.stopIntakeArm();
                 linearOp.sleep(sleepTime);
-
-                myIntakeSpinnerMotor.stopMotors();
-
 
                 break;
             case RIGHT:
@@ -401,7 +411,7 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(200);
 
 
-        while (myRevColorDistance.checkSensorMineralLift() == false) {
+        while (myRevColorDistance.checkSensorMineralLift() == false && linearOp.opModeIsActive()) {
             myMineralLift.LowerMineralLift();
         }
         myMineralLift.stopMotors();
