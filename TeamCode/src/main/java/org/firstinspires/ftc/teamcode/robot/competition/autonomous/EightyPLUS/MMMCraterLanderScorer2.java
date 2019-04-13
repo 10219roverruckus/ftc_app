@@ -35,7 +35,7 @@ public class MMMCraterLanderScorer2 {
     final double SPD_DRIVE_HIGH = .75; // was .8 but for testing we slowed it down
     final double SPD_DRIVE_MAX = 1.0;
     final double SPD_ARM_MED = .5;
-    final long sleepTime = 100;
+    final long sleepTime = 50;
     final int servoRotateTeamMarker = 1000;
 
 
@@ -85,9 +85,12 @@ public class MMMCraterLanderScorer2 {
         myMechDrive.driveForward(SPD_DRIVE_HIGH, 2.2);
         linearOp.sleep(sleepTime);
 
-        myIntakeExtender.retractIntactArm(SPD_ARM_MED);
-        linearOp.sleep(300);
+        myIntakeExtender.retractIntactArm(1);
+        linearOp.sleep(100);
         myIntakeExtender.stopIntakeArm();
+
+        myMechDrive.rotateLeft(SPD_DRIVE_HIGH, .5);
+        linearOp.sleep(sleepTime);
 
         myGyro.gyroOrientMecanum(42, myMechDrive);      // was 46
         myMechDrive.stopMotors();
@@ -110,14 +113,14 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.extendIntakeArm(1);          //extend extender to knock off mineral
-        linearOp.sleep(1800);
+        linearOp.sleep(1200);                   // was 1400
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
         myIntakeSpinnerMotor.intakeSpinner(-1);
 
         myIntakeExtenderArm.retractIntactArm(1);              // retract extender
-        linearOp.sleep(1800);
+        linearOp.sleep(1250);               // was 1450
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
@@ -201,7 +204,7 @@ public class MMMCraterLanderScorer2 {
                 myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-95, myMechDrive);
+                myGyro.gyroOrientMecanum(-98, myMechDrive);                 // was -95
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -211,13 +214,13 @@ public class MMMCraterLanderScorer2 {
 
             case RIGHT:
 
-                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.42);
+                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.5);
                 linearOp.sleep(sleepTime);
 
                 myMechDrive.rotateRight(SPD_DRIVE_HIGH, 1.5);
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-113, myMechDrive);
+                myGyro.gyroOrientMecanum(-110, myMechDrive);            // was -112  was about to mis mineral
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -235,7 +238,9 @@ public class MMMCraterLanderScorer2 {
                 myMechDrive.driveForward(SPD_DRIVE_HIGH, .95);
                 linearOp.sleep(300);
 
-                myGyro.gyroOrientMecanum(-114, myMechDrive);
+                myMechDrive.driveBackward(SPD_DRIVE_HIGH, .25);         // not break the plane of the crater
+
+                myGyro.gyroOrientMecanum(-115, myMechDrive);            // was -114
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
              break;
@@ -247,8 +252,8 @@ public class MMMCraterLanderScorer2 {
         myIntakeRotator.raisedRotater();
         linearOp.sleep(400);
 
-        myIntakeSpinnerMotor.intakeSpinner(-1);                         // mineral is getting caught in intake____ was 600
-        linearOp.sleep(700);
+        myIntakeSpinnerMotor.intakeSpinner(-1);                         // mineral is getting caught in intake____ was 700
+        linearOp.sleep(900);
 
         myIntakeExtenderArm.stopIntakeArm();
         myIntakeSpinnerMotor.stopMotors();
@@ -262,7 +267,7 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(100);
 
         myMineralLift.RaiseMineralLift();
-        linearOp.sleep(1200);
+        linearOp.sleep(1500);
 
         myLanderServo.landerServoScore();
         linearOp.sleep(700);
@@ -321,7 +326,7 @@ public class MMMCraterLanderScorer2 {
                 break;
             case MIDDLE:
 
-                myGyro.gyroOrientMecanum(-95, myMechDrive);
+                myGyro.gyroOrientMecanum(-98, myMechDrive);             // was -95
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -387,14 +392,14 @@ public class MMMCraterLanderScorer2 {
 
 //                myIntakeSpinnerMotor.stopMotors();
 
-                myGyro.gyroOrientMecanum(-114, myMechDrive);
+                myGyro.gyroOrientMecanum(-115, myMechDrive);            // was -114
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 break;
         }
 
         myIntakeSpinnerMotor.intakeSpinner(-1);
-        linearOp.sleep(400);
+        linearOp.sleep(900);
         myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(200);
         myLanderServo.landerServoTravel();
@@ -402,7 +407,7 @@ public class MMMCraterLanderScorer2 {
 
 
         myMineralLift.RaiseMineralLift();
-        linearOp.sleep(1200);
+        linearOp.sleep(1500);
 
         myLanderServo.landerServoScore();
         linearOp.sleep(900);
@@ -419,7 +424,7 @@ public class MMMCraterLanderScorer2 {
 
 
         myIntakeExtenderArm.extendIntakeArm(1);            // extending to grab second cycle
-        linearOp.sleep(300);
+        linearOp.sleep(400);
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
