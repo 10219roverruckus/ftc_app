@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot.competition.autonomous.EightyPLUS;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robot.competition.autonomous.GoldPosition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
@@ -13,12 +12,11 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
-import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 
 
-public class MMMCraterLanderScorer2 {
+public class MMMDepotLanderScorer2 {
 
-    public MMMCraterLanderScorer2() {
+    public MMMDepotLanderScorer2() {
 
     }
 
@@ -80,25 +78,13 @@ public class MMMCraterLanderScorer2 {
     }
 
 
-    public void driveAwayFromHook (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeExtenderArm myIntakeExtender) {
+    public void alignForDroppingTM (GyroCompetition myGyro, MecanumDrive myMechDrive) {
 
-        myMechDrive.driveForward(SPD_DRIVE_HIGH, 2.2);
+        myMechDrive.rotateRight(SPD_DRIVE_HIGH, .8);
         linearOp.sleep(sleepTime);
 
-        myIntakeExtender.retractIntactArm(1);
-        linearOp.sleep(100);
-        myIntakeExtender.stopIntakeArm();
-
-        myMechDrive.rotateLeft(SPD_DRIVE_HIGH, .5);
+        myGyro.gyroOrientMecanum(-80, myMechDrive);
         linearOp.sleep(sleepTime);
-
-        myGyro.gyroOrientMecanum(42, myMechDrive);      // was 46
-        myMechDrive.stopMotors();
-        linearOp.sleep(sleepTime);
-
-        myMechDrive.strafeRight(SPD_DRIVE_MED, 1);      // .3
-        linearOp.sleep(sleepTime);
-
     }
 
 
@@ -113,45 +99,45 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(sleepTime);
 
         myIntakeExtenderArm.extendIntakeArm(1);          //extend extender to knock off mineral
-        linearOp.sleep(1200);                   // was 1400
+        linearOp.sleep(500);                   // was 1400
+        myIntakeExtenderArm.stopIntakeArm();
+        linearOp.sleep(sleepTime);
+
+        myIntakeRotator.loweredRotater();
+        linearOp.sleep(sleepTime);
+
+        myIntakeExtenderArm.extendIntakeArm(1);
+        linearOp.sleep(700);
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
         myIntakeSpinnerMotor.intakeSpinner(-1);
 
         myIntakeExtenderArm.retractIntactArm(1);              // retract extender
-        linearOp.sleep(1250);               // was 1450
+        linearOp.sleep(700);               // was 1450
+        myIntakeExtenderArm.stopIntakeArm();
+        linearOp.sleep(sleepTime);
+
+        myIntakeRotator.raisedRotater();
+        linearOp.sleep(sleepTime);
+
+        myIntakeExtenderArm.retractIntactArm(1);          //extend extender to knock off mineral
+        linearOp.sleep(500);                   // was 1400
         myIntakeExtenderArm.stopIntakeArm();
         linearOp.sleep(sleepTime);
 
         myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(sleepTime);
-
-        myIntakeRotator.raisedRotater();
-        linearOp.sleep(sleepTime);
     }
 
-
-    public void goToStartPosition (GyroCompetition myGyro, MecanumDrive myMechDrive) {
-
-        myMechDrive.strafeLeft(SPD_DRIVE_HIGH, 1.2);    // was .8
-
-        myGyro.gyroOrientMecanum(-8, myMechDrive);      // was -5
-        myMechDrive.stopMotors();
-        linearOp.sleep(sleepTime);
-
-
-    }
 
 
     public void knockOffMineral (GyroCompetition myGyro, MecanumDrive myMechDrive, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor, IntakeExtenderArm myIntakeExtenderArm) {
 
         switch (goldPosition) {
             case LEFT:
-                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 1.6);     // was 2.2
-                linearOp.sleep(sleepTime);
 
-                myMechDrive.rotateRight(SPD_DRIVE_HIGH, .5);
+                myMechDrive.rotateLeft(SPD_DRIVE_HIGH, .5);
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(-58, myMechDrive);
@@ -160,7 +146,7 @@ public class MMMCraterLanderScorer2 {
 
 
                 myIntakeExtenderArm.retractIntactArm(1);
-                linearOp.sleep(300);
+                linearOp.sleep(200);
                 myIntakeExtenderArm.stopIntakeArm();
 
                 myIntakeRotator.loweredRotater();
@@ -180,26 +166,18 @@ public class MMMCraterLanderScorer2 {
 
             case MIDDLE:
 
-                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.2);
-                linearOp.sleep(sleepTime);
-
-                myMechDrive.rotateRight(SPD_DRIVE_HIGH, 1);
-                linearOp.sleep(sleepTime);
-
                 myGyro.gyroOrientMecanum(-80, myMechDrive);
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-
                 myIntakeExtenderArm.retractIntactArm(1);
-                linearOp.sleep(300);
+                linearOp.sleep(200);
                 myIntakeExtenderArm.stopIntakeArm();
 
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeSpinnerMotor.intakeSpinner(1);
-
 
                 myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
                 linearOp.sleep(sleepTime);
@@ -214,26 +192,21 @@ public class MMMCraterLanderScorer2 {
 
             case RIGHT:
 
-                myMechDrive.driveBackward(SPD_DRIVE_HIGH, 2.5);
-                linearOp.sleep(sleepTime);
-
-                myMechDrive.rotateRight(SPD_DRIVE_HIGH, 1.5);
+                myMechDrive.rotateRight(SPD_DRIVE_HIGH, 1);
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(-112, myMechDrive);            // was -112  was about to mis mineral
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
-
                 myIntakeExtenderArm.retractIntactArm(1);
-                linearOp.sleep(300);
+                linearOp.sleep(200);
                 myIntakeExtenderArm.stopIntakeArm();
 
                 myIntakeRotator.loweredRotater();
                 linearOp.sleep(sleepTime);
 
                 myIntakeSpinnerMotor.intakeSpinner(1);
-
 
                 myMechDrive.driveForward(SPD_DRIVE_HIGH, .95);
                 linearOp.sleep(300);

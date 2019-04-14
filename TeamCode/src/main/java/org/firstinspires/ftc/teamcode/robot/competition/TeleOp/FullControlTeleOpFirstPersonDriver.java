@@ -43,7 +43,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     double rearRightSpeed;
 
     boolean reverseModeToggle;
-    double speedMultiplier = 1.0;
+    double speedMultiplier = .6;
 
     boolean initTeleOpToggle;
 

@@ -18,8 +18,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.EightyPoints.MecanumMineralMinerCrater;
-import org.firstinspires.ftc.teamcode.robot.competition.autonomous.EightyPoints.MecanumMineralMinerDepot;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.RevColorDistance;
@@ -29,9 +27,6 @@ import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.Intake
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LanderServo;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.LiftMotor;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.motors.MineralLift;
-import org.firstinspires.ftc.teamcode.robot.competition.oldClasses.MecanumMineralMiner;
-import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.constructor.sensors.GyroCompetition;
-import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +39,15 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - Competition 80 PLUS")
+@Autonomous(name = "Depot - Competition 80 PLUS")
 //@Disabled
-public class CraterLanderScorer2 extends LinearOpMode {
+public class DepotLanderScorer2 extends LinearOpMode {
 
     MecanumDrive myMechDrive;
 
     GyroCompetition myGyro;
 
-    MMMCraterLanderScorer2 myMineralMinerScorer;
+    MMMDepotLanderScorer2 myMineralMinerScorer;
 
 
     LiftMotor myLiftMotor;
@@ -114,7 +109,7 @@ public class CraterLanderScorer2 extends LinearOpMode {
 
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
-        myMineralMinerScorer = new MMMCraterLanderScorer2();
+        myMineralMinerScorer = new MMMDepotLanderScorer2();
         myMineralMinerScorer.setLinearOp(this);
 
 
@@ -221,19 +216,15 @@ public class CraterLanderScorer2 extends LinearOpMode {
             idle();
 
 
-            myMineralMinerScorer.driveAwayFromHook(myGyro, myMechDrive, myIntakeExtenderArm);
+            myMineralMinerScorer.alignForDroppingTM(myGyro, myMechDrive);
             sleep(sleepTime);
             idle();
 
 
             myMineralMinerScorer.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor);
-
             sleep(sleepTime);
             idle();
 
-            myMineralMinerScorer.goToStartPosition(myGyro, myMechDrive);
-            sleep(sleepTime);
-            idle();
 
             myMineralMinerScorer.knockOffMineral(myGyro, myMechDrive, myIntakeRotator, myIntakeSpinnerMotor, myIntakeExtenderArm);
             sleep(sleepTime);
