@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.DriveMotors;
 
 @Autonomous(name = "ENCODERS - RUN WITHOUT ENCODERS", group = "TESTING")
-//@Disabled
+@Disabled
 public class runWithoutEncoders extends LinearOpMode {
 
     DcMotor testMotor;

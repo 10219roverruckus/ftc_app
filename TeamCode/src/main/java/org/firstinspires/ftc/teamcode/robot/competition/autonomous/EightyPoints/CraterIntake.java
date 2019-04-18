@@ -36,7 +36,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 
-@Autonomous(name = "Crater - Competition Intake")
+@Autonomous(name = "Crater - Competition Standard")
 //@Disabled
 public class CraterIntake extends LinearOpMode {
 

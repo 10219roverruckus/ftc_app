@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name = "ENCODERS - RUN WITH ENCODERS", group = "TESTING")
-//@Disabled
+@Disabled
 
 public class runWithEncoders extends LinearOpMode {
 

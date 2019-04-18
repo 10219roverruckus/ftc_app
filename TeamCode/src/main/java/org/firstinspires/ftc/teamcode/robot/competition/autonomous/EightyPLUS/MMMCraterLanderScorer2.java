@@ -102,10 +102,13 @@ public class MMMCraterLanderScorer2 {
     }
 
 
-    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor) {
+    public void LowerReleaseTM(IntakeExtenderArm myIntakeExtenderArm, IntakeRotaterServos myIntakeRotator, IntakeSpinnerMotor myIntakeSpinnerMotor, MecanumDrive myMechDrive) {
         // extend arm and lower rotator
         // rotator will spin to release TM
         // extender will retract and rotator will raise
+
+        myMechDrive.driveForward(SPD_DRIVE_MED, .3);
+        linearOp.sleep(sleepTime);
 
         myIntakeSpinnerMotor.intakeSpinner(1);
 
@@ -129,6 +132,8 @@ public class MMMCraterLanderScorer2 {
 
         myIntakeRotator.raisedRotater();
         linearOp.sleep(sleepTime);
+
+        myMechDrive.driveBackward(SPD_DRIVE_MED, .3);
     }
 
 
@@ -201,7 +206,7 @@ public class MMMCraterLanderScorer2 {
                 myIntakeSpinnerMotor.intakeSpinner(1);
 
 
-                myMechDrive.driveForward(SPD_DRIVE_HIGH, .7);
+                myMechDrive.driveForward(SPD_DRIVE_HIGH, 1);
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(-98, myMechDrive);                 // was -95
@@ -319,8 +324,8 @@ public class MMMCraterLanderScorer2 {
 
                 myIntakeExtenderArm.retractIntactArm(1);
                 linearOp.sleep(550);
-                myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
+//                myIntakeExtenderArm.stopIntakeArm();
+//                linearOp.sleep(sleepTime);
 
 
                 break;
@@ -331,7 +336,7 @@ public class MMMCraterLanderScorer2 {
 //                linearOp.sleep(sleepTime);
 
                 myIntakeExtenderArm.extendIntakeArm(1);
-                linearOp.sleep(300);
+                linearOp.sleep(150);                // was 300
                 myIntakeExtenderArm.stopIntakeArm();
 //                linearOp.sleep(sleepTime);
 
@@ -354,8 +359,8 @@ public class MMMCraterLanderScorer2 {
 
                 myIntakeExtenderArm.retractIntactArm(1);
                 linearOp.sleep(550);
-                myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
+//                myIntakeExtenderArm.stopIntakeArm();
+//                linearOp.sleep(sleepTime);
 
                 break;
             case RIGHT:
@@ -387,8 +392,8 @@ public class MMMCraterLanderScorer2 {
 
                 myIntakeExtenderArm.retractIntactArm(1);
                 linearOp.sleep(550);
-                myIntakeExtenderArm.stopIntakeArm();
-                linearOp.sleep(sleepTime);
+//                myIntakeExtenderArm.stopIntakeArm();
+//                linearOp.sleep(sleepTime);
 
 //                myIntakeSpinnerMotor.stopMotors();
 
@@ -402,6 +407,9 @@ public class MMMCraterLanderScorer2 {
         linearOp.sleep(900);
         myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(200);
+
+        myIntakeExtenderArm.stopIntakeArm();
+
         myLanderServo.landerServoTravel();
         linearOp.sleep(200);
 

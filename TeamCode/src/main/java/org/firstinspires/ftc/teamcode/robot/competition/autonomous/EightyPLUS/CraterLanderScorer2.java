@@ -226,7 +226,7 @@ public class CraterLanderScorer2 extends LinearOpMode {
             idle();
 
 
-            myMineralMinerScorer.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor);
+            myMineralMinerScorer.LowerReleaseTM(myIntakeExtenderArm, myIntakeRotator, myIntakeSpinnerMotor, myMechDrive);
 
             sleep(sleepTime);
             idle();

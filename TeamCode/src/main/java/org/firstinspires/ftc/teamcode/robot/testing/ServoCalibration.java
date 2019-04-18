@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 //import org.opencv.core.Range;
 
 @TeleOp(name = "Calibrate Servo- P2 y+a", group = "CALIBRATION")
-//@Disabled
+@Disabled
 public class ServoCalibration extends OpMode {
     Servo servotest;
 

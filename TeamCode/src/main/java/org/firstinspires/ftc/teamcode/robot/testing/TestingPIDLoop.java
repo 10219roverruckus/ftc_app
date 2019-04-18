@@ -2,11 +2,15 @@ package org.firstinspires.ftc.teamcode.robot.testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.robot.competition.mechanisms.MecanumDrive;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
 @Autonomous(name = "Testing PID Loops")
+@Disabled
 public class TestingPIDLoop extends LinearOpMode{
+
 
     MecanumDrive myMechDrive;
 

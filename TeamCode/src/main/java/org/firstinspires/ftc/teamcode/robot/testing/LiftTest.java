@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TEST LIFT - P2 R STICK - B RESET")
-//@Disabled
+@Disabled
 public class LiftTest extends OpMode {
     DcMotor liftArmMotor;
     double rightJoystick_lift;

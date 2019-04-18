@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name = "ENCODERS - RUN TO POSITION", group = "TESTING")
-//@Disabled
+@Disabled
 
 public class runToPosition extends LinearOpMode {
     DcMotor testMotor;

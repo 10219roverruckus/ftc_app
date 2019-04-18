@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robot.testing.mechanisms.Gyro;
 import org.firstinspires.ftc.teamcode.robot.outreach.mechanisms.motors.DriveMotors;
 
 @Autonomous(name = "TEST DEBUG AUTO STOP", group = "TESTING")
-//@Disabled
+@Disabled
 public class TestingAutonomousSTOP extends LinearOpMode {
 
 //    Gyro myGyro;

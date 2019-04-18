@@ -37,7 +37,7 @@ public class RevColorDistance {
 //    public final int MINERAL_LIFT_THRESHOLD = 100;            //
 
     public final int MINERAL_LIFT_THRESHOLD_NOTHING = 0;       // Original was 180, adjusted for red hue
-    public final int MINERAL_LIFT_THRESHOLD_RED = 18;          // Original was 270
+    public final int MINERAL_LIFT_THRESHOLD_RED = 7;          // Original was 270
     public final int HOOK_LIFT_THRESHOLD = 100;
     public final int EXTENDER_THRESHOLD = 100;
 
@@ -65,7 +65,7 @@ public class RevColorDistance {
                 hsvValues);
 
 
-        if (hsvValues[0] > MINERAL_LIFT_THRESHOLD_NOTHING && hsvValues[0] <  MINERAL_LIFT_THRESHOLD_RED) {
+        if (hsvValues[0] >= MINERAL_LIFT_THRESHOLD_NOTHING && hsvValues[0] <  MINERAL_LIFT_THRESHOLD_RED) {
             return true;
 
         }

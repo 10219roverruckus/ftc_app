@@ -69,6 +69,8 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
     RevColorDistance myRevColorDistance;
     LEDLights myLEDStrip;
 
+    double MineralLiftDescent = 200;
+
     boolean mineralLiftAllowed;
 
     boolean LeftBumber = false;
@@ -254,13 +256,23 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
             myMineralLift.RaiseMineralLift();
             LeftBumber = false;
 
-        } else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper || LeftBumber)) {                  // was return true for check color Mineral Lift
+        }
+
+        else if (myRevColorDistance.checkSensorMineralLift() == false && (gamepad2.left_bumper || LeftBumber)) {                  // was return true for check color Mineral Lift
             LeftBumber = true;
             myLanderServo.landerServoCollect();
             myMineralLift.LowerMineralLift();
             telemetry.addLine("LOWER LIFT!!");
 
-        } else {
+        }
+        /*
+        else if (gamepad2.left_bumper && TeleOpTime.time() <=  )  {
+            myMineralLift.LowerMineralLift();
+
+        }
+        */
+
+        else {
             telemetry.addLine("STOP LIFT");
             LeftBumber = false;
             myMineralLift.stopMotors();

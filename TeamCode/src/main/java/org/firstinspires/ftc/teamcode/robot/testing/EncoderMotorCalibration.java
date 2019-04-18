@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.robot.testing;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "Calibrate INTAKE Motor Encoder - P2 R STICK - B RESET", group = "CALIBRATION")
+@Disabled
 public class EncoderMotorCalibration extends OpMode {
 
     DcMotor myEncoderMotor;  //NAME DOESN'T MATTER - BUT BE SURE TO CHANGE HARDWARE MAP AS NEEDED
