@@ -99,7 +99,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
 
         myLiftMotor = new LiftMotor(hardwareMap.dcMotor.get("lift_motor"));
         myIntakeExtenderArm = new IntakeExtenderArm(hardwareMap.dcMotor.get("intake_extender_arm"));
-        myIntakeRotator = new IntakeRotaterServos (hardwareMap.servo.get("rotator_top"), hardwareMap.servo.get("rotator_bottom"));
+        myIntakeRotator = new IntakeRotaterServos ( hardwareMap.servo.get("rotator_bottom"));               // deleted tp servo
         myIntakeSpinnerMotor = new IntakeSpinnerMotor(hardwareMap.dcMotor.get("intake_spinner_motor"));
         myMineralLift = new MineralLift(hardwareMap.dcMotor.get("mineral_lift_motor"));
         myLanderServo = new LanderServo(hardwareMap.servo.get("mineral_dumper"));
@@ -229,7 +229,7 @@ public class FullControlTeleOpFirstPersonDriver extends OpMode {
         if (gamepad2.right_trigger > powerThreshold) {
             myIntakeSpinnerMotor.intakeSpinner(1);
         } else if (gamepad2.left_trigger > powerThreshold  || gamepad2.a) {
-            myIntakeSpinnerMotor.intakeSpinner(-1);
+            myIntakeSpinnerMotor.intakeSpinner(-0.75);
         } else {
             myIntakeSpinnerMotor.stopMotors();
         }

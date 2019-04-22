@@ -159,7 +159,7 @@ public class MMMCraterLanderScorer2 {
                 myMechDrive.rotateRight(SPD_DRIVE_HIGH, .5);
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-58, myMechDrive);
+                myGyro.gyroOrientMecanum(-59, myMechDrive);     // was -58
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -177,6 +177,10 @@ public class MMMCraterLanderScorer2 {
                 linearOp.sleep(sleepTime);
 
                 myGyro.gyroOrientMecanum(-81, myMechDrive);         // was -76
+                myMechDrive.stopMotors();
+                linearOp.sleep(sleepTime);
+
+                myGyro.gyroOrientMecanum(-81, myMechDrive);     //-76
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -209,7 +213,7 @@ public class MMMCraterLanderScorer2 {
                 myMechDrive.driveForward(SPD_DRIVE_HIGH, 1);
                 linearOp.sleep(sleepTime);
 
-                myGyro.gyroOrientMecanum(-98, myMechDrive);                 // was -95
+                myGyro.gyroOrientMecanum(-98, myMechDrive);                 // was -98 missed mineral
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
 
@@ -257,7 +261,7 @@ public class MMMCraterLanderScorer2 {
         myIntakeRotator.raisedRotater();
         linearOp.sleep(400);
 
-        myIntakeSpinnerMotor.intakeSpinner(-1);                         // mineral is getting caught in intake____ was 700
+        myIntakeSpinnerMotor.intakeSpinner(-.75);                         // mineral is getting caught in intake____ was 700
         linearOp.sleep(900);
 
         myIntakeExtenderArm.stopIntakeArm();
@@ -397,13 +401,14 @@ public class MMMCraterLanderScorer2 {
 
 //                myIntakeSpinnerMotor.stopMotors();
 
+                //SECOND ANGLE CHANGE THAT WAS OVER CORRECTING THE ANGLE
                 myGyro.gyroOrientMecanum(-115, myMechDrive);            // was -114
                 myMechDrive.stopMotors();
                 linearOp.sleep(sleepTime);
                 break;
         }
 
-        myIntakeSpinnerMotor.intakeSpinner(-1);
+        myIntakeSpinnerMotor.intakeSpinner(-.75);
         linearOp.sleep(900);
         myIntakeSpinnerMotor.stopMotors();
         linearOp.sleep(200);

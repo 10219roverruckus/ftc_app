@@ -16,7 +16,7 @@ public class LanderServo {
 
     public double LSScore = 0.98;         // Scoring Position for the Dump
     public double LSTravel = .62;       // Travel Position for the Dump
-    public double LSCollect = .33;      // was 0.355     Collecting Minerals or Upright Position for the dump
+    public double LSCollect = .32;      // was 0.355     Collecting Minerals or Upright Position for the dump
 
 
     public double CloseGate = .146; //was .184
